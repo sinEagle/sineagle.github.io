@@ -23,17 +23,18 @@
   </script>
 
   <meta property="og:type" content="article">
-<meta property="og:title" content="匈牙利算法">
-<meta property="og:url" content="https://sineagle.github.io/2021/05/14/%E5%8C%88%E7%89%99%E5%88%A9%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:title" content="AtCoder Beginner Contest 214 E题（贪心，map的奇淫技巧）">
+<meta property="og:url" content="https://sineagle.github.io/2021/08/26/AtCoder-Beginner-Contest-214-E%E9%A2%98%EF%BC%88%E8%B4%AA%E5%BF%83%EF%BC%8Cmap%E7%9A%84%E5%A5%87%E6%B7%AB%E6%8A%80%E5%B7%A7%EF%BC%89/index.html">
 <meta property="og:site_name" content="sinEagle">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-05-14T11:52:33.000Z">
-<meta property="article:modified_time" content="2021-05-14T11:54:32.701Z">
+<meta property="article:published_time" content="2021-08-26T07:11:57.000Z">
+<meta property="article:modified_time" content="2021-08-26T07:21:11.046Z">
 <meta property="article:author" content="sineagle">
-<meta property="article:tag" content="匈牙利算法">
+<meta property="article:tag" content="贪心">
+<meta property="article:tag" content="map">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://sineagle.github.io/2021/05/14/%E5%8C%88%E7%89%99%E5%88%A9%E7%AE%97%E6%B3%95/">
+<link rel="canonical" href="https://sineagle.github.io/2021/08/26/AtCoder-Beginner-Contest-214-E%E9%A2%98%EF%BC%88%E8%B4%AA%E5%BF%83%EF%BC%8Cmap%E7%9A%84%E5%A5%87%E6%B7%AB%E6%8A%80%E5%B7%A7%EF%BC%89/">
 
 
 <script id="page-configurations">
@@ -46,7 +47,7 @@
   };
 </script>
 
-  <title>匈牙利算法 | sinEagle</title>
+  <title>AtCoder Beginner Contest 214 E题（贪心，map的奇淫技巧） | sinEagle</title>
   
 
 
@@ -167,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2021/05/14/%E5%8C%88%E7%89%99%E5%88%A9%E7%AE%97%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2021/08/26/AtCoder-Beginner-Contest-214-E%E9%A2%98%EF%BC%88%E8%B4%AA%E5%BF%83%EF%BC%8Cmap%E7%9A%84%E5%A5%87%E6%B7%AB%E6%8A%80%E5%B7%A7%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.jpg">
@@ -180,7 +181,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          匈牙利算法
+          AtCoder Beginner Contest 214 E题（贪心，map的奇淫技巧）
         </h1>
 
         <div class="post-meta">
@@ -191,7 +192,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-05-14 19:52:33 / 修改时间：19:54:32" itemprop="dateCreated datePublished" datetime="2021-05-14T19:52:33+08:00">2021-05-14</time>
+              <time title="创建时间：2021-08-26 15:11:57 / 修改时间：15:21:11" itemprop="dateCreated datePublished" datetime="2021-08-26T15:11:57+08:00">2021-08-26</time>
             </span>
 
           <br>
@@ -200,7 +201,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1k</span>
+              <span>961</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -220,7 +221,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="求二分图的最大匹配"><a href="#求二分图的最大匹配" class="headerlink" title="求二分图的最大匹配"></a>求二分图的最大匹配</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1000001</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> M = <span class="number">2000001</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n1, n2, m, ans; </span><br><span class="line"><span class="keyword">bool</span> state[N];</span><br><span class="line"><span class="keyword">int</span> result[N];</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> fir[N], edge_num, nxt[M], to[M];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addEdge</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">    to[++edge_num] = y;</span><br><span class="line">    nxt[edge_num] = fir[x];</span><br><span class="line">    fir[x] = edge_num;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t1, t2;</span><br><span class="line">    <span class="built_in">memset</span>(result, <span class="number">0</span>, <span class="built_in"><span class="keyword">sizeof</span></span>(result));</span><br><span class="line">    ans = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>, &amp;n1, &amp;n2, &amp;m);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;t1, &amp;t2);</span><br><span class="line">        <span class="keyword">if</span>(t1&gt;n1 || t2&gt;n2) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="built_in">addEdge</span>(t1, t2); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=fir[x]; i; i=nxt[i])&#123;</span><br><span class="line">        <span class="keyword">int</span> v = to[i];</span><br><span class="line">        <span class="keyword">if</span>(!state[v])&#123;</span><br><span class="line">            state[v] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(result[v]==<span class="number">0</span> || <span class="built_in">find</span>(result[v]))&#123;</span><br><span class="line">                result[v] = x;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">init</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n1;i++)&#123;</span><br><span class="line">        <span class="built_in">memset</span>(state, <span class="number">0</span>, <span class="built_in"><span class="keyword">sizeof</span></span>(state));</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">find</span>(i))	ans++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ans);</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc214/tasks/abc214_e">题目链接</a></p>
+<p>题目大意: N个球每个球有一个可放的范围 [L, R] (表示盒子的编号),一共有1e9 个盒子,求方案是否可行</p>
+<p>贪心按右端点从小到大排序，之后尽可能往左放，需要用到map的奇淫技巧用到链表的思想  </p>
+<p>参考 <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_54699118/article/details/119724654?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_title~default-0.control&spm=1001.2101.3001.4242">大佬的写法</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">2e5</span> + <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">ll T, n;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    ll l, r;</span><br><span class="line">&#125;a[N];</span><br><span class="line">map&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; fa;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(node a, node b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a.r &lt; b.r;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(fa.<span class="built_in">count</span>(x)) &#123;</span><br><span class="line">        <span class="keyword">return</span> fa[x] = <span class="built_in">find</span>(fa[x]); <span class="comment">//找到能放的位置</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; T;</span><br><span class="line">    <span class="keyword">while</span>(T--) &#123;</span><br><span class="line">        fa.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>, &amp;n);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%lld%lld&quot;</span>, &amp;a[i].l, &amp;a[i].r);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">sort</span>(a + <span class="number">1</span>, a + n + <span class="number">1</span>, cmp);</span><br><span class="line">        <span class="keyword">bool</span> flag = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> x = <span class="built_in">find</span>(a[i].l); <span class="comment">//找当前区间最左边</span></span><br><span class="line">            fa[x] = x + <span class="number">1</span>; <span class="comment">//指向下一个空的位置</span></span><br><span class="line">            <span class="keyword">if</span>(x &gt; a[i].r) &#123;</span><br><span class="line">                flag = <span class="number">0</span>;</span><br><span class="line">                <span class="built_in">puts</span>(<span class="string">&quot;No&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(flag) <span class="built_in">puts</span>(<span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -244,7 +250,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%8C%88%E7%89%99%E5%88%A9%E7%AE%97%E6%B3%95/" rel="tag"># 匈牙利算法</a>
+              <a href="/tags/%E8%B4%AA%E5%BF%83/" rel="tag"># 贪心</a>
+              <a href="/tags/map/" rel="tag"># map</a>
           </div>
 
         
@@ -253,13 +260,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/05/14/ICPC%202021(%E6%98%86%E6%98%8E)%20L.Simone%20and%20graph%20coloring/" rel="prev" title="ICPC 2021(昆明) L.Simone and graph coloring">
-      <i class="fa fa-chevron-left"></i> ICPC 2021(昆明) L.Simone and graph coloring
+    <a href="/2021/08/25/ICPC-2018-%E5%BE%90%E5%B7%9E%E7%BD%91%E7%BB%9C%E8%B5%9BG%E9%A2%98%EF%BC%88STL-set-%E4%BA%8C%E5%88%86-%E6%80%9D%E7%BB%B4%EF%BC%89/" rel="prev" title="ICPC-2018 徐州网络赛G题（STL-set, 二分, 思维）">
+      <i class="fa fa-chevron-left"></i> ICPC-2018 徐州网络赛G题（STL-set, 二分, 思维）
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/05/14/POJ3692/" rel="next" title="POJ3692 (最大完全子图)">
-      POJ3692 (最大完全子图) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -318,7 +322,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%82%E4%BA%8C%E5%88%86%E5%9B%BE%E7%9A%84%E6%9C%80%E5%A4%A7%E5%8C%B9%E9%85%8D"><span class="nav-number">1.</span> <span class="nav-text">求二分图的最大匹配</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
