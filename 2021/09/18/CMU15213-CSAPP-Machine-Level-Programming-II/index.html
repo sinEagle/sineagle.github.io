@@ -22,17 +22,25 @@
     var CONFIG = {"hostname":"sineagle.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="资深失败家">
-<meta property="og:type" content="website">
-<meta property="og:title" content="sinEagle">
-<meta property="og:url" content="https://sineagle.github.io/tags/%E5%8D%95%E8%B0%83%E6%A0%88/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="CMU15213-CSAPP Machine-Level Programming II Control">
+<meta property="og:url" content="https://sineagle.github.io/2021/09/18/CMU15213-CSAPP-Machine-Level-Programming-II/index.html">
 <meta property="og:site_name" content="sinEagle">
-<meta property="og:description" content="资深失败家">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/09/18/inUdOwRWhxZ3c2D.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/18/e9gBOnUPkxFfAdM.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/18/SY4A7OMlEbyXjzo.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/18/Ds3wGvThFtBNU4H.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/18/XErOnyTfWbHt6pu.png">
+<meta property="article:published_time" content="2021-09-18T10:44:45.000Z">
+<meta property="article:modified_time" content="2021-09-18T12:09:14.841Z">
 <meta property="article:author" content="sineagle">
+<meta property="article:tag" content="CSAPP">
+<meta property="article:tag" content="ASM">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/09/18/inUdOwRWhxZ3c2D.png">
 
-<link rel="canonical" href="https://sineagle.github.io/tags/%E5%8D%95%E8%B0%83%E6%A0%88/">
+<link rel="canonical" href="https://sineagle.github.io/2021/09/18/CMU15213-CSAPP-Machine-Level-Programming-II/">
 
 
 <script id="page-configurations">
@@ -40,12 +48,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: 单调栈 | sinEagle</title>
+  <title>CMU15213-CSAPP Machine-Level Programming II Control | sinEagle</title>
   
 
 
@@ -159,51 +167,117 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">单调栈
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2021/09/18/CMU15213-CSAPP-Machine-Level-Programming-II/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="sineagle">
+      <meta itemprop="description" content="资深失败家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sinEagle">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CMU15213-CSAPP Machine-Level Programming II Control
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-18 18:44:45 / 修改时间：20:09:14" itemprop="dateCreated datePublished" datetime="2021-09-18T18:44:45+08:00">2021-09-18</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>161</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+            <div class="post-description"> </div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-03T19:35:45+08:00"
-              content="2021-08-03">
-          08-03
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/03/SDTBU2021%E6%9A%91%E5%81%87%E9%9B%86%E8%AE%ADII-B%E9%A2%98%EF%BC%88%E5%8D%95%E8%B0%83%E6%A0%88%EF%BC%89/" itemprop="url">
-            <span itemprop="name">SDTBU2021暑假集训II B题（单调栈）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
+        <h3 id="标志寄存器里的标志位"><a href="#标志寄存器里的标志位" class="headerlink" title="标志寄存器里的标志位"></a>标志寄存器里的标志位</h3><p>CF =&gt; 无符号溢出<br>ZF =&gt; 结果等于0<br>SF =&gt; 对于有符号数最高位是1<br>OF =&gt; 有符号溢出（正数相加变成负数，负数相加变成正数）</p>
+<p><img src="https://i.loli.net/2021/09/18/inUdOwRWhxZ3c2D.png"></p>
+<h3 id="cmpq指令"><a href="#cmpq指令" class="headerlink" title="cmpq指令"></a>cmpq指令</h3><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmpq b, a<span class="comment">; 执行a-b</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/09/18/e9gBOnUPkxFfAdM.png"></p>
+<h3 id="testq-指令"><a href="#testq-指令" class="headerlink" title="testq 指令"></a>testq 指令</h3><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">testq b, a<span class="comment">; a &amp; b</span></span><br></pre></td></tr></table></figure>
+<p>通常用作testq 两个相同的寄存器可以对一个参数进行分析<br><img src="https://i.loli.net/2021/09/18/SY4A7OMlEbyXjzo.png"></p>
+<h3 id="setx指令"><a href="#setx指令" class="headerlink" title="setx指令"></a>setx指令</h3><p><img src="https://i.loli.net/2021/09/18/Ds3wGvThFtBNU4H.png"><br><img src="https://i.loli.net/2021/09/18/XErOnyTfWbHt6pu.png"></p>
 
     </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>求大佬赏个饭</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weichat.png" alt="sineagle 微信支付">
+        <p>微信支付</p>
+      </div>
+
   </div>
-  
-  
-  
+</div>
 
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CSAPP/" rel="tag"># CSAPP</a>
+              <a href="/tags/ASM/" rel="tag"># ASM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/18/NTHU-Operating-System-Chap2-OS-Structure/" rel="prev" title="NTHU-Operating System Chap2 OS Structure">
+      <i class="fa fa-chevron-left"></i> NTHU-Operating System Chap2 OS Structure
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
@@ -256,6 +330,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%BF%97%E5%AF%84%E5%AD%98%E5%99%A8%E9%87%8C%E7%9A%84%E6%A0%87%E5%BF%97%E4%BD%8D"><span class="nav-number">1.</span> <span class="nav-text">标志寄存器里的标志位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmpq%E6%8C%87%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">cmpq指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#testq-%E6%8C%87%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">testq 指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setx%E6%8C%87%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">setx指令</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
