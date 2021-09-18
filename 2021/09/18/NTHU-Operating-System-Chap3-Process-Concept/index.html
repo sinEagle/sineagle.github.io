@@ -22,17 +22,28 @@
     var CONFIG = {"hostname":"sineagle.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="资深失败家">
-<meta property="og:type" content="website">
-<meta property="og:title" content="sinEagle">
-<meta property="og:url" content="https://sineagle.github.io/tags/%E5%8C%88%E7%89%99%E5%88%A9%E7%AE%97%E6%B3%95/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="NTHU-Operating System Chap3 Process Concept">
+<meta property="og:url" content="https://sineagle.github.io/2021/09/18/NTHU-Operating-System-Chap3-Process-Concept/index.html">
 <meta property="og:site_name" content="sinEagle">
-<meta property="og:description" content="资深失败家">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/09/18/tQUi7p5gnSfkIrb.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/18/qoMe4TDQdGRPEys.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/18/s3Om5dNW7TBwaQK.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/18/G6pTaqwrXxRmHUh.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/18/P9yNdqLXvhs8j3Y.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/18/Na9QnPcX14f3ReT.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/18/UgprOQGczVaeiZb.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/18/JLuMtpCb8GqsNUF.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/18/jnOWmRDEi9Y5xQd.png">
+<meta property="article:published_time" content="2021-09-18T13:36:33.000Z">
+<meta property="article:modified_time" content="2021-09-18T15:07:38.405Z">
 <meta property="article:author" content="sineagle">
+<meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/09/18/tQUi7p5gnSfkIrb.png">
 
-<link rel="canonical" href="https://sineagle.github.io/tags/%E5%8C%88%E7%89%99%E5%88%A9%E7%AE%97%E6%B3%95/">
+<link rel="canonical" href="https://sineagle.github.io/2021/09/18/NTHU-Operating-System-Chap3-Process-Concept/">
 
 
 <script id="page-configurations">
@@ -40,12 +51,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: 匈牙利算法 | sinEagle</title>
+  <title>NTHU-Operating System Chap3 Process Concept | sinEagle</title>
   
 
 
@@ -159,71 +170,117 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">匈牙利算法
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2021/09/18/NTHU-Operating-System-Chap3-Process-Concept/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="sineagle">
+      <meta itemprop="description" content="资深失败家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sinEagle">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NTHU-Operating System Chap3 Process Concept
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-18 21:36:33 / 修改时间：23:07:38" itemprop="dateCreated datePublished" datetime="2021-09-18T21:36:33+08:00">2021-09-18</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>121</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+            <div class="post-description"> </div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-05-14T19:56:08+08:00"
-              content="2021-05-14">
-          05-14
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/05/14/POJ3692/" itemprop="url">
-            <span itemprop="name">POJ3692 (最大完全子图)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-05-14T19:52:33+08:00"
-              content="2021-05-14">
-          05-14
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/05/14/%E5%8C%88%E7%89%99%E5%88%A9%E7%AE%97%E6%B3%95/" itemprop="url">
-            <span itemprop="name">匈牙利算法</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
+        <h3 id="Process-Concept"><a href="#Process-Concept" class="headerlink" title="Process Concept"></a>Process Concept</h3><p><img src="https://i.loli.net/2021/09/18/tQUi7p5gnSfkIrb.png"></p>
+<h4 id="Process-in-Memory"><a href="#Process-in-Memory" class="headerlink" title="Process in Memory"></a>Process in Memory</h4><p><img src="https://i.loli.net/2021/09/18/qoMe4TDQdGRPEys.png"></p>
+<h4 id="Threads"><a href="#Threads" class="headerlink" title="Threads"></a>Threads</h4><p><img src="https://i.loli.net/2021/09/18/s3Om5dNW7TBwaQK.png"></p>
+<h4 id="Process-State"><a href="#Process-State" class="headerlink" title="Process State"></a>Process State</h4><p><img src="https://i.loli.net/2021/09/18/G6pTaqwrXxRmHUh.png"></p>
+<h4 id="Diagram-of-Process-State"><a href="#Diagram-of-Process-State" class="headerlink" title="Diagram of Process State"></a>Diagram of Process State</h4><p><img src="https://i.loli.net/2021/09/18/P9yNdqLXvhs8j3Y.png"></p>
+<h4 id="Process-Control-Block-PCB"><a href="#Process-Control-Block-PCB" class="headerlink" title="Process Control Block (PCB)"></a>Process Control Block (PCB)</h4><p><img src="https://i.loli.net/2021/09/18/Na9QnPcX14f3ReT.png"></p>
+<h4 id="Context-Switch"><a href="#Context-Switch" class="headerlink" title="Context Switch"></a>Context Switch</h4><p><img src="https://i.loli.net/2021/09/18/UgprOQGczVaeiZb.png"><br><img src="https://i.loli.net/2021/09/18/JLuMtpCb8GqsNUF.png"></p>
+<h4 id="Review-Slides-1"><a href="#Review-Slides-1" class="headerlink" title="Review Slides(1)"></a>Review Slides(1)</h4><p><img src="https://i.loli.net/2021/09/18/jnOWmRDEi9Y5xQd.png"></p>
 
     </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>求大佬赏个饭</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weichat.png" alt="sineagle 微信支付">
+        <p>微信支付</p>
+      </div>
+
   </div>
-  
-  
-  
+</div>
 
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS/" rel="tag"># OS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/18/CMU15213-CSAPP-Machine-Level-Programming-II/" rel="prev" title="CMU15213-CSAPP Machine-Level Programming II Control">
+      <i class="fa fa-chevron-left"></i> CMU15213-CSAPP Machine-Level Programming II Control
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
@@ -276,6 +333,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Process-Concept"><span class="nav-number">1.</span> <span class="nav-text">Process Concept</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Process-in-Memory"><span class="nav-number">1.1.</span> <span class="nav-text">Process in Memory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Threads"><span class="nav-number">1.2.</span> <span class="nav-text">Threads</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Process-State"><span class="nav-number">1.3.</span> <span class="nav-text">Process State</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Diagram-of-Process-State"><span class="nav-number">1.4.</span> <span class="nav-text">Diagram of Process State</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Process-Control-Block-PCB"><span class="nav-number">1.5.</span> <span class="nav-text">Process Control Block (PCB)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Context-Switch"><span class="nav-number">1.6.</span> <span class="nav-text">Context Switch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Review-Slides-1"><span class="nav-number">1.7.</span> <span class="nav-text">Review Slides(1)</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
