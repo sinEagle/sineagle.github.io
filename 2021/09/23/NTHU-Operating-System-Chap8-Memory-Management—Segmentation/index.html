@@ -23,18 +23,33 @@
   </script>
 
   <meta property="og:type" content="article">
-<meta property="og:title" content="R语言大作业I(分析《豆瓣短评数据》)">
-<meta property="og:url" content="https://sineagle.github.io/2021/06/02/movieanalyze/index.html">
+<meta property="og:title" content="NTHU-Operating-System-Chap8-Memory-Management—Segmentation">
+<meta property="og:url" content="https://sineagle.github.io/2021/09/23/NTHU-Operating-System-Chap8-Memory-Management%E2%80%94Segmentation/index.html">
 <meta property="og:site_name" content="sinEagle">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-06-02T09:53:17.000Z">
-<meta property="article:modified_time" content="2021-08-03T11:23:40.319Z">
+<meta property="og:image" content="https://i.loli.net/2021/09/24/XB69VUkmLZScrvu.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/24/Y4ALTBVaNfDu1h8.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/24/uiS46VwlnsQpc9D.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/24/ey1ODAoIZikU8lh.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/24/qdZ45OeBPCuJy7H.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/24/Ai1BgzIEW8C7YJL.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/24/ctkIP1w4iz6HCTD.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/24/Muhy6eZvX2ONjiC.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/24/aJTbMqze6YWXhFo.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/24/y3HvUt2zd7M6g5F.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/24/uF3gkIAjYUxhVaO.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/24/8cXfF5PEIiJOvlr.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/24/4OdHr6BoYRxp1cG.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/24/uAIbPYnH783L9Ei.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/24/1PSBriF2Xavug7l.png">
+<meta property="article:published_time" content="2021-09-23T03:02:41.000Z">
+<meta property="article:modified_time" content="2021-09-24T11:33:09.438Z">
 <meta property="article:author" content="sineagle">
-<meta property="article:tag" content="R">
-<meta property="article:tag" content="DS">
+<meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/09/24/XB69VUkmLZScrvu.png">
 
-<link rel="canonical" href="https://sineagle.github.io/2021/06/02/movieanalyze/">
+<link rel="canonical" href="https://sineagle.github.io/2021/09/23/NTHU-Operating-System-Chap8-Memory-Management%E2%80%94Segmentation/">
 
 
 <script id="page-configurations">
@@ -47,7 +62,7 @@
   };
 </script>
 
-  <title>R语言大作业I(分析《豆瓣短评数据》) | sinEagle</title>
+  <title>NTHU-Operating-System-Chap8-Memory-Management—Segmentation | sinEagle</title>
   
 
 
@@ -168,7 +183,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2021/06/02/movieanalyze/">
+    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2021/09/23/NTHU-Operating-System-Chap8-Memory-Management%E2%80%94Segmentation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.jpg">
@@ -181,7 +196,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          R语言大作业I(分析《豆瓣短评数据》)
+          NTHU-Operating-System-Chap8-Memory-Management—Segmentation
         </h1>
 
         <div class="post-meta">
@@ -191,14 +206,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-02 17:53:17" itemprop="dateCreated datePublished" datetime="2021-06-02T17:53:17+08:00">2021-06-02</time>
+              <time title="创建时间：2021-09-23 11:02:41" itemprop="dateCreated datePublished" datetime="2021-09-23T11:02:41+08:00">2021-09-23</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-03 19:23:40" itemprop="dateModified" datetime="2021-08-03T19:23:40+08:00">2021-08-03</time>
+                <time title="修改时间：2021-09-24 19:33:09" itemprop="dateModified" datetime="2021-09-24T19:33:09+08:00">2021-09-24</time>
               </span>
 
           <br>
@@ -207,7 +222,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>877</span>
+              <span>505</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -227,18 +242,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="774c8ff2345f87bc8f0bd93360b02b403e84aedc13879d40b935115bb2e9fe10">101d1d5d1585dfd9f702988508b8e9000a9dd0bae21dcde8dfa544ad2f220e638a94fc534b3903400abdb36112c2bd38873f7ed34b54c1c4d94cd5f3e241cb20ef7daeab5dc2df9b35af0caee41f09f76fe79d4580b4e4611bc0b396b425adfbb272c6818285e594fb018ac126f12e04a29f2f2af7ea249e0a4fdaeb92c503136bf2c18b2ed895ce92783b30687cc0ef04c9e5ead639ec2f3e82c80f236d340063e75141c6ad22e74090b25e1d564a70cfd922a90093906bb274850dfec4fa7f0ed046183c67ecaf822c773e2c67e3fc2124ef89aac17615c71309645e81a35bfe50f01b3d62de618646e73f35e05e9ebee47310915817a4fefc6eb8f39358a2b391eb25c7795eadaec8f369007670825a3adf88fc6d9a1ecad8b03a27011c58d7d2e1e998771b814fe55cc9fe56b0775af8da662bb888123785355653be9d37a1511b2b4a324a76cc2bae1531c351a9db01d87a0650ab6e65d6df5872cd40e3ecbde3a518bdd9e01469f7dd082edd2e655731c6901a54e00c8a5d5e35bb287fc2306cdba2a8d007ee40245e802050e7ba1dc1cdd1555f2366fa661c143a50d26f43fb067eee25693a59d89447f613f794990ac2b91b81e403f9c2765b538f1e5b064d477fa908aacb5d513d1ccf06b4e3fbe1f7c4b641f398828e8a8c07e92f9ea1a1b557680d34c169298f05dc36664d874b65df60b1955d9088954b6e26560df87ecbd0a36fe08cb4d26d861ed2ca6e35a9d71219bac5a42fde23444088e108e2673d3f5cf7b3b382538502a5f5a9749035361c243e1f93df388f83b1d2f08f80456a3094176f6e400988ddf988c135612647ff36f6ecda956027f2905f0547769151983251b86162aff9d6bcbdb1a54372943d0180734f1e032b3f9d083a5c9647d33d182e67f89d0056e7266726e996da6dd01638039ee1dd6257eafcb6eba044645a07968208dcb2a86cc84abad51901173b5b3f98f20403336dcbb3b94a38ff48acef52828a659cbc8fa2fddf58fd0ccdde584a1a85249405ec3e67dd5676ed951cff9017e9efbd3ab3c50c68fca13c901f8a70a4a3d09cbf10b61c8564f50e378e1efb64ad6b1777405d56befd95c3f88e4ee4b997a2597ae1ec2c8b17ef7c5ab427a3e7abc579c72b9f65ed59efafd735991650f9405dd6992327b91b872d2dc2f930ca11e76ea9e4a0013b0dc74753071dc3c31764533140da30c97a274ee0501d223afb4617625491a515ae3dedf5d5709e972985ad67ada00b177a27442843649b6c311c86aa63f35f28a47cba76457ada6f953545cd5878c75c03d4bc48ff491ac3e4099e96473b411ea897412619b59a82d000a859b815066d40be27f75d738c613a487af7fa0bcaf3c06b11a640baadf7187cabf6375645eb084d02ad2874cd506726bd6422c2a49f55b832c786d06c7b74af486a0b257e1680d44475640872c6de61884d125c94304801b1e29c98163e9bcc85f436195d48d0e6e62316e15be19830e77906ddfad41659f29705d1e4abaecb2a966520141fc1ed61609851e8526175d6ca5b255d5445cd5d65a1bd7843a84b875d96494898767d36a770cea806910de8975c2a03efaa434a3cec1255b8f188e59734fe702c1b4e53fbb869d3392a4eb23f1a93905839df07dc49c326c539b8a680f05754f74cb77d38249d4308863d1436315c6b77b65b82ddc594c87088a49a6bf8980c7746378424d40c3a709df383b5828f3e31ece9ddea6449a83acc7cb9db0bc9f523fc0269df80a0fe1412123720f821077ed3f7b82ba0807114747ab4513752ea7771dff4fcbfe16c8ea3d120d586c61591be7ddc078e7acc0fa87abee9b425942f1b4a60370e19ae7203b589c476bf2c8f483d78b7a755c0a6d3f2c47cc4ccd5c997eda0bb54d04d413b5564fc05e317d6807c665ed5bf5dc3093b063665f3792b144cfa0617bb38ac19ba29553fd172e5ef4f1a9d08e09516c36e033ffa78f3857cc1144de7bf73273cc97a1221b910b883130681e4a7dd0db81a6f870e8182b4d946a9d62b26587e2b5237c2099c268c37e97e10f40ec33f61901f5030054078d0272f63457071b311db270354b14cc2dd38f8360101e110f3b79ed11f545d903a820282d13134a67439a345b2b4c17aac8b09feee622365ffe39bdee9b0e9bf41982682091b460e0076c3a3b4d19a01a8a3ef4ebde876db9357ce119f8d87b5acbdb552e44205b7ce8ecb9301ac4a22c9b0dd84e067a3044a128aa6ebc7de10fa65a45bf2da37d7b5d6c28c6069bf1d7a12b1ed19ff6db570696726654ee2e4809a0e71d6681ac0cc0d2c920f185bded619f2c2529bd6aacae96669d45de40c569c09bda87daab1787d7a7a94f5edcf087c5acbfe778c9d0c3947c538601841b05324ab38fa1c199a3cbbb3f7d6ab137dc1ade906f964172310d2b360e480a9da6947f074fed964241f412415ec0a4bd87ca51665c46a026aab2bb8e8d6d2e905aa2835ec3883090eda41a886a10f1ee4c266f48c31da45544f7ef913ddedb2725ca191c417e36c8477369e420c6cd0bea6aca2e5cd6fac1ec380d6440c69e4ef225025a956a7f9d015bc81bd45536b24799a9cdb1577ad120f844ce0b499fa3a10fd4cdc4687edf4f0f7c5294bccce9f918531bc9053dbff19d612f71be49a5871bd91f0257522c210818429b3dd610e1670d5bb4e000610860172b45c4005cf45d8b2b723c562b0c9f4e292cd1db0928f354bf3fbd6dfa53006005e9ab3c30d971637dd73f61dd09675b48fba86f4bd86e0e408ce6ec16a0c20149004f28ee89afdcbf058039acd467d8457d2f5eb9d62cb7a74b26853a3983680816e619c38b36169a593b51eff89d12a3b0ef5aff5d5e173e89a3d6db090a5c8ad91b0388981b081ba325c907e2713b1f33e6da54b5db982c5bf3146c23ff48b352e6c2cf7e945c76fff109c0f82e59db1b6f35ea8d40f167fab32d6cb8829146b34257fe80ee1b8b2d633e733c83877becf216390f53ac7af0b1a8dbe361fb47f2b461bfb975602523048f64a4e82db9bee3e045ffc2739b53561cba40b55576e09da0369d16118a3e06a27ec2b668cb76fe3534a6a53784e5f1a3cade896179cc8de7051768ebb3267a6dcd341886139c7c19eeb798c78beed97b1c100980daab1a240fb24605b2e17f02864e5ed3c61c523c94d22f116cd2364dff411ad8191a7721adcf9e00f47ec0d6a2d31105d672ea6282d710500e5a7e5d62ee0f0a14084bcd852fdd75e73abbe211ed0fd427ae2d7c9c0417c7cbe6ad6384480f61416e4512433489f8bd80bb5e36033d11406645e59119652be1c5e334d155a85c12fb8867272b162ac8ed6918fd77563081ba44111a63d7cc09e0268a87b13db7eef3f583d4d86a7bac330650d9edb52a1500bf23b787dde24d0936e23471687c5aca4773d9bcaf377bd097c9a155731e65db6e5b33aa2f1437b988d5bc345edb41160d4a3ea2f7f0b9644861f496547e6bfd289952e3185b85e747cc6d60c06329a3bbe32eface1666d0eb1589b5be079f6791edb392071901bdc2e36a8d2ec4ddb80103f1d4bf3970bcdaea7c957940a1bc7b709e1711622f270495b487a450a3dc2b47f6c815b5f124462e43f1f34f650b4396ab6b17530496ff8e825529c18c6b3f8a507fca62ad7a3bc1c9390668c1469881161083254037b0e7bcc5992fe7bdbb1b5b36952f17ffbe4f5a1fde63e68e505f8d48f647df9c32a068eacce8674ecdfc6b5747e49a0c012724b18fdb76d7dd71a05bd02351dd5d701630301d9cd4ec6667affcfb103d18269dd420e7a449a02a6bf461160d0b25af970070ed90f6337ebc219cbb1fa5e652ec96d9b0bbeea2dd7eb5de32329508b4aeeb2a4199ae3f6c3b9e4cc85ca4ce7ded2d3e55fda3ababbc1ac22f8fb133b35bec5326d1833e5c19fa7a32c7eb0114379d76ab6d607e6c1146ff453b9d7003e4415c62251cf593388d3f6bcb3755d4b8b6ac3215e62ac3f6f71e1fd44c8d9d82ecbb23780b21c3ebcb1d36a96be11dde4f93b4a1847424041de02cfc83a6594b0dd586ccd15bc99051b15244d5dfbf3e9881a51ea51fd6237a4d0f1064b143157d7f772a2e20b9f303c03fb3d7c7e71ba1e2bd41a2241df2edea6ef1565638ac27f9f033a786de018dfc859a4c11be6e075368c5bd0fcb0cda70474049ad0ec3a9dec7256d182396b704ee83d681594cda283b2e9d36cc5b2455536bc5beff4548e2d8d71338a50898460723532be64fe46127f93611455321f1baa61963b2725c100abf4a7f496e9962d86a539ab55a237bd490923836ad271ec655d45c5a9123d74460e7100771abed32f9e7dc40a219fb9f075bc3088f352368833f0a1aeeed994dafaedbe8f1d3230e9d6ef5e0b018ac83a4064a7950b245540949031114cfea9afeb2b59ff036fbc59aee231571eab1a64755b00b6766708de66bc56ebf8411f46704d38fc313f36d165dcb7bc1be9c1cf7d2ec280fed118a5e3f93bf7bf79b50ec8e029ffaecb6dbd37f57a70c929be1ad364302d8c068e86e92bac21f7b082c630a82dfc4f4cd6e6b0464a13c63906c70ad9fe9199fc6d2b8768a8a70d08c8904df88587079d6b63c6d4fc78ed481d314010aa37096d67cf919c97711614c9a85a6c195956c006b4184a69f4de8325a23c0edb333edb8dcfa4264f769e48445dfd1033b9a8fca48fa3d0186617cfdd0f2c97a5ddc84b8f2ba9b41199c3a79edb8f796f115889afda7698779eb871a49bfd2e1244d2150a5a479694a63d26c7ef947334fc27d4cb48ee46f5d33ab308d36ded2f665e12d141850e3c7a2607aee29fba661d111a5d92f7b77691fce01f67630f06e0f13a5f8aab6f946abd0644858d8c4fe320dd352cb15740bd24fa4d9ce563dc072e4f785c5255ba3925a5dade81231adf933699d2e5f27a94fa50cd5a5149b647cd0a5ed3f9220f2cc4fa2fc360d08b09c574885a17f23af41f8ada477a1010f963e59baace63a7f179b41b361f8e7ec7f96cf5ecd23ce268dd846f2672a2386859ef7c278d98806cd2100fba30cd9efe9a2a52a25a4a5a70a4ad4c36bc8c36ff404fddfe35e095dc1dbc369758ad0dc4274438cb1331c2baf59f8c9eb1f431b9f22fec483e53df1800e7b949c4321da27c1c0e7e393e88f721afb671eae0aa992ca3d70d9d80baea371dd6036e5723d0be3955023e237946feecd7d86346abf701adb4def35035ec40c2d8bbb913f5cd2b8046406f12e61b65f2c1cbc513183afa4070ea547325de82b79ced04f587580b372f251d8ab2f9b2aedf5368a4d4cbf1739a4accda6e3473464a6528317509bc7c0cf6022f0b5ad3145aa48a439c6ca62eea04f747a71cd45002deddce3fb79bd5f0af4cd06319911502b3a43fe11f0fb3b63019b123949d7560e54ddf098c017c46d95bbafdec64f11da71e2b7989b2151ea7c17a2e8357aed14ce16402ee73a824c4cd058773f6cb62ec2839e09f20475df219f3615a1d1b80231685c478bd735ecdf8de50fcec8fb6d2b1e10eaa671553883cca24f72ab689097c6b3d86cad537964257204b3e4f68d0a885f483300f8bf9ae16ccf62f9648c78fd95f4a7fc7de9c43919da76cee835fd5bf68792b81384c4cc5e6ce56c58fd4d0e46fc5bcc9b84b1533617c5fa12a43b2237ab0385ef200850974c1f98e646b372c01696487c9c5a66c7ebbddbe3503bd512347f66172c9a6cb94db3c51b3d1d0a6b80a893529d2a8fd72e55dc22f6f8c736ad2a5538eb384d74f2c39da4064afe6aef9c29ecc9bde409a7f75646572ed01d0e17c00c062349658cfb8fb37044708ed8451e1e853bb83f3b3c13ef9e2ebf8f6743176ba4d70999ea7c847ba6f00ad42c2b3f8ae8b69ce8b6cff6c7f3ccb9686e4d3069c672dc002fc5d8f54ca2dbf01332c64ee574b1704d46564007c1d1560952d6233ebc0dd1f6f8146623ccbf7abe629c5fa5e2a7f8aeca34b964a22a8cd6e538498975a6c5a78ba539dedf04013374ae153d4e473387b17a17bda8501f37bdcf12bc371c3b3d7f9af66f5ae8943f5e0eb6459dbec1eec0cf35b27e0fdf7c7ea0a74b88f8c0314587987e71d01dc7123b188edf2f6b2b77b77095b74e798cde24497107dae353bc177504fa8b84f40e0964860add9d2b3180eb8e60c53014b42b23e7820f46c5764680abe66da48b34e0c5510cbc43affa3967f7a8fbb41ecebc2b3d76e84743f8eef0ff6c64ee71fa6c04f64956cfe0dc4c29c568da3d554b9f20c69d9c109b40980c997d43b3f6d0de851f83d4a529b16adeead90f164c39b847cd5535c291e19219bd3489fb32539f2860b7e5f9f172c66182db3c052c39e3ee67f4744adc6d6346e7c383edb52d3e9a8d5e295e1d41045d196a6a6e88564bdda097ea1e3b9748cc7e6a2343c669263ee03136c3d226e00204364f0b15b23c2896650ed5ffe19dedee4c84329bfb6d897563da528226cde9e3f1958ae6ab1bdf5cf7563b65a38b364dd6dd019544d2024f5f568502d17bcd8cc537228ffd07216e5e74ed7b47a6f1f8eced4636eb8070eff8bcecbaa3306bb164abfeb85326b24d96b65362b4501040a7b75fbb1f5a149431b803d211f3b2a648b44ca4268e97cb31ddffdbab63a0758b567ff3d403152504e8238fdaf3ecd9c1dbfa7910b01a88aecf6bf87483f31b8eeaf120616776a87de3a2a71393b6247562a06848b17f122fe8b0316daac6b4ce48b2650f57e50f176515e799d9fda68744096d5a13bf17e271363df5048bc599d96a75bce365709154935a63f3972e53de2ebe485f0431ea1f1377f11b2ca4fc9cc3a871e7c7b5d6f799f27769e73b1ec5c2e4f9432b32f58b1fc1e64f348acb95cecb18d5e66586b6415e99869ee0a5d39a1e6ed210c10d726decd776dfc77fba2381e6e61fbb244e3cd9a34926e9921a8a0aa3828b8baa7b7e5fb836b01e2df7a2f497bcc7d3ccf5b344ebfbd8265655de9f628618478fe093a0129cb3b87ea414f7e91ccc2913ebd43c8c696f20db0f1049c30fe6583fb9cfc13f91682b756eab576</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">输入密码(密码是321)</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+        <h2 id="Segmentation"><a href="#Segmentation" class="headerlink" title="Segmentation"></a>Segmentation</h2><p><img src="https://i.loli.net/2021/09/24/XB69VUkmLZScrvu.png"></p>
+<h3 id="Logical-View-of-Segmentation"><a href="#Logical-View-of-Segmentation" class="headerlink" title="Logical View of Segmentation"></a>Logical View of Segmentation</h3><p><img src="https://i.loli.net/2021/09/24/Y4ALTBVaNfDu1h8.png"></p>
+<h3 id="Segmentation-Table"><a href="#Segmentation-Table" class="headerlink" title="Segmentation Table"></a>Segmentation Table</h3><p><img src="https://i.loli.net/2021/09/24/uiS46VwlnsQpc9D.png"></p>
+<h3 id="Segmentation-Hardware"><a href="#Segmentation-Hardware" class="headerlink" title="Segmentation Hardware"></a>Segmentation Hardware</h3><p><img src="https://i.loli.net/2021/09/24/ey1ODAoIZikU8lh.png"></p>
+<h3 id="Address-Translation-Comparison"><a href="#Address-Translation-Comparison" class="headerlink" title="Address Translation Comparison"></a>Address Translation Comparison</h3><p><img src="https://i.loli.net/2021/09/24/qdZ45OeBPCuJy7H.png"></p>
+<h3 id="Example-of-Segmentation"><a href="#Example-of-Segmentation" class="headerlink" title="Example of Segmentation"></a>Example of Segmentation</h3><p><img src="https://i.loli.net/2021/09/24/Ai1BgzIEW8C7YJL.png"></p>
+<h3 id="Sharing-of-Segments"><a href="#Sharing-of-Segments" class="headerlink" title="Sharing of Segments"></a>Sharing of Segments</h3><p><img src="https://i.loli.net/2021/09/24/ctkIP1w4iz6HCTD.png"></p>
+<h3 id="Protection-amp-Sharing"><a href="#Protection-amp-Sharing" class="headerlink" title="Protection &amp; Sharing"></a>Protection &amp; Sharing</h3><p><img src="https://i.loli.net/2021/09/24/Muhy6eZvX2ONjiC.png"></p>
+<h2 id="Segmentation-with-Paging"><a href="#Segmentation-with-Paging" class="headerlink" title="Segmentation with Paging"></a>Segmentation with Paging</h2><h3 id="Basic-Concept"><a href="#Basic-Concept" class="headerlink" title="Basic Concept"></a>Basic Concept</h3><p><img src="https://i.loli.net/2021/09/24/aJTbMqze6YWXhFo.png"></p>
+<h3 id="Address-Translation"><a href="#Address-Translation" class="headerlink" title="Address Translation"></a>Address Translation</h3><p><img src="https://i.loli.net/2021/09/24/y3HvUt2zd7M6g5F.png"></p>
+<h3 id="Example-The-Intel-Pentium"><a href="#Example-The-Intel-Pentium" class="headerlink" title="Example: The Intel Pentium"></a>Example: The Intel Pentium</h3><p>前16位是段选择子，段选择子分为三部分，我们只关心第一部分13位，其中segment number 通过STBR在内存中找到相应的段基址，然后用后32位与段基址相加得到线性地址<br><img src="https://i.loli.net/2021/09/24/uF3gkIAjYUxhVaO.png"></p>
+<h3 id="Intel-Pentium-Segmentation"><a href="#Intel-Pentium-Segmentation" class="headerlink" title="Intel Pentium Segmentation"></a>Intel Pentium Segmentation</h3><p><img src="https://i.loli.net/2021/09/24/8cXfF5PEIiJOvlr.png"></p>
+<p>这里用由于基址和偏移都是32位的,因此产生的线性地址是32位的，再将这个32位的地址按Two-Level Address Translation 转换成物理地址，从而避免了64-bit Address的弊端</p>
+<h3 id="Intel-Pentium-Paging-Two-Level"><a href="#Intel-Pentium-Paging-Two-Level" class="headerlink" title="Intel Pentium Paging (Two-Level)"></a>Intel Pentium Paging (Two-Level)</h3><p><img src="https://i.loli.net/2021/09/24/4OdHr6BoYRxp1cG.png"></p>
+<h3 id="Example-Question"><a href="#Example-Question" class="headerlink" title="Example Question"></a>Example Question</h3><p><img src="https://i.loli.net/2021/09/24/uAIbPYnH783L9Ei.png"></p>
+<h3 id="Review-Slides-5"><a href="#Review-Slides-5" class="headerlink" title="Review Slides ( 5 )"></a>Review Slides ( 5 )</h3><p><img src="https://i.loli.net/2021/09/24/1PSBriF2Xavug7l.png"></p>
+
     </div>
 
     
@@ -262,8 +282,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/R/" rel="tag"># R</a>
-              <a href="/tags/DS/" rel="tag"># DS</a>
+              <a href="/tags/OS/" rel="tag"># OS</a>
           </div>
 
         
@@ -272,13 +291,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/05/27/meituan2020A/" rel="prev" title="【美团杯2020】A.查查查乐乐">
-      <i class="fa fa-chevron-left"></i> 【美团杯2020】A.查查查乐乐
+    <a href="/2021/09/22/NTHU-Operating-System-Chap8-Memory-Management-Paging/" rel="prev" title="NTHU-Operating-System-Chap8 Memory Management-Paging">
+      <i class="fa fa-chevron-left"></i> NTHU-Operating-System-Chap8 Memory Management-Paging
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/06/02/bbb/" rel="next" title="R语言大作业Ⅱ(B站数据分析)">
-      R语言大作业Ⅱ(B站数据分析) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -337,6 +353,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Segmentation"><span class="nav-number">1.</span> <span class="nav-text">Segmentation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Logical-View-of-Segmentation"><span class="nav-number">1.1.</span> <span class="nav-text">Logical View of Segmentation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Segmentation-Table"><span class="nav-number">1.2.</span> <span class="nav-text">Segmentation Table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Segmentation-Hardware"><span class="nav-number">1.3.</span> <span class="nav-text">Segmentation Hardware</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Address-Translation-Comparison"><span class="nav-number">1.4.</span> <span class="nav-text">Address Translation Comparison</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-of-Segmentation"><span class="nav-number">1.5.</span> <span class="nav-text">Example of Segmentation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sharing-of-Segments"><span class="nav-number">1.6.</span> <span class="nav-text">Sharing of Segments</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Protection-amp-Sharing"><span class="nav-number">1.7.</span> <span class="nav-text">Protection &amp; Sharing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Segmentation-with-Paging"><span class="nav-number">2.</span> <span class="nav-text">Segmentation with Paging</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-Concept"><span class="nav-number">2.1.</span> <span class="nav-text">Basic Concept</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Address-Translation"><span class="nav-number">2.2.</span> <span class="nav-text">Address Translation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-The-Intel-Pentium"><span class="nav-number">2.3.</span> <span class="nav-text">Example: The Intel Pentium</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intel-Pentium-Segmentation"><span class="nav-number">2.4.</span> <span class="nav-text">Intel Pentium Segmentation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intel-Pentium-Paging-Two-Level"><span class="nav-number">2.5.</span> <span class="nav-text">Intel Pentium Paging (Two-Level)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-Question"><span class="nav-number">2.6.</span> <span class="nav-text">Example Question</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Review-Slides-5"><span class="nav-number">2.7.</span> <span class="nav-text">Review Slides ( 5 )</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
