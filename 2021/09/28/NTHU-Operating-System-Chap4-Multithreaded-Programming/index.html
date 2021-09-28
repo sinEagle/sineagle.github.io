@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/eagle32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/eagle16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=DejaVu Sans Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-flat-top.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sineagle.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="NTHU-Operating System: Chap4 Multithreaded Programming">
+<meta property="og:url" content="https://sineagle.github.io/2021/09/28/NTHU-Operating-System-Chap4-Multithreaded-Programming/index.html">
+<meta property="og:site_name" content="sinEagle">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/IPjmCvhDRWyuBKU.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/ySfxFdBeVTPkN3o.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/ftQVvMCwh7JFxO1.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/oTagx9QzLVZmC8B.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/pI5XemU1qr6B4uT.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/dm54TnFEitHARzN.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/oGWuj6cMfXwdRnI.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/oOsyHEIm8fz1hGR.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/Hru5gLq6YAaSWIo.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/H3Xu5tiAWloFM2S.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/myOKIDzrC9c5V8W.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/w4tFaJHvqjCSpOd.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/wiacyWoMuJXBpxn.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/zemQlsXZqDobKFt.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/6wBAHLaDflKXoOg.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/leQdC4nZKOf26XJ.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/Vq7KzOPxnbeFsru.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/nhauzfOw5lCIxS4.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/6qkcyaBOuI3CGlL.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/u6qBD8NRf3VhWT5.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/fKWyrIeZlncj7aX.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/bwU72MtTFGvf6JI.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/TP2RhUcvx6LeriF.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/lKS6W98sBgkay5V.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/4UOSsjfVDExM1dI.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/28/kqhRQLFlCxd4Uga.png">
+<meta property="article:published_time" content="2021-09-28T02:02:07.000Z">
+<meta property="article:modified_time" content="2021-09-28T12:04:33.856Z">
+<meta property="article:author" content="sineagle">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/09/28/IPjmCvhDRWyuBKU.png">
+
+<link rel="canonical" href="https://sineagle.github.io/2021/09/28/NTHU-Operating-System-Chap4-Multithreaded-Programming/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>NTHU-Operating System: Chap4 Multithreaded Programming | sinEagle</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">sinEagle</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">bottlecode</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2021/09/28/NTHU-Operating-System-Chap4-Multithreaded-Programming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="sineagle">
+      <meta itemprop="description" content="资深失败家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sinEagle">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NTHU-Operating System: Chap4 Multithreaded Programming
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-28 10:02:07 / 修改时间：20:04:33" itemprop="dateCreated datePublished" datetime="2021-09-28T10:02:07+08:00">2021-09-28</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>843</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+            <div class="post-description"> </div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p><img src="https://i.loli.net/2021/09/28/IPjmCvhDRWyuBKU.png"></p>
+<h2 id="Thread-Introduction"><a href="#Thread-Introduction" class="headerlink" title="Thread Introduction"></a>Thread Introduction</h2><h3 id="Threads"><a href="#Threads" class="headerlink" title="Threads"></a>Threads</h3><p><img src="https://i.loli.net/2021/09/28/ySfxFdBeVTPkN3o.png"></p>
+<h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p><img src="https://i.loli.net/2021/09/28/ftQVvMCwh7JFxO1.png"></p>
+<h3 id="Benefits-of-Multithreading"><a href="#Benefits-of-Multithreading" class="headerlink" title="Benefits of Multithreading"></a>Benefits of Multithreading</h3><p><img src="https://i.loli.net/2021/09/28/oTagx9QzLVZmC8B.png"></p>
+<h3 id="Why-Thread"><a href="#Why-Thread" class="headerlink" title="Why Thread?"></a>Why Thread?</h3><p><img src="https://i.loli.net/2021/09/28/pI5XemU1qr6B4uT.png"></p>
+<h3 id="Multithcore-Programming"><a href="#Multithcore-Programming" class="headerlink" title="Multithcore Programming"></a>Multithcore Programming</h3><p><img src="https://i.loli.net/2021/09/28/dm54TnFEitHARzN.png"></p>
+<h3 id="Challenges-in-Multicore-Programming"><a href="#Challenges-in-Multicore-Programming" class="headerlink" title="Challenges in Multicore Programming"></a>Challenges in Multicore Programming</h3><p><img src="https://i.loli.net/2021/09/28/oGWuj6cMfXwdRnI.png"></p>
+<h3 id="User-vs-Kernel-Threads"><a href="#User-vs-Kernel-Threads" class="headerlink" title="User vs. Kernel Threads"></a>User vs. Kernel Threads</h3><p><img src="https://i.loli.net/2021/09/28/oOsyHEIm8fz1hGR.png"><br><img src="https://i.loli.net/2021/09/28/Hru5gLq6YAaSWIo.png"></p>
+<h2 id="Multithreading-Models"><a href="#Multithreading-Models" class="headerlink" title="Multithreading Models"></a>Multithreading Models</h2><p><img src="https://i.loli.net/2021/09/28/H3Xu5tiAWloFM2S.png"></p>
+<h3 id="Many-to-One"><a href="#Many-to-One" class="headerlink" title="Many-to-One"></a>Many-to-One</h3><p><img src="https://i.loli.net/2021/09/28/myOKIDzrC9c5V8W.png"></p>
+<h3 id="One-to-one"><a href="#One-to-one" class="headerlink" title="One-to-one"></a>One-to-one</h3><p><img src="https://i.loli.net/2021/09/28/w4tFaJHvqjCSpOd.png"></p>
+<h3 id="Many-to-Many"><a href="#Many-to-Many" class="headerlink" title="Many-to-Many"></a>Many-to-Many</h3><p><img src="https://i.loli.net/2021/09/28/wiacyWoMuJXBpxn.png"></p>
+<h2 id="Threaded-Case-Study"><a href="#Threaded-Case-Study" class="headerlink" title="Threaded Case Study"></a>Threaded Case Study</h2><h3 id="Case-Study"><a href="#Case-Study" class="headerlink" title="Case Study"></a>Case Study</h3><p><img src="https://i.loli.net/2021/09/28/zemQlsXZqDobKFt.png"></p>
+<h3 id="Shared-Memory-Programming"><a href="#Shared-Memory-Programming" class="headerlink" title="Shared-Memory Programming"></a>Shared-Memory Programming</h3><p><img src="https://i.loli.net/2021/09/28/6wBAHLaDflKXoOg.png"></p>
+<h3 id="What-is-Pthread"><a href="#What-is-Pthread" class="headerlink" title="What is Pthread?"></a>What is Pthread?</h3><p><img src="https://i.loli.net/2021/09/28/leQdC4nZKOf26XJ.png"></p>
+<h3 id="Pthread-Creation"><a href="#Pthread-Creation" class="headerlink" title="Pthread Creation"></a>Pthread Creation</h3><p><img src="https://i.loli.net/2021/09/28/Vq7KzOPxnbeFsru.png"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NUM_THREADS 5</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">PrintHello</span><span class="params">(<span class="keyword">void</span> *threadld)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">long</span> *data = (<span class="keyword">long</span> *) threadld;</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot;Hello World! tid = %ld\n&quot;</span>, *data);</span><br><span class="line">   pthread_exit(<span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="keyword">pthread_t</span> threads[NUM_THREADS];</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">long</span> tid = <span class="number">0</span>; tid &lt; NUM_THREADS; tid++) &#123;</span><br><span class="line">      pthread_create(&amp;threads[tid], <span class="literal">NULL</span>, PrintHello, (<span class="keyword">void</span> *)&amp;tid);</span><br><span class="line">   &#125;</span><br><span class="line">   pthread_exit(<span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Pthread-Joining-amp-Detaching"><a href="#Pthread-Joining-amp-Detaching" class="headerlink" title="Pthread Joining &amp; Detaching"></a>Pthread Joining &amp; Detaching</h3><p><img src="https://i.loli.net/2021/09/28/nhauzfOw5lCIxS4.png"></p>
+<h3 id="Java-Threads"><a href="#Java-Threads" class="headerlink" title="Java Threads"></a>Java Threads</h3><p><img src="https://i.loli.net/2021/09/28/6qkcyaBOuI3CGlL.png"></p>
+<h3 id="Linux-Threads"><a href="#Linux-Threads" class="headerlink" title="Linux Threads"></a>Linux Threads</h3><p><img src="https://i.loli.net/2021/09/28/u6qBD8NRf3VhWT5.png"><br><img src="https://i.loli.net/2021/09/28/fKWyrIeZlncj7aX.png"></p>
+<h2 id="Threading-Issues"><a href="#Threading-Issues" class="headerlink" title="Threading Issues"></a>Threading Issues</h2><p><img src="https://i.loli.net/2021/09/28/bwU72MtTFGvf6JI.png"></p>
+<h3 id="Semantics-of-fork-and-exec"><a href="#Semantics-of-fork-and-exec" class="headerlink" title="Semantics of fork() and exec()"></a>Semantics of fork() and exec()</h3><p><img src="https://i.loli.net/2021/09/28/TP2RhUcvx6LeriF.png"></p>
+<h3 id="Thread-Cancellation"><a href="#Thread-Cancellation" class="headerlink" title="Thread Cancellation"></a>Thread Cancellation</h3><p><img src="https://i.loli.net/2021/09/28/lKS6W98sBgkay5V.png"></p>
+<h3 id="Signal-Handling"><a href="#Signal-Handling" class="headerlink" title="Signal Handling"></a>Signal Handling</h3><p><img src="https://i.loli.net/2021/09/28/4UOSsjfVDExM1dI.png"></p>
+<h3 id="Thread-Pools"><a href="#Thread-Pools" class="headerlink" title="Thread Pools"></a>Thread Pools</h3><p><img src="https://i.loli.net/2021/09/28/kqhRQLFlCxd4Uga.png"></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>求大佬赏个饭</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weichat.png" alt="sineagle 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS/" rel="tag"># OS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/25/NTHU-Operating-System-Chap9-Virtual-Memory-Management/" rel="prev" title="NTHU-Operating System: Chap9 Virtual Memory Management">
+      <i class="fa fa-chevron-left"></i> NTHU-Operating System: Chap9 Virtual Memory Management
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Thread-Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Thread Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Threads"><span class="nav-number">1.1.1.</span> <span class="nav-text">Threads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Motivation"><span class="nav-number">1.1.2.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Benefits-of-Multithreading"><span class="nav-number">1.1.3.</span> <span class="nav-text">Benefits of Multithreading</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-Thread"><span class="nav-number">1.1.4.</span> <span class="nav-text">Why Thread?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multithcore-Programming"><span class="nav-number">1.1.5.</span> <span class="nav-text">Multithcore Programming</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Challenges-in-Multicore-Programming"><span class="nav-number">1.1.6.</span> <span class="nav-text">Challenges in Multicore Programming</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#User-vs-Kernel-Threads"><span class="nav-number">1.1.7.</span> <span class="nav-text">User vs. Kernel Threads</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multithreading-Models"><span class="nav-number">1.2.</span> <span class="nav-text">Multithreading Models</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Many-to-One"><span class="nav-number">1.2.1.</span> <span class="nav-text">Many-to-One</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#One-to-one"><span class="nav-number">1.2.2.</span> <span class="nav-text">One-to-one</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Many-to-Many"><span class="nav-number">1.2.3.</span> <span class="nav-text">Many-to-Many</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Threaded-Case-Study"><span class="nav-number">1.3.</span> <span class="nav-text">Threaded Case Study</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Case-Study"><span class="nav-number">1.3.1.</span> <span class="nav-text">Case Study</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shared-Memory-Programming"><span class="nav-number">1.3.2.</span> <span class="nav-text">Shared-Memory Programming</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-is-Pthread"><span class="nav-number">1.3.3.</span> <span class="nav-text">What is Pthread?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pthread-Creation"><span class="nav-number">1.3.4.</span> <span class="nav-text">Pthread Creation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pthread-Joining-amp-Detaching"><span class="nav-number">1.3.5.</span> <span class="nav-text">Pthread Joining &amp; Detaching</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-Threads"><span class="nav-number">1.3.6.</span> <span class="nav-text">Java Threads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-Threads"><span class="nav-number">1.3.7.</span> <span class="nav-text">Linux Threads</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Threading-Issues"><span class="nav-number">1.4.</span> <span class="nav-text">Threading Issues</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Semantics-of-fork-and-exec"><span class="nav-number">1.4.1.</span> <span class="nav-text">Semantics of fork() and exec()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread-Cancellation"><span class="nav-number">1.4.2.</span> <span class="nav-text">Thread Cancellation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Signal-Handling"><span class="nav-number">1.4.3.</span> <span class="nav-text">Signal Handling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread-Pools"><span class="nav-number">1.4.4.</span> <span class="nav-text">Thread Pools</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sineagle"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">sineagle</p>
+  <div class="site-description" itemprop="description">资深失败家</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sineagle" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sineagle" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:997991067@gmail.com" title="E-Mail → mailto:997991067@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/bottlecodes" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;bottlecodes" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/bottlecodes" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;bottlecodes" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:yourname?call|chat" title="Skype → skype:yourname?call|chat" rel="noopener" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://cnblogs.com/sineagle" title="OldBlogs → https:&#x2F;&#x2F;cnblogs.com&#x2F;sineagle" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>OldBlogs</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://cnblogs.com/sineagle" title="http:&#x2F;&#x2F;cnblogs.com&#x2F;sineagle" rel="noopener" target="_blank">MyOldBlog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://cnblogs.com/sineagle" title="http:&#x2F;&#x2F;cnblogs.com&#x2F;sineagle" rel="noopener" target="_blank">MyOldBlog2</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://cnblogs.com/sineagle" title="http:&#x2F;&#x2F;cnblogs.com&#x2F;sineagle" rel="noopener" target="_blank">MyOldBlog3</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://cnblogs.com/sineagle" title="http:&#x2F;&#x2F;cnblogs.com&#x2F;sineagle" rel="noopener" target="_blank">MyOldBlog4</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sineagle</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">80k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:13</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
