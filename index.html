@@ -189,10 +189,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-10-18 19:10:56 / 修改时间：19:57:27" itemprop="dateCreated datePublished" datetime="2021-10-18T19:10:56+08:00">2021-10-18</time>
+              <time title="创建时间：2021-10-18 19:10:56" itemprop="dateCreated datePublished" datetime="2021-10-18T19:10:56+08:00">2021-10-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-19 09:52:51" itemprop="dateModified" datetime="2021-10-19T09:52:51+08:00">2021-10-19</time>
+              </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -219,10 +225,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="死锁产生的条件"><a href="#死锁产生的条件" class="headerlink" title="死锁产生的条件"></a>死锁产生的条件</h1><p><img src="https://i.loli.net/2021/10/18/jioR9fuFY7lPbhd.png"><br><img src="https://i.loli.net/2021/10/18/WjPOQbKSshntdzR.png"><br><img src="https://i.loli.net/2021/10/18/eHwcPbWmdr1yqtz.png"></p>
-<p><img src="https://i.loli.net/2021/10/18/BdGbDyzfLgS3mR4.png"><br><img src="https://i.loli.net/2021/10/18/LksjUM2ZeuNovfG.png"></p>
-<p><img src="https://i.loli.net/2021/10/18/ZrGAqK64cWv7nyV.png"><br><img src="https://i.loli.net/2021/10/18/vAIiuwJmX26jS9M.png"></p>
-
+          <p> </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/18/NTHU-Operating-System-Chap7-DeathLock/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -432,7 +443,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-18 21:08:49" itemprop="dateModified" datetime="2021-10-18T21:08:49+08:00">2021-10-18</time>
+                <time title="修改时间：2021-10-19 11:38:41" itemprop="dateModified" datetime="2021-10-19T11:38:41+08:00">2021-10-19</time>
               </span>
 
           <br>
@@ -441,7 +452,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>736</span>
+              <span>1.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1147,12 +1158,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">102k</span>
+    <span title="站点总字数">103k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:33</span>
+    <span title="站点阅读时长">1:34</span>
 </div>
 
         
@@ -1205,6 +1216,61 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
