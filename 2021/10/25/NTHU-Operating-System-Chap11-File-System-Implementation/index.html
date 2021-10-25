@@ -22,17 +22,24 @@
     var CONFIG = {"hostname":"sineagle.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="资深失败家">
-<meta property="og:type" content="website">
-<meta property="og:title" content="sinEagle">
-<meta property="og:url" content="https://sineagle.github.io/tags/win32%E6%B1%87%E7%BC%96/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="NTHU-Operating System: Chap11 File System Implementation">
+<meta property="og:url" content="https://sineagle.github.io/2021/10/25/NTHU-Operating-System-Chap11-File-System-Implementation/index.html">
 <meta property="og:site_name" content="sinEagle">
-<meta property="og:description" content="资深失败家">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/10/25/32QkNLtlaAFGziV.png">
+<meta property="og:image" content="https://i.loli.net/2021/10/25/UdqbOQaxP7EC6eL.png">
+<meta property="og:image" content="https://i.loli.net/2021/10/25/Ou5GQYxjVl8WILd.png">
+<meta property="og:image" content="https://i.loli.net/2021/10/25/w3HrshzoLQXJ2nS.png">
+<meta property="og:image" content="https://i.loli.net/2021/10/25/7d51lT2teMXKCcH.png">
+<meta property="article:published_time" content="2021-10-25T08:01:41.000Z">
+<meta property="article:modified_time" content="2021-10-25T09:13:45.412Z">
 <meta property="article:author" content="sineagle">
+<meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/10/25/32QkNLtlaAFGziV.png">
 
-<link rel="canonical" href="https://sineagle.github.io/tags/win32%E6%B1%87%E7%BC%96/">
+<link rel="canonical" href="https://sineagle.github.io/2021/10/25/NTHU-Operating-System-Chap11-File-System-Implementation/">
 
 
 <script id="page-configurations">
@@ -40,12 +47,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: win32汇编 | sinEagle</title>
+  <title>NTHU-Operating System: Chap11 File System Implementation | sinEagle</title>
   
 
 
@@ -159,52 +166,113 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
 			
 			
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">win32汇编
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2021/10/25/NTHU-Operating-System-Chap11-File-System-Implementation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="sineagle">
+      <meta itemprop="description" content="资深失败家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sinEagle">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NTHU-Operating System: Chap11 File System Implementation
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-25 16:01:41 / 修改时间：17:13:45" itemprop="dateCreated datePublished" datetime="2021-10-25T16:01:41+08:00">2021-10-25</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>98</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+            <div class="post-description"> </div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-09-01T23:02:46+08:00"
-              content="2021-09-01">
-          09-01
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/09/01/WIN32%E6%B1%87%E7%BC%96-Hello-World/" itemprop="url">
-            <span itemprop="name">WIN32汇编 Hello World</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
+        <h1 id="File-System-Structure"><a href="#File-System-Structure" class="headerlink" title="File-System Structure"></a>File-System Structure</h1><h2 id="File-System-Structure-1"><a href="#File-System-Structure-1" class="headerlink" title="File-System Structure"></a>File-System Structure</h2><p><img src="https://i.loli.net/2021/10/25/32QkNLtlaAFGziV.png"></p>
+<h2 id="Layered-File-System"><a href="#Layered-File-System" class="headerlink" title="Layered File System"></a>Layered File System</h2><p><img src="https://i.loli.net/2021/10/25/UdqbOQaxP7EC6eL.png"><br><img src="https://i.loli.net/2021/10/25/Ou5GQYxjVl8WILd.png"></p>
+<h1 id="File-System-Implementation"><a href="#File-System-Implementation" class="headerlink" title="File-System Implementation"></a>File-System Implementation</h1><h2 id="On-Disk-Structure"><a href="#On-Disk-Structure" class="headerlink" title="On-Disk Structure"></a>On-Disk Structure</h2><p><img src="https://i.loli.net/2021/10/25/w3HrshzoLQXJ2nS.png"><br><img src="https://i.loli.net/2021/10/25/7d51lT2teMXKCcH.png"></p>
 
     </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>求大佬赏个饭</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weichat.png" alt="sineagle 微信支付">
+        <p>微信支付</p>
+      </div>
+
   </div>
-  
-  
-  
+</div>
 
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS/" rel="tag"># OS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/21/NTHU-Operating-System-Chap10-File-System-Interface/" rel="prev" title="NTHU-Operating System: Chap10 File System Interface">
+      <i class="fa fa-chevron-left"></i> NTHU-Operating System: Chap10 File System Interface
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
@@ -258,6 +326,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#File-System-Structure"><span class="nav-number">1.</span> <span class="nav-text">File-System Structure</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#File-System-Structure-1"><span class="nav-number">1.1.</span> <span class="nav-text">File-System Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layered-File-System"><span class="nav-number">1.2.</span> <span class="nav-text">Layered File System</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File-System-Implementation"><span class="nav-number">2.</span> <span class="nav-text">File-System Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#On-Disk-Structure"><span class="nav-number">2.1.</span> <span class="nav-text">On-Disk Structure</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
