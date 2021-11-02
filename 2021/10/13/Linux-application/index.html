@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://i.loli.net/2021/10/28/eczQrGFw4jvZa83.png">
 <meta property="og:image" content="https://i.loli.net/2021/10/28/bxWzsdZiB5a1OtY.png">
 <meta property="article:published_time" content="2021-10-13T08:09:15.000Z">
-<meta property="article:modified_time" content="2021-10-28T07:29:25.540Z">
+<meta property="article:modified_time" content="2021-11-01T11:24:24.206Z">
 <meta property="article:author" content="sineagle">
 <meta property="article:tag" content="OS">
 <meta property="article:tag" content="Linux">
@@ -206,7 +206,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-28 15:29:25" itemprop="dateModified" datetime="2021-10-28T15:29:25+08:00">2021-10-28</time>
+                <time title="修改时间：2021-11-01 19:24:24" itemprop="dateModified" datetime="2021-11-01T19:24:24+08:00">2021-11-01</time>
               </span>
 
           <br>
@@ -215,14 +215,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.6k</span>
+              <span>2.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
             <div class="post-description"> </div>
 
@@ -282,9 +282,14 @@
 <h2 id="SUID"><a href="#SUID" class="headerlink" title="SUID"></a>SUID</h2></li>
 </ol>
 <h1 id="week9"><a href="#week9" class="headerlink" title="week9"></a>week9</h1><h2 id="文件的链接"><a href="#文件的链接" class="headerlink" title="文件的链接"></a>文件的链接</h2><h3 id="ln-命令"><a href="#ln-命令" class="headerlink" title="ln 命令"></a>ln 命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln a b</span><br></pre></td></tr></table></figure>
-<p>硬链接：是在另外的目录或本目录中添加目标文件的目录项额，<br>ln命令只会增加链接数,rm命令只会减少链接数，除非链接数为0，否则不会物理从文件系统被删除<br><img src="https://i.loli.net/2021/10/28/eczQrGFw4jvZa83.png"></p>
+<p>硬链接：是在另外的目录或本目录中添加目标文件的目录项额，<br>ln命令只会增加链接数,rm命令只会减少链接数，除非链接数为0，否则不会物理从文件系统被删除</p>
+<p><img src="https://i.loli.net/2021/10/28/eczQrGFw4jvZa83.png"></p>
 <p>软链接<br>类似Windows系统快捷方式<br><img src="https://i.loli.net/2021/10/28/bxWzsdZiB5a1OtY.png"></p>
-
+<h1 id="week10"><a href="#week10" class="headerlink" title="week10"></a>week10</h1><h2 id="用户和组的配置文件"><a href="#用户和组的配置文件" class="headerlink" title="用户和组的配置文件"></a>用户和组的配置文件</h2><h3 id="passwd文件"><a href="#passwd文件" class="headerlink" title="passwd文件"></a>passwd文件</h3><p>位置:/etc/passwd<br>用于保存各个用户的信息</p>
+<h3 id="shadow-文件"><a href="#shadow-文件" class="headerlink" title="shadow 文件"></a>shadow 文件</h3><p>用户保存用户账号的密码等信息</p>
+<h3 id="group-文件"><a href="#group-文件" class="headerlink" title="group 文件"></a>group 文件</h3><p>保存各个用户的分组信息</p>
+<h2 id="用户和组的管理命令"><a href="#用户和组的管理命令" class="headerlink" title="用户和组的管理命令"></a>用户和组的管理命令</h2><h3 id="useradd-命令"><a href="#useradd-命令" class="headerlink" title="useradd 命令"></a>useradd 命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">useradd user1</span><br><span class="line">useradd -d home-dir //设置用户的宿主目录</span><br><span class="line">-e date //设置账号的过期时间</span><br><span class="line">-s shell-path //设置用户登录所使用的shell</span><br><span class="line">-g group-name //设置用户所属的组名</span><br></pre></td></tr></table></figure>
+<h3 id="usermod-命令"><a href="#usermod-命令" class="headerlink" title="usermod 命令"></a>usermod 命令</h3>
     </div>
 
     
@@ -384,7 +389,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#week-7"><span class="nav-number">1.</span> <span class="nav-text">week 7</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-%E5%88%87%E6%8D%A2root%E7%94%A8%E6%88%B7"><span class="nav-number">1.1.</span> <span class="nav-text">Linux 切换root用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cd-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">cd 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tree%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.</span> <span class="nav-text">tree命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ls%E5%91%BD%E4%BB%A4"><span class="nav-number">1.4.</span> <span class="nav-text">ls命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#touch"><span class="nav-number">1.5.</span> <span class="nav-text">touch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cat-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.6.</span> <span class="nav-text">cat 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#less-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.7.</span> <span class="nav-text">less 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#more-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.8.</span> <span class="nav-text">more 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#head"><span class="nav-number">1.9.</span> <span class="nav-text">head</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tail"><span class="nav-number">1.10.</span> <span class="nav-text">tail</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.11.</span> <span class="nav-text">cp 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mv-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.12.</span> <span class="nav-text">mv 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rm-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.13.</span> <span class="nav-text">rm 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mkdir-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.14.</span> <span class="nav-text">mkdir 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#week7%E4%BD%9C%E4%B8%9A"><span class="nav-number">1.15.</span> <span class="nav-text">week7作业</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#week-8"><span class="nav-number">2.</span> <span class="nav-text">week 8</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#grep-%E5%91%BD%E4%BB%A4"><span class="nav-number">2.1.</span> <span class="nav-text">grep 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sort-%E5%91%BD%E4%BB%A4"><span class="nav-number">2.2.</span> <span class="nav-text">sort 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#find-%E5%91%BD%E4%BB%A4"><span class="nav-number">2.3.</span> <span class="nav-text">find 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chown-%E5%91%BD%E4%BB%A4"><span class="nav-number">2.4.</span> <span class="nav-text">chown 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chmod-%E5%91%BD%E4%BB%A4"><span class="nav-number">2.5.</span> <span class="nav-text">chmod 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SUID"><span class="nav-number">2.6.</span> <span class="nav-text">SUID</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#week9"><span class="nav-number">3.</span> <span class="nav-text">week9</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E9%93%BE%E6%8E%A5"><span class="nav-number">3.1.</span> <span class="nav-text">文件的链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ln-%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.1.</span> <span class="nav-text">ln 命令</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#week-7"><span class="nav-number">1.</span> <span class="nav-text">week 7</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-%E5%88%87%E6%8D%A2root%E7%94%A8%E6%88%B7"><span class="nav-number">1.1.</span> <span class="nav-text">Linux 切换root用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cd-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">cd 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tree%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.</span> <span class="nav-text">tree命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ls%E5%91%BD%E4%BB%A4"><span class="nav-number">1.4.</span> <span class="nav-text">ls命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#touch"><span class="nav-number">1.5.</span> <span class="nav-text">touch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cat-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.6.</span> <span class="nav-text">cat 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#less-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.7.</span> <span class="nav-text">less 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#more-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.8.</span> <span class="nav-text">more 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#head"><span class="nav-number">1.9.</span> <span class="nav-text">head</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tail"><span class="nav-number">1.10.</span> <span class="nav-text">tail</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.11.</span> <span class="nav-text">cp 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mv-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.12.</span> <span class="nav-text">mv 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rm-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.13.</span> <span class="nav-text">rm 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mkdir-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.14.</span> <span class="nav-text">mkdir 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#week7%E4%BD%9C%E4%B8%9A"><span class="nav-number">1.15.</span> <span class="nav-text">week7作业</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#week-8"><span class="nav-number">2.</span> <span class="nav-text">week 8</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#grep-%E5%91%BD%E4%BB%A4"><span class="nav-number">2.1.</span> <span class="nav-text">grep 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sort-%E5%91%BD%E4%BB%A4"><span class="nav-number">2.2.</span> <span class="nav-text">sort 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#find-%E5%91%BD%E4%BB%A4"><span class="nav-number">2.3.</span> <span class="nav-text">find 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chown-%E5%91%BD%E4%BB%A4"><span class="nav-number">2.4.</span> <span class="nav-text">chown 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chmod-%E5%91%BD%E4%BB%A4"><span class="nav-number">2.5.</span> <span class="nav-text">chmod 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SUID"><span class="nav-number">2.6.</span> <span class="nav-text">SUID</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#week9"><span class="nav-number">3.</span> <span class="nav-text">week9</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E9%93%BE%E6%8E%A5"><span class="nav-number">3.1.</span> <span class="nav-text">文件的链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ln-%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.1.</span> <span class="nav-text">ln 命令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#week10"><span class="nav-number">4.</span> <span class="nav-text">week10</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.</span> <span class="nav-text">用户和组的配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#passwd%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.1.</span> <span class="nav-text">passwd文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shadow-%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.2.</span> <span class="nav-text">shadow 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#group-%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.3.</span> <span class="nav-text">group 文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84%E7%9A%84%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-number">4.2.</span> <span class="nav-text">用户和组的管理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#useradd-%E5%91%BD%E4%BB%A4"><span class="nav-number">4.2.1.</span> <span class="nav-text">useradd 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#usermod-%E5%91%BD%E4%BB%A4"><span class="nav-number">4.2.2.</span> <span class="nav-text">usermod 命令</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -400,14 +405,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-count">60</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -482,12 +487,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">100k</span>
+    <span title="站点总字数">103k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:31</span>
+    <span title="站点阅读时长">1:34</span>
 </div>
 
         
