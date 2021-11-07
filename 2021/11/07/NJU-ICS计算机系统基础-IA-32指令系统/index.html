@@ -22,17 +22,28 @@
     var CONFIG = {"hostname":"sineagle.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="资深失败家">
-<meta property="og:type" content="website">
-<meta property="og:title" content="sinEagle">
-<meta property="og:url" content="https://sineagle.github.io/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="NJU-ICS计算机系统基础 IA-32指令系统">
+<meta property="og:url" content="https://sineagle.github.io/2021/11/07/NJU-ICS%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80-IA-32%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="sinEagle">
-<meta property="og:description" content="资深失败家">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/11/07/YfD8a9lZiVFBQUd.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/07/iTynqDUx9tjeFzr.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/07/5jzDxW2VwAMeEXI.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/07/L5W4H8fYd7lqnIk.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/07/Tyi7nX6jPlZ8IxY.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/07/jDsqywmQeaHVL1F.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/07/C82Lcj7OI9pBK6S.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/07/Vw7Jp5fqSHhFDL8.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/07/Rov4QjMUZdweuTa.png">
+<meta property="article:published_time" content="2021-11-07T11:48:56.000Z">
+<meta property="article:modified_time" content="2021-11-07T12:36:19.005Z">
 <meta property="article:author" content="sineagle">
+<meta property="article:tag" content="CSAPP">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/11/07/YfD8a9lZiVFBQUd.png">
 
-<link rel="canonical" href="https://sineagle.github.io/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+<link rel="canonical" href="https://sineagle.github.io/2021/11/07/NJU-ICS%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80-IA-32%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">
 
 
 <script id="page-configurations">
@@ -40,12 +51,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: 字符串 | sinEagle</title>
+  <title>NJU-ICS计算机系统基础 IA-32指令系统 | sinEagle</title>
   
 
 
@@ -159,72 +170,120 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
 			
 			
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">字符串
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2021/11/07/NJU-ICS%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80-IA-32%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="sineagle">
+      <meta itemprop="description" content="资深失败家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sinEagle">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NJU-ICS计算机系统基础 IA-32指令系统
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-07 19:48:56 / 修改时间：20:36:19" itemprop="dateCreated datePublished" datetime="2021-11-07T19:48:56+08:00">2021-11-07</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>96</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+            <div class="post-description"> </div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-27T15:38:29+08:00"
-              content="2021-08-27">
-          08-27
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/27/Hdu1251-%EF%BC%88%E5%AD%97%E7%AC%A6%E4%B8%B2-Hash%EF%BC%89/" itemprop="url">
-            <span itemprop="name">Hdu1251 （字符串/Hash）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-05-27T16:18:57+08:00"
-              content="2021-05-27">
-          05-27
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/05/27/meituan2020A/" itemprop="url">
-            <span itemprop="name">【美团杯2020】A.查查查乐乐</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
+        <p>ji</p>
+<h1 id="程序转换概述"><a href="#程序转换概述" class="headerlink" title="程序转换概述"></a>程序转换概述</h1><h2 id="程序和指令的关系"><a href="#程序和指令的关系" class="headerlink" title="程序和指令的关系"></a>程序和指令的关系</h2><h3 id="“指令”的概念"><a href="#“指令”的概念" class="headerlink" title="“指令”的概念"></a>“指令”的概念</h3><p><img src="https://i.loli.net/2021/11/07/YfD8a9lZiVFBQUd.png"></p>
+<h3 id="机器级指令"><a href="#机器级指令" class="headerlink" title="机器级指令"></a>机器级指令</h3><p><img src="https://i.loli.net/2021/11/07/iTynqDUx9tjeFzr.png"></p>
+<h3 id="高级语言转换成机器代码的过程"><a href="#高级语言转换成机器代码的过程" class="headerlink" title="高级语言转换成机器代码的过程"></a>高级语言转换成机器代码的过程</h3><p><img src="https://i.loli.net/2021/11/07/5jzDxW2VwAMeEXI.png"></p>
+<h2 id="目标代码和ISA"><a href="#目标代码和ISA" class="headerlink" title="目标代码和ISA"></a>目标代码和ISA</h2><h3 id="GCC使用举例"><a href="#GCC使用举例" class="headerlink" title="GCC使用举例"></a>GCC使用举例</h3><p><img src="https://i.loli.net/2021/11/07/L5W4H8fYd7lqnIk.png"></p>
+<h3 id="两种目标文件"><a href="#两种目标文件" class="headerlink" title="两种目标文件"></a>两种目标文件</h3><p><img src="https://i.loli.net/2021/11/07/Tyi7nX6jPlZ8IxY.png"></p>
+<h3 id="可执行文件的存储器映像"><a href="#可执行文件的存储器映像" class="headerlink" title="可执行文件的存储器映像"></a>可执行文件的存储器映像</h3><p><img src="https://i.loli.net/2021/11/07/jDsqywmQeaHVL1F.png"></p>
+<h3 id="指令集体系结构ISA"><a href="#指令集体系结构ISA" class="headerlink" title="指令集体系结构ISA"></a>指令集体系结构ISA</h3><p><img src="https://i.loli.net/2021/11/07/C82Lcj7OI9pBK6S.png"></p>
+<h3 id="IA-32的体系结构"><a href="#IA-32的体系结构" class="headerlink" title="IA-32的体系结构"></a>IA-32的体系结构</h3><p><img src="https://i.loli.net/2021/11/07/Vw7Jp5fqSHhFDL8.png"></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img src="https://i.loli.net/2021/11/07/Rov4QjMUZdweuTa.png"></p>
 
     </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>求大佬赏个饭</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weichat.png" alt="sineagle 微信支付">
+        <p>微信支付</p>
+      </div>
+
   </div>
-  
-  
-  
+</div>
 
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CSAPP/" rel="tag"># CSAPP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/04/NJU-ICS%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80-%E4%B9%98%E9%99%A4%E8%BF%90%E7%AE%97%E5%8F%8A%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BF%90%E7%AE%97/" rel="prev" title="NJU-ICS计算机系统基础-乘除运算及浮点数运算">
+      <i class="fa fa-chevron-left"></i> NJU-ICS计算机系统基础-乘除运算及浮点数运算
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
@@ -278,6 +337,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%BD%AC%E6%8D%A2%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">程序转换概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E5%92%8C%E6%8C%87%E4%BB%A4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.1.</span> <span class="nav-text">程序和指令的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%9C%E6%8C%87%E4%BB%A4%E2%80%9D%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.1.</span> <span class="nav-text">“指令”的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E7%BA%A7%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.2.</span> <span class="nav-text">机器级指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E8%AF%AD%E8%A8%80%E8%BD%AC%E6%8D%A2%E6%88%90%E6%9C%BA%E5%99%A8%E4%BB%A3%E7%A0%81%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.3.</span> <span class="nav-text">高级语言转换成机器代码的过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E4%BB%A3%E7%A0%81%E5%92%8CISA"><span class="nav-number">1.2.</span> <span class="nav-text">目标代码和ISA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GCC%E4%BD%BF%E7%94%A8%E4%B8%BE%E4%BE%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">GCC使用举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">两种目标文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E7%9A%84%E5%AD%98%E5%82%A8%E5%99%A8%E6%98%A0%E5%83%8F"><span class="nav-number">1.2.3.</span> <span class="nav-text">可执行文件的存储器映像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E9%9B%86%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84ISA"><span class="nav-number">1.2.4.</span> <span class="nav-text">指令集体系结构ISA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IA-32%E7%9A%84%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.5.</span> <span class="nav-text">IA-32的体系结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.2.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
