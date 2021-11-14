@@ -22,17 +22,19 @@
     var CONFIG = {"hostname":"sineagle.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="资深失败家">
-<meta property="og:type" content="website">
-<meta property="og:title" content="sinEagle">
-<meta property="og:url" content="https://sineagle.github.io/archives/2021/page/6/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="C++ 多继承">
+<meta property="og:url" content="https://sineagle.github.io/2021/11/14/C-%E5%A4%9A%E7%BB%A7%E6%89%BF/index.html">
 <meta property="og:site_name" content="sinEagle">
-<meta property="og:description" content="资深失败家">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-14T12:17:34.000Z">
+<meta property="article:modified_time" content="2021-11-14T12:43:26.221Z">
 <meta property="article:author" content="sineagle">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="OO">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://sineagle.github.io/archives/2021/page/6/">
+<link rel="canonical" href="https://sineagle.github.io/2021/11/14/C-%E5%A4%9A%E7%BB%A7%E6%89%BF/">
 
 
 <script id="page-configurations">
@@ -40,12 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | sinEagle</title>
+  <title>C++ 多继承 | sinEagle</title>
   
 
 
@@ -159,236 +161,115 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
 			
 			
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">很好! 目前共计 84 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2021/11/14/C-%E5%A4%9A%E7%BB%A7%E6%89%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="sineagle">
+      <meta itemprop="description" content="资深失败家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sinEagle">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++ 多继承
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-14 20:17:34 / 修改时间：20:43:26" itemprop="dateCreated datePublished" datetime="2021-11-14T20:17:34+08:00">2021-11-14</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>699</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+            <div class="post-description"> </div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
-    </div>
+        <h3 id="多继承体系下构造函数的调用"><a href="#多继承体系下构造函数的调用" class="headerlink" title="多继承体系下构造函数的调用"></a>多继承体系下构造函数的调用</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> m_score;</span><br><span class="line">    <span class="built_in">Student</span>(<span class="keyword">int</span> score) : <span class="built_in">m_score</span>(score) &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">study</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;student:study() score = &quot;</span>&lt;&lt; m_score &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Worker</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> m_salary;</span><br><span class="line">    <span class="built_in">Worker</span>(<span class="keyword">int</span> salary) : <span class="built_in">m_salary</span>(salary) &#123;&#125;;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">work</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;worker:: work salary = &quot;</span> &lt;&lt; m_salary &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Underground</span> :</span> Student, Worker &#123;</span><br><span class="line">    <span class="keyword">int</span> m_grade;</span><br><span class="line">    <span class="built_in">Underground</span>(<span class="keyword">int</span> score, <span class="keyword">int</span> salary, <span class="keyword">int</span> grade) :<span class="built_in">m_grade</span>(grade),</span><br><span class="line">    <span class="built_in">Student</span>(score), <span class="built_in">Worker</span>(salary) &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">play</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Unerground::play grade = &quot;</span> &lt;&lt; m_grade &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-14T09:57:54+08:00"
-              content="2021-08-14">
-          08-14
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/14/fhq-Treap%E6%A8%A1%E6%9D%BF/" itemprop="url">
-            <span itemprop="name">fhq Treap模板</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-12T10:12:35+08:00"
-              content="2021-08-12">
-          08-12
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/12/POJ3481-Double-Queue-%EF%BC%88%E5%B9%B3%E8%A1%A1%E6%A0%91%EF%BC%89/" itemprop="url">
-            <span itemprop="name">POJ3481 Double Queue （平衡树）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-11T16:31:56+08:00"
-              content="2021-08-11">
-          08-11
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/11/Luogu-P3369-%EF%BC%88Treap%E6%A8%A1%E6%9D%BF%EF%BC%89/" itemprop="url">
-            <span itemprop="name">Luogu P3369 （Treap模板）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-10T09:13:23+08:00"
-              content="2021-08-10">
-          08-10
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/10/SDTBU-ACM%E9%9B%86%E8%AE%AD%E9%98%9F%E6%9A%91%E5%81%87%E8%AE%AD%E7%BB%83-%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%8A%A0%E6%B7%B1/" itemprop="url">
-            <span itemprop="name">SDTBU-ACM集训队暑假训练-----线段树加深</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-09T12:39:39+08:00"
-              content="2021-08-09">
-          08-09
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/09/HDU-1806%EF%BC%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%BB%B4%E6%8A%A4%E5%8C%BA%E9%97%B4%E4%BC%97%E6%95%B0%EF%BC%89/" itemprop="url">
-            <span itemprop="name">HDU 1806（线段树维护区间众数）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-08T20:45:21+08:00"
-              content="2021-08-08">
-          08-08
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/08/Rust-chapter1-%EF%BC%88%E7%8C%9C%E6%95%B0%E6%B8%B8%E6%88%8F%EF%BC%89/" itemprop="url">
-            <span itemprop="name">Rust chapter1（猜数游戏）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-08T15:46:05+08:00"
-              content="2021-08-08">
-          08-08
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/08/HDU5172-%EF%BC%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E8%AF%A2%E9%97%AE%E5%8C%BA%E9%97%B4%E6%9C%89%E6%97%A0%E9%87%8D%E5%A4%8D%E6%95%B0%E5%AD%97%EF%BC%89/" itemprop="url">
-            <span itemprop="name">HDU 5172（线段树询问区间有无重复数字）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-08T10:55:48+08:00"
-              content="2021-08-08">
-          08-08
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/08/SDTBU-ACM%E9%9B%86%E8%AE%AD%E9%98%9F%E6%9A%91%E5%81%87%E8%AE%AD%E7%BB%83%EF%BC%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98%EF%BC%89/" itemprop="url">
-            <span itemprop="name">SDTBU-ACM集训队暑假训练（线段树 树状数组专题）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-03T20:21:18+08:00"
-              content="2021-08-03">
-          08-03
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/03/SDTBU2021%E6%9A%91%E5%81%87%E9%9B%86%E8%AE%ADII-G%E9%A2%98%EF%BC%88%E8%87%AA%E5%B8%A6%E5%BF%B5%E4%B9%A6%EF%BC%89/" itemprop="url">
-            <span itemprop="name">SDTBU2021暑假集训II G题（字典树）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-03T19:35:45+08:00"
-              content="2021-08-03">
-          08-03
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/03/SDTBU2021%E6%9A%91%E5%81%87%E9%9B%86%E8%AE%ADII-B%E9%A2%98%EF%BC%88%E5%8D%95%E8%B0%83%E6%A0%88%EF%BC%89/" itemprop="url">
-            <span itemprop="name">SDTBU2021暑假集训II B题（单调栈）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+<h3 id="多继承-虚函数"><a href="#多继承-虚函数" class="headerlink" title="多继承-虚函数"></a>多继承-虚函数</h3><p>如果子类继承的多个父类都有虚函数，那么子类对象就会产生对应的多个虚表</p>
 
     </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>求大佬赏个饭</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weichat.png" alt="sineagle 微信支付">
+        <p>微信支付</p>
+      </div>
+
   </div>
-  
-  
-  
+</div>
 
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+              <a href="/tags/OO/" rel="tag"># OO</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/11/HDU4497-GCD-and-LCM%EF%BC%88%E5%94%AF%E4%B8%80%E5%88%86%E8%A7%A3%E5%AE%9A%E7%90%86-%E6%8E%92%E5%88%97%E7%BB%84%E5%90%88%EF%BC%89/" rel="prev" title="HDU4497 GCD and LCM（唯一分解定理 & 排列组合）">
+      <i class="fa fa-chevron-left"></i> HDU4497 GCD and LCM（唯一分解定理 & 排列组合）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
   
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2021/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/2021/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2021/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/archives/2021/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2021/page/9/">9</a><a class="extend next" rel="next" href="/archives/2021/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
+  
+  
 
 
 
@@ -441,6 +322,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BB%A7%E6%89%BF%E4%BD%93%E7%B3%BB%E4%B8%8B%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E8%B0%83%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">多继承体系下构造函数的调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BB%A7%E6%89%BF-%E8%99%9A%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">多继承-虚函数</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
