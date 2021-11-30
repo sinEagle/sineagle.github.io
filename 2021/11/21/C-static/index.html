@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="sinEagle">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-11-21T08:55:53.000Z">
-<meta property="article:modified_time" content="2021-11-27T14:06:06.287Z">
+<meta property="article:modified_time" content="2021-11-29T13:37:29.165Z">
 <meta property="article:author" content="sineagle">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -198,7 +198,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-27 22:06:06" itemprop="dateModified" datetime="2021-11-27T22:06:06+08:00">2021-11-27</time>
+                <time title="修改时间：2021-11-29 21:37:29" itemprop="dateModified" datetime="2021-11-29T21:37:29+08:00">2021-11-29</time>
               </span>
 
           <br>
@@ -241,6 +241,8 @@
 <li>提供一个公共的访问单例对象的接口</li>
 </ol>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rocket</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">Rocket</span>() &#123;&#125;</span><br><span class="line">    ~<span class="built_in">Rocket</span>() &#123;&#125;</span><br><span class="line">    <span class="keyword">static</span> Rocket* ms_rocket;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">static</span> Rocket* <span class="title">shareRocket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//这里要考虑多线程安全 </span></span><br><span class="line">        <span class="keyword">if</span> (ms_rocket == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            ms_rocket = <span class="keyword">new</span> <span class="built_in">Rocket</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ms_rocket;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">deleteRocket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//需要考虑多线程安全</span></span><br><span class="line">        <span class="keyword">if</span> (ms_rocket != <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="keyword">delete</span> ms_rocket;</span><br><span class="line">            ms_rocket = <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Rocket::run&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Rocket* Rocket::ms_rocket = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Rocket* p1 = Rocket::<span class="built_in">shareRocket</span>();  </span><br><span class="line">    Rocket* p2 = Rocket::<span class="built_in">shareRocket</span>();</span><br><span class="line">    Rocket* p3 = Rocket::<span class="built_in">shareRocket</span>();</span><br><span class="line">    Rocket* p4 = Rocket::<span class="built_in">shareRocket</span>();</span><br><span class="line">    <span class="comment">//delete(p1);</span></span><br><span class="line">    p1-&gt;<span class="built_in">run</span>();</span><br><span class="line">    cout &lt;&lt; p1 &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; p2 &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; p3 &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; p4 &lt;&lt; endl;</span><br><span class="line">    <span class="comment">//Rocket rocket1;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
     </div>
 
     
@@ -355,7 +357,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -437,12 +439,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">139k</span>
+    <span title="站点总字数">140k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:06</span>
+    <span title="站点阅读时长">2:07</span>
 </div>
 
         
