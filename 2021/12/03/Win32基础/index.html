@@ -27,11 +27,13 @@
 <meta property="og:url" content="https://sineagle.github.io/2021/12/03/Win32%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="sinEagle">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/12/03/PcykXW47VC52mif.png">
 <meta property="article:published_time" content="2021-12-03T07:07:49.000Z">
-<meta property="article:modified_time" content="2021-12-03T07:41:30.832Z">
+<meta property="article:modified_time" content="2021-12-03T12:35:13.060Z">
 <meta property="article:author" content="sineagle">
 <meta property="article:tag" content="win32">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/12/03/PcykXW47VC52mif.png">
 
 <link rel="canonical" href="https://sineagle.github.io/2021/12/03/Win32%E5%9F%BA%E7%A1%80/">
 
@@ -192,7 +194,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-12-03 15:07:49 / 修改时间：15:41:30" itemprop="dateCreated datePublished" datetime="2021-12-03T15:07:49+08:00">2021-12-03</time>
+              <time title="创建时间：2021-12-03 15:07:49 / 修改时间：20:35:13" itemprop="dateCreated datePublished" datetime="2021-12-03T15:07:49+08:00">2021-12-03</time>
             </span>
 
           <br>
@@ -201,7 +203,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>744</span>
+              <span>895</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -229,6 +231,16 @@
 <h4 id="MessageBoxW"><a href="#MessageBoxW" class="headerlink" title="MessageBoxW"></a>MessageBoxW</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WCHAR swzTitle[] = <span class="string">L&quot;标题&quot;</span>;</span><br><span class="line">WCHAR swzContent[] = <span class="string">L&quot;UUU win32世界！&quot;</span>;</span><br><span class="line">MessageBoxW(<span class="number">0</span>, swzContent, swzTitle, MB_OK);</span><br></pre></td></tr></table></figure>
 <h4 id="MessageBox"><a href="#MessageBox" class="headerlink" title="MessageBox"></a>MessageBox</h4><p>通常这样写</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TCHAR stzTitle[] = TEXT(<span class="string">&quot;标题&quot;</span>);</span><br><span class="line">TCHAR stzContent[] = TEXT(<span class="string">&quot;欢迎来到win32 U&amp;A!\n\n\n&quot;</span>);</span><br><span class="line">MessageBox(<span class="number">0</span>, stzContent, stzTitle, MB_OK);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><h4 id="进程内存空间的地址划分"><a href="#进程内存空间的地址划分" class="headerlink" title="进程内存空间的地址划分"></a>进程内存空间的地址划分</h4><p><img src="https://i.loli.net/2021/12/03/PcykXW47VC52mif.png"></p>
+<h4 id="进程的创建"><a href="#进程的创建" class="headerlink" title="进程的创建"></a>进程的创建</h4><p>任何进程都是由别的进程创建的 CreateProcess()<br>进程的创建过程</p>
+<ol>
+<li>映射EXE文件</li>
+<li>创建内核对象EPROCESS</li>
+<li>映射系统DLL(ntdll.dll)</li>
+<li>创建线程内核对象ETHREAD</li>
+<li>系统启动线程<br> 映射DLL(ntdll.LdrInitializeThunk)<br> 线程开始执行</li>
+</ol>
+
     </div>
 
     
@@ -324,7 +336,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">字符类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8C%87%E9%92%88"><span class="nav-number">2.</span> <span class="nav-text">字符串指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text">窗口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MessageBoxA"><span class="nav-number">3.1.</span> <span class="nav-text">MessageBoxA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MessageBoxW"><span class="nav-number">3.2.</span> <span class="nav-text">MessageBoxW</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MessageBox"><span class="nav-number">3.3.</span> <span class="nav-text">MessageBox</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">字符类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8C%87%E9%92%88"><span class="nav-number">2.</span> <span class="nav-text">字符串指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text">窗口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MessageBoxA"><span class="nav-number">3.1.</span> <span class="nav-text">MessageBoxA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MessageBoxW"><span class="nav-number">3.2.</span> <span class="nav-text">MessageBoxW</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MessageBox"><span class="nav-number">3.3.</span> <span class="nav-text">MessageBox</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4%E7%9A%84%E5%9C%B0%E5%9D%80%E5%88%92%E5%88%86"><span class="nav-number">4.1.</span> <span class="nav-text">进程内存空间的地址划分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">4.2.</span> <span class="nav-text">进程的创建</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
