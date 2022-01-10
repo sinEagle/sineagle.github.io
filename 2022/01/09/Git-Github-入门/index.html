@@ -36,8 +36,9 @@
 <meta property="og:image" content="https://s2.loli.net/2022/01/10/UEZO9ruKwWGIFmf.png">
 <meta property="og:image" content="https://s2.loli.net/2022/01/10/cYFDwlKG5IMXsuz.png">
 <meta property="og:image" content="https://s2.loli.net/2022/01/10/4JCDgZbSEhm5ncQ.png">
+<meta property="og:image" content="https://s2.loli.net/2022/01/10/ze7YgxmWKkD96pC.png">
 <meta property="article:published_time" content="2022-01-09T15:01:20.000Z">
-<meta property="article:modified_time" content="2022-01-10T08:45:29.264Z">
+<meta property="article:modified_time" content="2022-01-10T14:17:43.731Z">
 <meta property="article:author" content="sineagle">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
@@ -208,7 +209,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-10 16:45:29" itemprop="dateModified" datetime="2022-01-10T16:45:29+08:00">2022-01-10</time>
+                <time title="修改时间：2022-01-10 22:17:43" itemprop="dateModified" datetime="2022-01-10T22:17:43+08:00">2022-01-10</time>
               </span>
 
           <br>
@@ -217,7 +218,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
+              <span>1.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -273,7 +274,7 @@
 <li>跨团队协作<br><img src="https://s2.loli.net/2022/01/10/78gBmFUITXsPaD6.png"></li>
 </ul>
 <h2 id="Git-命令行操作"><a href="#Git-命令行操作" class="headerlink" title="Git 命令行操作"></a>Git 命令行操作</h2><h3 id="本地库初始化"><a href="#本地库初始化" class="headerlink" title="本地库初始化"></a>本地库初始化</h3><p>首先用 <code>git init</code>命令进行初始化，产生 <code>.git</code>目录（存放本地库相关的子目录和文件）<br><img src="https://s2.loli.net/2022/01/10/pjxWdv3hzS7DBnA.png"></p>
-<h3 id="设置签名"><a href="#设置签名" class="headerlink" title="设置签名"></a>设置签名</h3><h4 id="形式"><a href="#形式" class="headerlink" title="形式"></a>形式</h4><p>用户名：sineagle<br>Email地址: <a href="mailto:&#120;&#120;&#x78;&#x40;&#x78;&#120;&#120;&#46;&#99;&#x6f;&#109;">&#120;&#120;&#x78;&#x40;&#x78;&#120;&#120;&#46;&#99;&#x6f;&#109;</a></p>
+<h3 id="设置签名"><a href="#设置签名" class="headerlink" title="设置签名"></a>设置签名</h3><h4 id="形式"><a href="#形式" class="headerlink" title="形式"></a>形式</h4><p>用户名：sineagle<br>Email地址: <a href="mailto:&#x78;&#x78;&#120;&#64;&#120;&#120;&#120;&#x2e;&#x63;&#x6f;&#x6d;">&#x78;&#x78;&#120;&#64;&#120;&#120;&#120;&#x2e;&#x63;&#x6f;&#x6d;</a></p>
 <h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>区分不同开发人员的身份</p>
 <h4 id="辨析"><a href="#辨析" class="headerlink" title="辨析"></a>辨析</h4><p>这里设置的签名和登录远程库（代码托管中心）的账号密码没有任何关系</p>
 <h4 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h4><ul>
@@ -291,7 +292,7 @@
 <p>这个命令只是从暂存区删除，并不会把工作区的文件删除</p>
 <h4 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h4><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">commit</span> filename</span><br><span class="line">git <span class="keyword">commit</span> -m &quot;command message&quot; [filename]</span><br></pre></td></tr></table></figure>
 <p>将暂存区的内容添加到本地库</p>
-<h3 id="版本的前进和后退"><a href="#版本的前进和后退" class="headerlink" title="版本的前进和后退"></a>版本的前进和后退</h3><h4 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h4><p>查看历史记录<br><img src="https://s2.loli.net/2022/01/10/UEZO9ruKwWGIFmf.png"><br>多屏显示控制的方法</p>
+<h3 id="查看历史记录"><a href="#查看历史记录" class="headerlink" title="查看历史记录"></a>查看历史记录</h3><h4 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h4><p>查看历史记录<br><img src="https://s2.loli.net/2022/01/10/UEZO9ruKwWGIFmf.png"><br>多屏显示控制的方法</p>
 <ul>
 <li>空格: 向下翻页</li>
 <li>b : 向上翻页</li>
@@ -299,8 +300,30 @@
 </ul>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> <span class="comment">--pretty=oneline</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://s2.loli.net/2022/01/10/cYFDwlKG5IMXsuz.png"></p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> <span class="comment">--oneline</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> <span class="comment">--oneline %只显示过去的</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://s2.loli.net/2022/01/10/4JCDgZbSEhm5ncQ.png"></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">ref</span>log %显示所有</span><br></pre></td></tr></table></figure>
+<p><img src="https://s2.loli.net/2022/01/10/ze7YgxmWKkD96pC.png"><br>HEAD@{移动到当前版本需要多少步}</p>
+<h3 id="前进后退历史版本"><a href="#前进后退历史版本" class="headerlink" title="前进后退历史版本"></a>前进后退历史版本</h3><h4 id="基于索引值操作-推荐"><a href="#基于索引值操作-推荐" class="headerlink" title="基于索引值操作[推荐]"></a>基于索引值操作[推荐]</h4><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">reset</span> <span class="comment">--hard [索引值]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用-符号"><a href="#使用-符号" class="headerlink" title="使用 ^ 符号"></a>使用 ^ 符号</h4><p>只能后退, 有几个^就是后退几步</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">reset</span> <span class="comment">--hard HEAD^</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用-符号-1"><a href="#使用-符号-1" class="headerlink" title="使用 ~ 符号"></a>使用 ~ 符号</h4><p>也只能后退<br>~n ： 表示后退n步</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">reset</span> <span class="comment">--hard HEAD~3 %后退三步</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="reset-命令的三个参数对比"><a href="#reset-命令的三个参数对比" class="headerlink" title="reset 命令的三个参数对比"></a>reset 命令的三个参数对比</h3><h4 id="–soft-参数"><a href="#–soft-参数" class="headerlink" title="–soft 参数"></a>–soft 参数</h4><ul>
+<li>仅仅在本地库移动HEAD指针</li>
+</ul>
+<h4 id="–mixed-参数"><a href="#–mixed-参数" class="headerlink" title="–mixed 参数"></a>–mixed 参数</h4><ul>
+<li>在本地库移动 HEAD 指针</li>
+<li>重置暂存区</li>
+</ul>
+<h4 id="–hard-参数"><a href="#–hard-参数" class="headerlink" title="–hard 参数"></a>–hard 参数</h4><ul>
+<li>在本地库移动 HEAD 指针</li>
+<li>重置暂存区</li>
+<li>重置工作区</li>
+</ul>
 
     </div>
 
@@ -397,7 +420,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7%E5%BA%94%E8%AF%A5%E5%85%B7%E6%9C%89%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">1.</span> <span class="nav-text">版本控制工具应该具有的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">Git简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">2.1.</span> <span class="nav-text">Git的优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-%E7%BB%93%E6%9E%84"><span class="nav-number">2.2.</span> <span class="nav-text">Git 结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git%E5%92%8C%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E4%B8%AD%E5%BF%83"><span class="nav-number">2.3.</span> <span class="nav-text">Git和代码托管中心</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%BA%93%E5%92%8C%E8%BF%9C%E7%A8%8B%E5%BA%93%E7%9A%84%E4%BA%A4%E4%BA%92"><span class="nav-number">2.4.</span> <span class="nav-text">本地库和远程库的交互</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">Git 命令行操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%BA%93%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">3.1.</span> <span class="nav-text">本地库初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%AD%BE%E5%90%8D"><span class="nav-number">3.2.</span> <span class="nav-text">设置签名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BD%A2%E5%BC%8F"><span class="nav-number">3.2.1.</span> <span class="nav-text">形式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8"><span class="nav-number">3.2.2.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%A8%E6%9E%90"><span class="nav-number">3.2.3.</span> <span class="nav-text">辨析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4"><span class="nav-number">3.2.4.</span> <span class="nav-text">命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%8F%90%E4%BA%A4%E5%92%8C%E6%9F%A5%E7%9C%8B%E7%8A%B6%E6%80%81%E6%93%8D%E4%BD%9C"><span class="nav-number">3.3.</span> <span class="nav-text">添加提交和查看状态操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%9F%A5%E7%9C%8B"><span class="nav-number">3.3.1.</span> <span class="nav-text">状态查看</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0"><span class="nav-number">3.3.2.</span> <span class="nav-text">添加</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4"><span class="nav-number">3.3.3.</span> <span class="nav-text">提交</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E7%9A%84%E5%89%8D%E8%BF%9B%E5%92%8C%E5%90%8E%E9%80%80"><span class="nav-number">3.4.</span> <span class="nav-text">版本的前进和后退</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#git-log"><span class="nav-number">3.4.1.</span> <span class="nav-text">git log</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7%E5%BA%94%E8%AF%A5%E5%85%B7%E6%9C%89%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">1.</span> <span class="nav-text">版本控制工具应该具有的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">Git简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">2.1.</span> <span class="nav-text">Git的优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-%E7%BB%93%E6%9E%84"><span class="nav-number">2.2.</span> <span class="nav-text">Git 结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git%E5%92%8C%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E4%B8%AD%E5%BF%83"><span class="nav-number">2.3.</span> <span class="nav-text">Git和代码托管中心</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%BA%93%E5%92%8C%E8%BF%9C%E7%A8%8B%E5%BA%93%E7%9A%84%E4%BA%A4%E4%BA%92"><span class="nav-number">2.4.</span> <span class="nav-text">本地库和远程库的交互</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">Git 命令行操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%BA%93%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">3.1.</span> <span class="nav-text">本地库初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%AD%BE%E5%90%8D"><span class="nav-number">3.2.</span> <span class="nav-text">设置签名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BD%A2%E5%BC%8F"><span class="nav-number">3.2.1.</span> <span class="nav-text">形式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8"><span class="nav-number">3.2.2.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%A8%E6%9E%90"><span class="nav-number">3.2.3.</span> <span class="nav-text">辨析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4"><span class="nav-number">3.2.4.</span> <span class="nav-text">命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%8F%90%E4%BA%A4%E5%92%8C%E6%9F%A5%E7%9C%8B%E7%8A%B6%E6%80%81%E6%93%8D%E4%BD%9C"><span class="nav-number">3.3.</span> <span class="nav-text">添加提交和查看状态操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%9F%A5%E7%9C%8B"><span class="nav-number">3.3.1.</span> <span class="nav-text">状态查看</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0"><span class="nav-number">3.3.2.</span> <span class="nav-text">添加</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4"><span class="nav-number">3.3.3.</span> <span class="nav-text">提交</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95"><span class="nav-number">3.4.</span> <span class="nav-text">查看历史记录</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#git-log"><span class="nav-number">3.4.1.</span> <span class="nav-text">git log</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%BF%9B%E5%90%8E%E9%80%80%E5%8E%86%E5%8F%B2%E7%89%88%E6%9C%AC"><span class="nav-number">3.5.</span> <span class="nav-text">前进后退历史版本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%B4%A2%E5%BC%95%E5%80%BC%E6%93%8D%E4%BD%9C-%E6%8E%A8%E8%8D%90"><span class="nav-number">3.5.1.</span> <span class="nav-text">基于索引值操作[推荐]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-%E7%AC%A6%E5%8F%B7"><span class="nav-number">3.5.2.</span> <span class="nav-text">使用 ^ 符号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-%E7%AC%A6%E5%8F%B7-1"><span class="nav-number">3.5.3.</span> <span class="nav-text">使用 ~ 符号</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reset-%E5%91%BD%E4%BB%A4%E7%9A%84%E4%B8%89%E4%B8%AA%E5%8F%82%E6%95%B0%E5%AF%B9%E6%AF%94"><span class="nav-number">3.6.</span> <span class="nav-text">reset 命令的三个参数对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%93soft-%E5%8F%82%E6%95%B0"><span class="nav-number">3.6.1.</span> <span class="nav-text">–soft 参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%93mixed-%E5%8F%82%E6%95%B0"><span class="nav-number">3.6.2.</span> <span class="nav-text">–mixed 参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%93hard-%E5%8F%82%E6%95%B0"><span class="nav-number">3.6.3.</span> <span class="nav-text">–hard 参数</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -495,7 +518,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">172k</span>
+    <span title="站点总字数">173k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
