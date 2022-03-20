@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/eagle32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/eagle16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=DejaVu Sans Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-flat-top.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sineagle.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="HIT-计算机网络(自顶向下方法)-应用层">
+<meta property="og:url" content="https://sineagle.github.io/2022/03/20/HIT-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E5%BA%94%E7%94%A8%E5%B1%82/index.html">
+<meta property="og:site_name" content="sinEagle">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220126224514.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220126225317.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220127180945.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220127194218.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220127200152.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220127201432.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220128115753.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220128121134.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220131112205.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220131112402.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220131113200.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220202193811.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220202193903.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220206211616.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220206213419.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220206214618.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220206220357.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220207120454.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220207121610.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214151842.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214152656.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214153124.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214154034.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214161148.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214162743.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214164912.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214165149.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220216104827.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220216112207.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220301084953.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320150659.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320151147.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320152849.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320153400.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320154551.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320183030.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320185009.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320185134.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320194603.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320194657.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320161700.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320200042.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320202256.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320203439.png">
+<meta property="article:published_time" content="2022-03-20T12:52:49.000Z">
+<meta property="article:modified_time" content="2022-03-20T13:01:33.033Z">
+<meta property="article:author" content="sineagle">
+<meta property="article:tag" content="计网">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220126224514.png">
+
+<link rel="canonical" href="https://sineagle.github.io/2022/03/20/HIT-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E5%BA%94%E7%94%A8%E5%B1%82/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>HIT-计算机网络(自顶向下方法)-应用层 | sinEagle</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">sinEagle</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">bottlecode</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+			
+			
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2022/03/20/HIT-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E5%BA%94%E7%94%A8%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="sineagle">
+      <meta itemprop="description" content="一个失败的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sinEagle">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HIT-计算机网络(自顶向下方法)-应用层
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-20 20:52:49 / 修改时间：21:01:33" itemprop="dateCreated datePublished" datetime="2022-03-20T20:52:49+08:00">2022-03-20</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+            <div class="post-description"> </div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="网络应用层概述"><a href="#网络应用层概述" class="headerlink" title="网络应用层概述"></a>网络应用层概述</h2><h3 id="网络应用体系结构"><a href="#网络应用体系结构" class="headerlink" title="网络应用体系结构"></a>网络应用体系结构</h3><ul>
+<li>客户机/服务器</li>
+<li>P2P</li>
+<li>混合结构</li>
+</ul>
+<h3 id="网络应用的服务需求"><a href="#网络应用的服务需求" class="headerlink" title="网络应用的服务需求"></a>网络应用的服务需求</h3><ul>
+<li>可靠性</li>
+<li>带宽</li>
+<li>时延</li>
+</ul>
+<h3 id="Internet传输层服务模型"><a href="#Internet传输层服务模型" class="headerlink" title="Internet传输层服务模型"></a>Internet传输层服务模型</h3><ul>
+<li>TCP</li>
+<li>UDP</li>
+</ul>
+<h3 id="特定网络应用及协议"><a href="#特定网络应用及协议" class="headerlink" title="特定网络应用及协议"></a>特定网络应用及协议</h3><ul>
+<li>HTTP</li>
+<li>SMTP, POP, IMAP</li>
+<li>DNS</li>
+<li>P2P应用</li>
+</ul>
+<h3 id="Socket编程"><a href="#Socket编程" class="headerlink" title="Socket编程"></a>Socket编程</h3><ul>
+<li>TCP</li>
+<li>UDP</li>
+</ul>
+<h2 id="网络应用的基本原理"><a href="#网络应用的基本原理" class="headerlink" title="网络应用的基本原理"></a>网络应用的基本原理</h2><h3 id="网络应用体系结构-1"><a href="#网络应用体系结构-1" class="headerlink" title="网络应用体系结构"></a>网络应用体系结构</h3><h4 id="客户机-服务器结构（Client-Server-C-S）"><a href="#客户机-服务器结构（Client-Server-C-S）" class="headerlink" title="客户机/服务器结构（Client-Server, C/S）"></a>客户机/服务器结构（Client-Server, C/S）</h4><p>服务器</p>
+<ul>
+<li>7*24小时提供服务</li>
+<li>永久性访问地址/域名</li>
+<li>利用大量服务器实现可扩展性</li>
+</ul>
+<p>客户机</p>
+<ul>
+<li>与服务器通信，使用服务器提供的服务</li>
+<li>间歇性接入网络</li>
+<li>可能使用动态的IP地址</li>
+<li>不会与其他客户机直接通信</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220126224514.png"></p>
+<h4 id="点对点结构（Peer-to-peer-P2P）"><a href="#点对点结构（Peer-to-peer-P2P）" class="headerlink" title="点对点结构（Peer to peer, P2P）"></a>点对点结构（Peer to peer, P2P）</h4><ul>
+<li>没有永远在线的服务器</li>
+<li>任意端系统/节点之间可以直接通讯</li>
+<li>节点间歇性接入网络</li>
+<li>节点可能改变IP地址</li>
+</ul>
+<p>优点：高度可伸缩<br>缺点：难于管理</p>
+<h4 id="混合模式（Hybrid）"><a href="#混合模式（Hybrid）" class="headerlink" title="混合模式（Hybrid）"></a>混合模式（Hybrid）</h4><p>Napster<br>文件传输使用 P2P 结构<br>文件搜索采用 C/S 结构 –集中式</p>
+<ul>
+<li>每个节点向中央服务器登记自己的内容</li>
+<li>每个节点向中央服务器提交查询请求，查找感兴趣的内容</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220126225317.png"></p>
+<h3 id="网络应用进程通信"><a href="#网络应用进程通信" class="headerlink" title="网络应用进程通信"></a>网络应用进程通信</h3><p>不同主机上运行的进程如何通信 ？ <font color = #9900CC>消息交换</font><br>客户机进程： 发起通信的进程<br>服务器进程： 等待通信请求的进程</p>
+<h4 id="套接字（Socket）"><a href="#套接字（Socket）" class="headerlink" title="套接字（Socket）"></a>套接字（Socket）</h4><ul>
+<li>进程间通信利用<code>socket</code>发送/接受消息实现</li>
+<li>类似于寄信<pre><code>发送方将消息送到门外邮箱
+发送方依赖（门外的）传输基础设施将消息传输到接收方所在的主机，并送到接受方的门外
+接收方从门外获取消息
+</code></pre>
+</li>
+<li>传输基础设施向进程提供API<pre><code>传输协议的选择
+参数的设置
+</code></pre>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220127180945.png"></p>
+<h4 id="如何寻址进程"><a href="#如何寻址进程" class="headerlink" title="如何寻址进程"></a>如何寻址进程</h4><p>不同主机上的进程通信， 那么每个进程必须拥有标识符<br>如何寻址主机？ –IP地址<br>端口号（Port number）</p>
+<ul>
+<li>为主机上每个需要通信的进程分配一个端口号</li>
+<li>HTTP Server: 80</li>
+<li>Mail Server: 25</li>
+</ul>
+<p>进程的标识符： <strong>IP地址 + 端口号</strong></p>
+<h4 id="应用层协议"><a href="#应用层协议" class="headerlink" title="应用层协议"></a>应用层协议</h4><ul>
+<li>网络应用需遵循应用层协议</li>
+<li>公开协议<ul>
+<li>由 RFC (Request For Comments) 定义</li>
+<li>允许互操作</li>
+<li>HTTP, SMTP, ….</li>
+</ul>
+</li>
+<li>私有协议<ul>
+<li>多数P2P文件共享应用</li>
+</ul>
+</li>
+</ul>
+<h4 id="应用层协议的内容"><a href="#应用层协议的内容" class="headerlink" title="应用层协议的内容"></a>应用层协议的内容</h4><ul>
+<li>消息的类型（type）<ul>
+<li>请求消息</li>
+<li>响应消息</li>
+</ul>
+</li>
+<li>消息的语法(syntax)/格式<ul>
+<li>消息中有哪些字段(field)</li>
+<li>每个字段如何表示</li>
+</ul>
+</li>
+<li>字段的语义（semantics）<ul>
+<li>字段中信息的含义</li>
+</ul>
+</li>
+<li>规则（rules）<ul>
+<li>进程何时发送/响应消息</li>
+<li>进程如何发送/响应消息</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220127194218.png"></p>
+<h3 id="网络应用需求与传输层服务"><a href="#网络应用需求与传输层服务" class="headerlink" title="网络应用需求与传输层服务"></a>网络应用需求与传输层服务</h3><h4 id="网络应用对传输服务的需求"><a href="#网络应用对传输服务的需求" class="headerlink" title="网络应用对传输服务的需求"></a>网络应用对传输服务的需求</h4><ul>
+<li>数据丢失（data loss） / 可靠性（reliability）<ul>
+<li>某些网络应用能够容忍一定的数据丢失：网络电话</li>
+<li>某些网络应用要求100%可靠的数据传输：文件传输， telnet</li>
+</ul>
+</li>
+<li>时间（Timing）/延迟（delay）<ul>
+<li>某些应用只有在延迟足够低时才有效</li>
+<li>网络电话/网络游戏</li>
+</ul>
+</li>
+<li>带宽（bandwidth）<ul>
+<li>某些应用只有在带宽达到最低要求时才“有效” ： 网络视频</li>
+<li>某些应用能够适应任何带宽：弹性应用： email</li>
+</ul>
+</li>
+</ul>
+<h4 id="典型网络应用对传输服务的需求"><a href="#典型网络应用对传输服务的需求" class="headerlink" title="典型网络应用对传输服务的需求"></a>典型网络应用对传输服务的需求</h4><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220127200152.png"></p>
+<h4 id="Internet提供的传输服务"><a href="#Internet提供的传输服务" class="headerlink" title="Internet提供的传输服务"></a>Internet提供的传输服务</h4><h5 id="TCP服务"><a href="#TCP服务" class="headerlink" title="TCP服务"></a>TCP服务</h5><ul>
+<li><strong>面向连接</strong>：客户机/服务器进程间需要建立连接</li>
+<li>可靠的传输</li>
+<li>流量控制：发送方不会发送速度过快， 超过接收方的处理能力</li>
+<li>拥塞控制：当网络负载过重时能够限制发送方的发送速度</li>
+<li><strong>不提供时间/延迟保障</strong></li>
+<li><strong>不提供最小带宽保障</strong></li>
+</ul>
+<h5 id="UDP服务"><a href="#UDP服务" class="headerlink" title="UDP服务"></a>UDP服务</h5><ul>
+<li>无连接</li>
+<li>不可靠的数据传输</li>
+<li>不提供:<ul>
+<li>可靠性保障</li>
+<li>流量控制</li>
+<li>拥塞控制</li>
+<li>延迟保障</li>
+<li>带宽保障</li>
+</ul>
+</li>
+</ul>
+<h4 id="典型网络应用所使用的传输层服务"><a href="#典型网络应用所使用的传输层服务" class="headerlink" title="典型网络应用所使用的传输层服务"></a>典型网络应用所使用的传输层服务</h4><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220127201432.png"></p>
+<h2 id="Web应用"><a href="#Web应用" class="headerlink" title="Web应用"></a>Web应用</h2><h3 id="Web应用概述"><a href="#Web应用概述" class="headerlink" title="Web应用概述"></a>Web应用概述</h3><h4 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h4><ul>
+<li>World Wide Web : Tim Berners-Lee<ul>
+<li>网页</li>
+<li>网页互相连接</li>
+</ul>
+</li>
+<li>网页（Web Page） 包含多个对象（objects）<ul>
+<li>对象：HTML文件、JPEG文件、视频文件、动态脚本等</li>
+<li>基本HTML文件：包含对其他对象引用的链接</li>
+</ul>
+</li>
+<li>对象的寻址（addressing）<ul>
+<li>URL（Uniform Resource Locator）: 统一资源定位器</li>
+<li>Schemes://host:port/path</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220128115753.png"></p>
+<h4 id="HTTP协议概述"><a href="#HTTP协议概述" class="headerlink" title="HTTP协议概述"></a>HTTP协议概述</h4><ul>
+<li><p>万维网应用遵循什么协议 ？  </p>
+<ul>
+<li>超文本传输协议: <font color = #9900CC>HyperText Transfer Protocol</font></li>
+</ul>
+</li>
+<li><p>C/S结构</p>
+<ul>
+<li>客户 —— Browser: 请求、接受、展示Web对象</li>
+<li>服务器 —— Web Server : 响应客户的请求，发送对象</li>
+</ul>
+</li>
+<li><p>HTTP版本：</p>
+<ul>
+<li>1.0：RFC 1945</li>
+<li>1.1：RFC 2068</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220128121134.png"></p>
+<ul>
+<li>使用<code>TCP</code>传输服务<ul>
+<li>服务器在80端口等待客户的请求</li>
+<li>浏览器发起到服务器的TCP连接（创建套接字Socket）</li>
+<li>服务器接受来自浏览器的TCP连接</li>
+<li>浏览器（HTTP客户端）与Web服务器（HTTP服务器）交换HTTP消息</li>
+<li>关闭TCP连接</li>
+</ul>
+</li>
+<li>无状态(stateless)<ul>
+<li><font color = #FF0000> 服务器不维护任何有关客户端<strong>历史请求</strong>的消息</font></li>
+</ul>
+</li>
+</ul>
+<h3 id="HTTP连接类型"><a href="#HTTP连接类型" class="headerlink" title="HTTP连接类型"></a>HTTP连接类型</h3><h4 id="HTTP连接的两种类型"><a href="#HTTP连接的两种类型" class="headerlink" title="HTTP连接的两种类型"></a>HTTP连接的两种类型</h4><ul>
+<li>非持久性连接（Nopersistent HTTP）<ul>
+<li>每个TCP连接最多传输一个对象</li>
+<li>HTTP 1.0 版本使用非持久性连接</li>
+</ul>
+</li>
+<li>持久性连接（Persistent HTTP）<ul>
+<li>每个TCP连接允许传输多个对象</li>
+<li>HTTP 1.1版本默认使用持久性连接</li>
+</ul>
+</li>
+</ul>
+<h4 id="非持久性连接"><a href="#非持久性连接" class="headerlink" title="非持久性连接"></a>非持久性连接</h4><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220131112205.png"><br><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220131112402.png"></p>
+<h4 id="响应时间分析与建模"><a href="#响应时间分析与建模" class="headerlink" title="响应时间分析与建模"></a>响应时间分析与建模</h4><ul>
+<li>RTT(Round Trip Time)<ul>
+<li>从客户端发送一个很小的数据包到服务器并返回所经历的时间</li>
+</ul>
+</li>
+<li>响应时间<ul>
+<li>发起、连接TCP : 一个<code>RTT</code></li>
+<li>发送HTTP请求消息到达HTTP响应消息的前几个字节到达： 一个<code>RTT</code></li>
+<li>响应消息中包含的文件/对象传输时间</li>
+<li>Total = 2RTT + 文件发送时间<br><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220131113200.png"></li>
+</ul>
+</li>
+</ul>
+<h4 id="持久性HTTP"><a href="#持久性HTTP" class="headerlink" title="持久性HTTP"></a>持久性HTTP</h4><ul>
+<li>发送响应后，服务器保持TCP连接的打开</li>
+<li>后续HTTP消息可以通过这个连接发送</li>
+</ul>
+<h5 id="无流水（pipelining）的持久性连接"><a href="#无流水（pipelining）的持久性连接" class="headerlink" title="无流水（pipelining）的持久性连接"></a>无流水（pipelining）的持久性连接</h5><ul>
+<li>客户端只有收到一个响应后才发送新的请求</li>
+<li>每个被引用的对象耗时1个RTT</li>
+</ul>
+<h5 id="带有流水机制的持久性连接"><a href="#带有流水机制的持久性连接" class="headerlink" title="带有流水机制的持久性连接"></a>带有流水机制的持久性连接</h5><ul>
+<li>HTTP1.1 的默认选项</li>
+<li>客户端只要遇到一个引用对象就尽快发出请求</li>
+<li>理想情况下，收到的所有的引用对象只需要消耗1个RTT</li>
+</ul>
+<h3 id="HTTP消息格式"><a href="#HTTP消息格式" class="headerlink" title="HTTP消息格式"></a>HTTP消息格式</h3><h4 id="HTTP请求消息"><a href="#HTTP请求消息" class="headerlink" title="HTTP请求消息"></a>HTTP请求消息</h4><p>HTTP协议有两类消息</p>
+<ul>
+<li>请求消息（request）</li>
+<li>响应消息（response）</li>
+</ul>
+<p>请求消息</p>
+<ul>
+<li>ASCII：人直接可读</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220202193811.png"></p>
+<h4 id="HTTP请求消息的通用格式"><a href="#HTTP请求消息的通用格式" class="headerlink" title="HTTP请求消息的通用格式"></a>HTTP请求消息的通用格式</h4><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220202193903.png"></p>
+<h4 id="上传输入的方法"><a href="#上传输入的方法" class="headerlink" title="上传输入的方法"></a>上传输入的方法</h4><p>POST方法</p>
+<ul>
+<li>网页经常需要填写表格（form）</li>
+<li>在请求消息的消息体（entity body）中上传客户端的输入</li>
+</ul>
+<p>URL方法</p>
+<ul>
+<li>使用GET方法</li>
+<li>输入信息通过<code>request</code>命令行的URL字段上传</li>
+</ul>
+<h4 id="方法的类型"><a href="#方法的类型" class="headerlink" title="方法的类型"></a>方法的类型</h4><h5 id="HTTP-1-0"><a href="#HTTP-1-0" class="headerlink" title="HTTP/1.0"></a>HTTP/1.0</h5><ul>
+<li>GET</li>
+<li>POST</li>
+<li>HEAD<ul>
+<li>将Server不要将所请求的对象放入响应消息中</li>
+</ul>
+</li>
+</ul>
+<h5 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP/1.1"></a>HTTP/1.1</h5><ul>
+<li>GET, POST, HEAD</li>
+<li>PUT<ul>
+<li>将消息体中的文件上传到URL字段所指定的路径</li>
+</ul>
+</li>
+<li>Delete<ul>
+<li>删除URL字段所指定的文件 </li>
+</ul>
+</li>
+</ul>
+<h4 id="HTTP响应消息"><a href="#HTTP响应消息" class="headerlink" title="HTTP响应消息"></a>HTTP响应消息</h4><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220206211616.png"></p>
+<h4 id="HTTP响应状态代码"><a href="#HTTP响应状态代码" class="headerlink" title="HTTP响应状态代码"></a>HTTP响应状态代码</h4><p><strong>消息响应的第一行</strong></p>
+<p>示例：</p>
+<ul>
+<li>200 OK</li>
+<li>301 Moved Permanently</li>
+<li>400 Bad Request</li>
+<li>404 Not Found</li>
+<li>505 HTTP Version Not Supported</li>
+</ul>
+<h3 id="Cookie技术"><a href="#Cookie技术" class="headerlink" title="Cookie技术"></a>Cookie技术</h3><p>Cookie技术</p>
+<ul>
+<li>某些网站为了辨别用户身份，进行session跟踪而储存在用户本地终端上的数据（通常经过加密）  </li>
+<li>RFC6265</li>
+</ul>
+<p>Cookie组件<br><font color = #FF0000></p>
+<ul>
+<li>HTTP响应的消息的cookie头部行</li>
+<li>HTTP请求消息的cookie头部行</li>
+<li>保存在客户端主机上cookie文件，由浏览器管理</li>
+<li>Web服务器后台数据库</font></li>
+</ul>
+<h4 id="Cookie技术原理"><a href="#Cookie技术原理" class="headerlink" title="Cookie技术原理"></a>Cookie技术原理</h4><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220206213419.png"></p>
+<h3 id="Web缓存-代理服务器技术"><a href="#Web缓存-代理服务器技术" class="headerlink" title="Web缓存/代理服务器技术"></a>Web缓存/代理服务器技术</h3><h4 id="Web缓存-代理服务器技术-1"><a href="#Web缓存-代理服务器技术-1" class="headerlink" title="Web缓存/代理服务器技术"></a>Web缓存/代理服务器技术</h4><p>功能： 在不访问服务器的条件下满足客户端的HTTP请求<br>为什么发明这种技术？</p>
+<ul>
+<li>缩短客户请求的响应时间</li>
+<li>减少机构/组织的流量</li>
+<li>在大范围（Internet）实现有效的内容分发</li>
+</ul>
+<p>Web缓存/代理服务器</p>
+<ul>
+<li>用户设定浏览器通过缓存进行Web访问</li>
+<li>浏览器向缓存/代理服务器发送所有HTTP请求<ul>
+<li>如果所请求对象在缓存中，缓存返回对象</li>
+<li>否则，缓存服务器向原始服务器发送HTTP请求，获取对象，然后返回给客户端并保存该对象</li>
+</ul>
+</li>
+</ul>
+<p>缓存既可以充当客户端，也可以充当服务器<br>一般由ISP（Internet服务供应商）架设<br><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220206214618.png"></p>
+<h4 id="条件性GET方法"><a href="#条件性GET方法" class="headerlink" title="条件性GET方法"></a>条件性GET方法</h4><h5 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h5><p>如果缓存中有最新的版本，则不需要发送请求消息</p>
+<h5 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h5><ul>
+<li>在HTTP请求消息中声明所持有版本的日期</li>
+<li>If-modified-since:<date></li>
+</ul>
+<h5 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h5><ul>
+<li>如果缓存的版本是最新的，则响应消息中不包含对象</li>
+<li>HTTP/1.0 304 Not Modified</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220206220357.png"></p>
+<h2 id="Email"><a href="#Email" class="headerlink" title="Email"></a>Email</h2><h3 id="Email应用的构成"><a href="#Email应用的构成" class="headerlink" title="Email应用的构成"></a>Email应用的构成</h3><ul>
+<li><p>Email应用的构成组件</p>
+<ul>
+<li>邮件客户端</li>
+<li>邮件服务器</li>
+<li>SMTP协议</li>
+</ul>
+</li>
+<li><p>邮件客户端</p>
+<ul>
+<li>读、写Email消息</li>
+<li>与服务器交互，收、发Email消息</li>
+<li>Outlook, Foxmail, Thunderbird</li>
+<li>Web客户端</li>
+</ul>
+</li>
+<li><p>邮件服务器</p>
+<ul>
+<li>邮箱：存储发给该用户的Email</li>
+<li>消息队列（message queue）: 存储等待发送的Email</li>
+</ul>
+</li>
+<li><p>SMTP协议</p>
+<ul>
+<li>邮件服务器之间传递消息所使用的协议</li>
+<li>客户端：发送消息的服务器</li>
+<li>服务器：接受消息的服务器<br><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220207120454.png"></li>
+</ul>
+</li>
+</ul>
+<h3 id="SMTP协议：RFC-2821"><a href="#SMTP协议：RFC-2821" class="headerlink" title="SMTP协议：RFC 2821"></a>SMTP协议：RFC 2821</h3><ul>
+<li>使用TCP进行email消息的可靠传输</li>
+<li>端口25</li>
+<li>传输过程的三个阶段<ul>
+<li>握手</li>
+<li>消息的传输</li>
+<li>关闭</li>
+</ul>
+</li>
+<li>命令/响应交互模式<ul>
+<li>命令(command) : ASCII文本</li>
+<li>响应(response) : 状态代码和语句</li>
+</ul>
+</li>
+<li>Email消息只能包含7位ASCII码</li>
+</ul>
+<h3 id="SMTP交互示例"><a href="#SMTP交互示例" class="headerlink" title="SMTP交互示例"></a>SMTP交互示例</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220207121610.png"></p>
+<h3 id="SMTP协议"><a href="#SMTP协议" class="headerlink" title="SMTP协议"></a>SMTP协议</h3><ul>
+<li>必须使用持久性连接</li>
+<li>要求消息必须由7位ASCII码构成</li>
+<li>SMTP服务器利用CRLF.CRLF确定消息的结束</li>
+</ul>
+<p><font color = #FF0000>与HTTP对比</font></p>
+<ul>
+<li>HTTP：拉式(pull)</li>
+<li>SMTP：退式(push)</li>
+<li>都是使用命令/响应交互模式</li>
+<li>命令和状态代码都是ASCII码</li>
+<li>HTTP: 每个对象封装在独立的响应消息中</li>
+<li>SMTP: 多个对象在由多个部分构成的消息中发送</li>
+</ul>
+<h3 id="Email-消息格式"><a href="#Email-消息格式" class="headerlink" title="Email 消息格式"></a>Email 消息格式</h3><ul>
+<li>SMTP: Email消息的传输/交换协议</li>
+<li>RFC 822: 头部消息格式标准<ul>
+<li>头部行(header)<ul>
+<li>To</li>
+<li>From</li>
+<li>Subject</li>
+</ul>
+</li>
+<li>消息体(body)<ul>
+<li>消息本身</li>
+<li>只能是ASCII字符</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214151842.png"></p>
+<h3 id="Email-消息格式（多媒体扩展）"><a href="#Email-消息格式（多媒体扩展）" class="headerlink" title="Email 消息格式（多媒体扩展）"></a>Email 消息格式（多媒体扩展）</h3><ul>
+<li>MIME：多媒体邮件扩展 RFC 2045, 2056<ul>
+<li>通过在邮件<font color = #FF0000>头部</font>增加额外的行以声明MIME的内容类型</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214152656.png"></p>
+<h3 id="邮件访问协议"><a href="#邮件访问协议" class="headerlink" title="邮件访问协议"></a>邮件访问协议</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214153124.png"><br>邮件访问协议：从服务器获取邮件</p>
+<ul>
+<li><p>POP: Post Office Protocol[RFC 1939]</p>
+<pre><code>认证/授权（客户端&lt;-&gt;服务器）和下载
+</code></pre>
+</li>
+<li><p>IMAP: Internet Mail Access Protocol[RFC 1730]</p>
+</li>
+<li><p>HTTP：163, QQ, Mail等</p>
+</li>
+</ul>
+<h4 id="POP协议"><a href="#POP协议" class="headerlink" title="POP协议"></a>POP协议</h4><ul>
+<li><p>认证过程</p>
+<ul>
+<li>客户端命令<ul>
+<li>User: 声明用户名</li>
+<li>Pass: 声明密码</li>
+</ul>
+</li>
+<li>服务器响应<ul>
+<li>+OK</li>
+<li>-ERR</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>事物过程</p>
+<ul>
+<li>list: 列出消息数量</li>
+<li>Retr: 用编号获取消息</li>
+<li>Dele: 删除消息</li>
+<li>Quit</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214154034.png"></p>
+<ul>
+<li><p>“下载并删除“ 模式<br>用户如果换了客户端软件，无法重读该邮件</p>
+</li>
+<li><p>”下载并保持“模式<br>不同客户端都可以保留消息的拷贝</p>
+</li>
+<li><p><font color = #9900CC>POP3是无状态的</font></p>
+</li>
+</ul>
+<h4 id="IMAP协议"><a href="#IMAP协议" class="headerlink" title="IMAP协议"></a>IMAP协议</h4><ul>
+<li>所有消息统一保存在一个地方：服务器</li>
+<li>允许用户利用文件夹组织消息</li>
+<li>IMAP支持跨对话（Session）的用户状态：<ul>
+<li>文件夹的名字</li>
+<li>文件夹与消息ID之间的映射等</li>
+</ul>
+</li>
+<li>有状态的协议</li>
+</ul>
+<h2 id="DNS应用"><a href="#DNS应用" class="headerlink" title="DNS应用"></a>DNS应用</h2><h3 id="DNS概述"><a href="#DNS概述" class="headerlink" title="DNS概述"></a>DNS概述</h3><h4 id="DNS-Domain-Name-System"><a href="#DNS-Domain-Name-System" class="headerlink" title="DNS(Domain Name System)"></a>DNS(Domain Name System)</h4><ul>
+<li><p>Internet 上主机/路由器的识别问题</p>
+<ul>
+<li>IP地址</li>
+<li>域名：<a target="_blank" rel="noopener" href="http://www.xxx.edu.cn/">www.xxx.edu.cn</a></li>
+</ul>
+</li>
+<li><p>域名和IP地址如何映射？</p>
+</li>
+<li><p>域名解析系统DNS</p>
+<ul>
+<li><font color = #9900CC>多层命名服务器构成的分布式数据库</font></li>
+<li><font color = #9900CC> 应用层协议：完成名字的解析 <ul>
+<li>Internet核心功能，由应用层协议实现</li>
+<li>网络边界复杂 </font></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>DNS服务</p>
+<ul>
+<li>域名向IP地址的翻译</li>
+<li>主机别名</li>
+<li>邮件服务器别名</li>
+<li>负载均衡：Web服务器</li>
+</ul>
+</li>
+<li><p>为什么不使用集中式的DNS?</p>
+<ul>
+<li>单点失败问题</li>
+<li>流量问题</li>
+<li>距离问题</li>
+<li>维护性问题</li>
+</ul>
+</li>
+</ul>
+<h4 id="分布式层次式数据库"><a href="#分布式层次式数据库" class="headerlink" title="分布式层次式数据库"></a>分布式层次式数据库</h4><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214161148.png"></p>
+<ul>
+<li>客户端想要查询<code>www.amazon.com</code>的IP<ul>
+<li>客户端先查询根服务器，找到<code>com</code>域名的域名解析服务器</li>
+<li>客户端查询<code>com</code>域名解析服务器，找到<code>amazon.com</code>域名解析服务器</li>
+<li>客户端查询<code>amazon.com</code>域名解析服务器，获得<code>www.amazon.com</code>的IP地址</li>
+</ul>
+</li>
+</ul>
+<h4 id="DNS根域名服务器"><a href="#DNS根域名服务器" class="headerlink" title="DNS根域名服务器"></a>DNS根域名服务器</h4><ul>
+<li>本地域名解析服务器无法解析域名时，访问根域名服务器</li>
+<li>根域名服务器<ul>
+<li>如果不知道映射，访问权威域名服务器</li>
+<li>获得映射</li>
+<li>向本地域名服务器返回映射</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214162743.png"></p>
+<h4 id="TLD和权威域名解析服务器"><a href="#TLD和权威域名解析服务器" class="headerlink" title="TLD和权威域名解析服务器"></a>TLD和权威域名解析服务器</h4><ul>
+<li>顶级域名服务器（TLD, top-level domain）<ul>
+<li>负责顶级域名（com, org, net, edu等）和国家顶级域名（cn, uk, fr等）</li>
+<li>Network Solutions维护com顶级域名服务器</li>
+<li>Education维护edu顶级域名服务器</li>
+</ul>
+</li>
+<li>权威（Authoritative）域名服务器：组织的域名解析服务器，提供组织内部服务器的解析服务<ul>
+<li>组织负责维护</li>
+<li>服务提供商负责维护</li>
+</ul>
+</li>
+</ul>
+<h4 id="本地域名解析服务器"><a href="#本地域名解析服务器" class="headerlink" title="本地域名解析服务器"></a>本地域名解析服务器</h4><ul>
+<li>不严格属于层级体系</li>
+<li>每个ISP有一个本地域名服务器<ul>
+<li>默认域名解析服务器</li>
+</ul>
+</li>
+<li>当主机进行DNS查询时，查询被发送到本地域名服务器<ul>
+<li>使用代理(proxy), 将查询转发给（层级式）域名解析服务器系统 </li>
+</ul>
+</li>
+</ul>
+<h4 id="DNS查询示例"><a href="#DNS查询示例" class="headerlink" title="DNS查询示例"></a>DNS查询示例</h4><p><code>cis.poly.edu</code>的主机想要获得<code>gaia.cs.umass.edu</code>的IP地址</p>
+<h5 id="迭代查询"><a href="#迭代查询" class="headerlink" title="迭代查询"></a>迭代查询</h5><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214164912.png"></p>
+<h5 id="递归查询"><a href="#递归查询" class="headerlink" title="递归查询"></a>递归查询</h5><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220214165149.png"></p>
+<h4 id="DNS记录缓存和更新"><a href="#DNS记录缓存和更新" class="headerlink" title="DNS记录缓存和更新"></a>DNS记录缓存和更新</h4><ul>
+<li><p>只要域名解析服务器获得域名 –IP映射，即<font color = #FF0000>缓存</font>这一映射</p>
+<ul>
+<li>一段时间过后，缓存条目失效（删除）</li>
+<li>本地域名服务器一般会缓存顶级域名服务器的映射（因此根域名服务器不经常被访问）</li>
+</ul>
+</li>
+<li><p>记录的更新/通知机制</p>
+<ul>
+<li>RFC 2136</li>
+<li>Dynamic Updates in Demain Name System(DNS UPDATE)</li>
+</ul>
+</li>
+</ul>
+<h3 id="DNS记录和消息"><a href="#DNS记录和消息" class="headerlink" title="DNS记录和消息"></a>DNS记录和消息</h3><h4 id="DNS记录"><a href="#DNS记录" class="headerlink" title="DNS记录"></a>DNS记录</h4><ul>
+<li>记录资源（RR Resource records）<br><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220216104827.png"></li>
+<li>Type = A<ul>
+<li>Name: 主机域名</li>
+<li>Value: IP地址</li>
+</ul>
+</li>
+<li>Type = NS<ul>
+<li>Name: 域(edu.cn)</li>
+<li>Value: 该域权威域名解析服务器的主机域名</li>
+</ul>
+</li>
+<li>Type = CNAME<ul>
+<li>Name: 某一真实域名的别名<ul>
+<li><a target="_blank" rel="noopener" href="http://www.bim.com/">www.bim.com</a> – serverteast.backup2.ibm.com</li>
+</ul>
+</li>
+<li>Values: 真实域名</li>
+</ul>
+</li>
+<li>Type = MX<ul>
+<li>Value是与name相对应的邮件服务器</li>
+</ul>
+</li>
+</ul>
+<h4 id="DNS协议与消息"><a href="#DNS协议与消息" class="headerlink" title="DNS协议与消息"></a>DNS协议与消息</h4><p>DNS协议</p>
+<ul>
+<li>查询(query)和回复(reply消息)</li>
+<li>消息格式相同<br><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220216112207.png"></li>
+<li>消息头部<ul>
+<li>Identification: 16位查询编号，回复使用相同的编号</li>
+<li>flag<ul>
+<li>查询或回复</li>
+<li>期望递归</li>
+<li>递归可用</li>
+<li>权威回答</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="P2P应用"><a href="#P2P应用" class="headerlink" title="P2P应用"></a>P2P应用</h2><ul>
+<li>没有服务器</li>
+<li>任意端系统之间直接通信</li>
+<li>节点阶段性接入Internet</li>
+<li>节点可能更换IP地址</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220301084953.png"></p>
+<h3 id="BitTorrent"><a href="#BitTorrent" class="headerlink" title="BitTorrent"></a>BitTorrent</h3><h2 id="Socket-编程"><a href="#Socket-编程" class="headerlink" title="Socket 编程"></a>Socket 编程</h2><h3 id="网络程序设计接口"><a href="#网络程序设计接口" class="headerlink" title="网络程序设计接口"></a>网络程序设计接口</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320150659.png"></p>
+<h3 id="应用编程接口-API"><a href="#应用编程接口-API" class="headerlink" title="应用编程接口 API"></a>应用编程接口 API</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320151147.png"></p>
+<p><strong>应用编程接口API</strong> : 应用进程的控制权和操作系统的控制权进行转换的的一个系统调用接口</p>
+<h3 id="Socket-API"><a href="#Socket-API" class="headerlink" title="Socket API"></a>Socket API</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320152849.png"></p>
+<p>标识通信端口（对外）</p>
+<ul>
+<li>IP地址 + 端口号</li>
+</ul>
+<p>操作系统/进程如何管理套接字（对内）</p>
+<ul>
+<li>套接字描述符<ul>
+<li>小整数</li>
+</ul>
+</li>
+</ul>
+<h3 id="Socket抽象"><a href="#Socket抽象" class="headerlink" title="Socket抽象"></a>Socket抽象</h3><ul>
+<li><p>类似于文件的抽象</p>
+</li>
+<li><p>当应用进程创建套接字时，操作系统分配一个数据结构存储套接字相关信息</p>
+</li>
+<li><p>返回套接字描述符</p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320153400.png"></p>
+<h3 id="地址结构"><a href="#地址结构" class="headerlink" title="地址结构"></a>地址结构</h3><ul>
+<li><p>已定义结构 <strong>socketaddr_in</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">strucct socketaddr_in &#123;</span><br><span class="line">    u_char sin_len; <span class="comment">//地址长度</span></span><br><span class="line">    u_char sin_family; <span class="comment">//地址族（TCP/IP: AF_INET）</span></span><br><span class="line">    u_short sin_port; <span class="comment">//端口号</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">in_addr</span> <span class="title">sin_addr</span>;</span> <span class="comment">//IP地址</span></span><br><span class="line">    <span class="keyword">char</span> sin_zero[<span class="number">8</span>]; <span class="comment">//未用置零</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+<li><p>使用<code>TCP/IP</code>协议簇的网络应用程序声明端口地址变量时，使用结构 <code>socketaddr_in</code></p>
+</li>
+</ul>
+<h3 id="Socket-API函数"><a href="#Socket-API函数" class="headerlink" title="Socket API函数"></a>Socket API函数</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320154551.png"></p>
+<h4 id="WSAStartup"><a href="#WSAStartup" class="headerlink" title="WSAStartup"></a>WSAStartup</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">WSAStartup</span><span class="params">(WORD wVersionRequested, LPWSADATA IpWSAData)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>使用 Socket 的应用程序在使用Socket之前必须<strong>首先</strong>调用 <code>WSAStartup</code> 函数</p>
+</li>
+<li><p>两个参数</p>
+<ul>
+<li>第一个参数指明程序请求使用的WinSock版本，其中高位字节指明副版本、低位字节指明主版本<ul>
+<li>十六进制整数、例如0x102标识2.1版</li>
+</ul>
+</li>
+<li>第二个参数返回实际的WinSock的版本信息<ul>
+<li>返回指向<code>WSADATA</code>结构的指针</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>例： 使用2.1版本的WinSock的程序代码段</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wVersionRequested = MAKEWORD(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">err = WSAStartup(wVersionRequested, &amp;wsaData);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="WSACleanup"><a href="#WSACleanup" class="headerlink" title="WSACleanup"></a>WSACleanup</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">WSACleanup</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>应用程序在完成对请求的Socket库的使用，最后要调用<code>WSACleanup</code> 函数</li>
+<li>解除与 <code>Socket库</code>的绑定</li>
+<li>释放<code>Socket库</code>所占用的系统资源</li>
+</ul>
+<h4 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sd = socket(protofamily, type, proto);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>创建套接字</p>
+</li>
+<li><p>操作系统返回套接字描述符（sd）</p>
+</li>
+<li><p>第一个参数（协议簇）： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protofamily = PF_INET（TCP/IP）</span><br></pre></td></tr></table></figure></li>
+<li><p>第二个参数（套接字类型）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type = SOCKET_STREAM,SOCKET_DGRAM <span class="keyword">or</span> SOCKET_RAM (TCP/IP)</span><br></pre></td></tr></table></figure></li>
+<li><p>第三个参数（协议号）：0为默认</p>
+</li>
+<li><p>例：创建一个流套接字的代码段</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">protoent</span> *<span class="title">p</span>;</span></span><br><span class="line">p = getprotobyname(<span class="string">&quot;TCP&quot;</span>);</span><br><span class="line">SOCKET sd = socket(PF_INET, SOCKET_STREAM, p-&gt;p_proto);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="Closesocket"><a href="#Closesocket" class="headerlink" title="Closesocket"></a>Closesocket</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">closesocket</span><span class="params">(SOCKET sd)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>关闭一个描述符为sd的套接字</p>
+</li>
+<li><p>如果有多个进程共享一个套接字，调用 <font color='red'>closesocket </font>将套接字引用计数减1， 减到0才关闭</p>
+</li>
+<li><p>一个进程中的多线程对一个套接字的使用无计数</p>
+<ul>
+<li>如果进程中一个线程调用<font color='red'>closesocket</font>将一个套接字关闭，该进程中的其他线程也不能访问该套接字</li>
+</ul>
+</li>
+<li><p>返回值</p>
+<ul>
+<li><p>0： 成功</p>
+</li>
+<li><p>SOCKET_ERROR: 失败</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bind</span><span class="params">(sd, localaddr, addrlen)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>绑定套接字本地端点地址<ul>
+<li>IP地址 + 端口号</li>
+</ul>
+</li>
+<li>参数<ul>
+<li>套接字描述符（sd）</li>
+<li>端点地址（localaddr）<ul>
+<li>结构：<font color='red'>socket_addrin</font></li>
+</ul>
+</li>
+<li>客户程序一般不需要调用<code>bind</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320183030.png"></p>
+<p>通过地址通配符：<font color='red'>INADDR_ANY</font> 解决上图出现的问题</p>
+<h4 id="listen"><a href="#listen" class="headerlink" title="listen"></a>listen</h4><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320185009.png"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">listen</span><span class="params">(sd, queuesize)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>置服务器端的流式套接字处于监听状态<ul>
+<li><font color='red'>仅服务器端调用</font></li>
+<li><font color='red'>仅用于面向连接的套接字</font></li>
+</ul>
+</li>
+<li>设置连接请求的队列大小（queuesize）</li>
+<li>返回值：<ul>
+<li>0：成功</li>
+<li>SOCKET_ERROR: 失败</li>
+</ul>
+</li>
+</ul>
+<h4 id="connect"><a href="#connect" class="headerlink" title="connect"></a>connect</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">connect</span>(sd, addr, saddrlen);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320185134.png"></p>
+<ul>
+<li>客户端调用<code>connect</code>函数来使客户套接字(sd) 与指定计算机的特定端口(saddr)的套接字（服务）进行连接</li>
+<li><font color='red'>仅用于客户端</font></li>
+<li>可用于<font color='9900CC'>TCP客户端</font>也可用于<font color='9900CC'>UDP客户端</font><ul>
+<li>TCP客户端： 建立TCP连接</li>
+<li>UDP客户端：指定服务器端点地址</li>
+</ul>
+</li>
+</ul>
+<h4 id="accept"><a href="#accept" class="headerlink" title="accept"></a>accept</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">newsock = <span class="built_in">accept</span>(sd, caddr, caddrlen);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>服务程序调用<code>accept</code>函数从处于监听状态的流套接字<code>sd</code>的客户连接队列请求中取出排在最前的一个客户请求，并且创建一个新的套接字来与客户套接字创建连接通道<ul>
+<li><font color='red'>仅用于TCP连接</font></li>
+<li><font color='red'>仅用于服务器</font></li>
+</ul>
+</li>
+<li>利用新创建的套接字（netsock）与客户通信</li>
+</ul>
+<h4 id="send-sendto"><a href="#send-sendto" class="headerlink" title="send, sendto"></a>send, sendto</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">send</span>(sd, *buf, len, flags);</span><br><span class="line"><span class="built_in">sendto</span>(sd, *buf, len, flags, destaddr, addrlen);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>send函数用于TCP套接字（客户与服务器）或调用了connect函数的UDP套接字</p>
+</li>
+<li><p>sendto函数用于UDP服务器套接字或未调用connect函数的UDP套接字</p>
+</li>
+</ul>
+<h4 id="recv-recvfrom"><a href="#recv-recvfrom" class="headerlink" title="recv, recvfrom"></a>recv, recvfrom</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">recv</span>(sd, *buffer, len, flags);</span><br><span class="line"><span class="built_in">recvfrom</span>(sd, *buf, len, flags, senderaddr, saddrlen);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>recv函数从TCP连接的另一端接受数据，或者从调用connect 函数的UDP客户端接受对端数据</li>
+<li>recvfrom函数用户UDP服务器端套接字与未调用connect函数的UDP客户端接受对端数据</li>
+</ul>
+<h4 id="Socket-API函数小结"><a href="#Socket-API函数小结" class="headerlink" title="Socket API函数小结"></a>Socket API函数小结</h4><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320194603.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320194657.png"></p>
+<h3 id="Socket面向TCP-IP的服务类型"><a href="#Socket面向TCP-IP的服务类型" class="headerlink" title="Socket面向TCP/IP的服务类型"></a>Socket面向TCP/IP的服务类型</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320161700.png"></p>
+<ul>
+<li>TCP : 可靠、面向连接、字节流传输、点对点</li>
+<li>UDP: 不可靠、无连接、数据包传输</li>
+</ul>
+<h3 id="关于网络字节顺序"><a href="#关于网络字节顺序" class="headerlink" title="关于网络字节顺序"></a>关于网络字节顺序</h3><ul>
+<li><p>TCP/IP定义了标准的用于协议头中的二进制整数表示：<font color='red'>网络字节顺序</font>（network byte order）</p>
+</li>
+<li><p>某些Socket API函数参数需要存储为网络字节顺序（如IP地址、端口号等）</p>
+</li>
+<li><p>可以实现本地字节顺序与网络字节顺序间转换的函数</p>
+<ul>
+<li><p><font color='red'>htons</font>: 本地字节顺序 -&gt; 网络字节顺序（16bits）</p>
+</li>
+<li><p><font color='red'>ntohs</font>: 网络字节顺序 -&gt;本地字节顺序（16bits）</p>
+</li>
+<li><p><font color='red'>htonl</font>: 本地字节顺序 -&gt; 网络字节顺序（32bits）</p>
+</li>
+<li><p><font color='red'>ntohl</font>: 网络字节顺序 -&gt;本地字节顺序（32bits）</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="网络应用的Socket-API-TCP-调用基本流程"><a href="#网络应用的Socket-API-TCP-调用基本流程" class="headerlink" title="网络应用的Socket API(TCP)调用基本流程"></a>网络应用的Socket API(TCP)调用基本流程</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320200042.png"></p>
+<h3 id="客户端软件设计"><a href="#客户端软件设计" class="headerlink" title="客户端软件设计"></a>客户端软件设计</h3><h4 id="解析服务器IP地址"><a href="#解析服务器IP地址" class="headerlink" title="解析服务器IP地址"></a>解析服务器IP地址</h4><ul>
+<li>客户端可能使用域名（如: study.163.com） 或 IP地址（如：123.58.180.121）标识服务器</li>
+<li>IP协议需要使用32位二进制IP地址</li>
+<li>需要将域名或IP地址转换为32位的IP地址<ul>
+<li>函数 <font color='9900CC'>inet_addr()</font> 实现点分十进制IP地址到32位IP地址的转换</li>
+<li>函数 <font color='9900CC'>gethostbyname()</font> 实现域名到32位IP地址的转换<ul>
+<li>返回一个指向结构 <font color='9900CC'>hostenet</font> 的指针</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320202256.png"></p>
+<h4 id="解析服务器（熟知）端口号"><a href="#解析服务器（熟知）端口号" class="headerlink" title="解析服务器（熟知）端口号"></a>解析服务器（熟知）端口号</h4><ul>
+<li>客户端还可能使用 <font color='9900CC'>服务名</font> (如HTTP)标识服务器端口</li>
+<li>需要将服务名转化为熟知的端口号<ul>
+<li>函数 <font color='9900CC'>getservbyname()</font><ul>
+<li>返回一个指向结构 <font color='9900CC'>servent </font>的指针</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="解析协议号"><a href="#解析协议号" class="headerlink" title="解析协议号"></a>解析协议号</h4><ul>
+<li>客户端可能使用<font color='9900CC'>协议名</font>（如：TCP）来指定协议</li>
+<li>需要将协议名转换为协议号（如 ： 6）<ul>
+<li>函数 <font color='9900CC'>getprotobyname() </font>实现协议名到协议号的转换<ul>
+<li>返回一个指向结构 <font color='9900CC'>prototent</font> 的指针</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20220320203439.png"></p>
+<h4 id="TCP客户端软件流程"><a href="#TCP客户端软件流程" class="headerlink" title="TCP客户端软件流程"></a>TCP客户端软件流程</h4><ol>
+<li>确定服务器的IP地址与端口号</li>
+<li>创建套接字</li>
+<li>分配本地端口地址（IP地址 + 端口号）</li>
+<li><font color='9900CC'>连接服务器（套接字）</font></li>
+<li>遵循应用层协议进行通信</li>
+<li>关闭/释放连接</li>
+</ol>
+<h4 id="UDP客户端软件流程"><a href="#UDP客户端软件流程" class="headerlink" title="UDP客户端软件流程"></a>UDP客户端软件流程</h4><ol>
+<li>确定服务器的IP地址与端口号</li>
+<li>创建套接字</li>
+<li>分配本地端口地址（IP地址 + 端口号）</li>
+<li><font color='9900CC'>指定服务器端点地址，构造UDP数据包</font></li>
+<li>遵循应用层协议进行通信</li>
+<li>关闭/释放连接</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>求大佬赏个饭</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weichat.png" alt="sineagle 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%BD%91/" rel="tag"># 计网</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/12/JDBC-PrepareStatement-%E8%A7%A3%E5%86%B3SQL%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98/" rel="prev" title="JDBC-PreparedStatement 解决SQL注入问题">
+      <i class="fa fa-chevron-left"></i> JDBC-PreparedStatement 解决SQL注入问题
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+			
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E5%B1%82%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">网络应用层概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">网络应用体系结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E7%9A%84%E6%9C%8D%E5%8A%A1%E9%9C%80%E6%B1%82"><span class="nav-number">1.2.</span> <span class="nav-text">网络应用的服务需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Internet%E4%BC%A0%E8%BE%93%E5%B1%82%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">Internet传输层服务模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%AE%9A%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E5%8F%8A%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.4.</span> <span class="nav-text">特定网络应用及协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket%E7%BC%96%E7%A8%8B"><span class="nav-number">1.5.</span> <span class="nav-text">Socket编程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">网络应用的基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84-1"><span class="nav-number">2.1.</span> <span class="nav-text">网络应用体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E6%9C%BA-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BB%93%E6%9E%84%EF%BC%88Client-Server-C-S%EF%BC%89"><span class="nav-number">2.1.1.</span> <span class="nav-text">客户机&#x2F;服务器结构（Client-Server, C&#x2F;S）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%82%B9%E5%AF%B9%E7%82%B9%E7%BB%93%E6%9E%84%EF%BC%88Peer-to-peer-P2P%EF%BC%89"><span class="nav-number">2.1.2.</span> <span class="nav-text">点对点结构（Peer to peer, P2P）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B7%E5%90%88%E6%A8%A1%E5%BC%8F%EF%BC%88Hybrid%EF%BC%89"><span class="nav-number">2.1.3.</span> <span class="nav-text">混合模式（Hybrid）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1"><span class="nav-number">2.2.</span> <span class="nav-text">网络应用进程通信</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A5%97%E6%8E%A5%E5%AD%97%EF%BC%88Socket%EF%BC%89"><span class="nav-number">2.2.1.</span> <span class="nav-text">套接字（Socket）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AF%BB%E5%9D%80%E8%BF%9B%E7%A8%8B"><span class="nav-number">2.2.2.</span> <span class="nav-text">如何寻址进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.2.3.</span> <span class="nav-text">应用层协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">2.2.4.</span> <span class="nav-text">应用层协议的内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BC%A0%E8%BE%93%E5%B1%82%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.3.</span> <span class="nav-text">网络应用需求与传输层服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E5%AF%B9%E4%BC%A0%E8%BE%93%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%9C%80%E6%B1%82"><span class="nav-number">2.3.1.</span> <span class="nav-text">网络应用对传输服务的需求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E5%AF%B9%E4%BC%A0%E8%BE%93%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%9C%80%E6%B1%82"><span class="nav-number">2.3.2.</span> <span class="nav-text">典型网络应用对传输服务的需求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Internet%E6%8F%90%E4%BE%9B%E7%9A%84%E4%BC%A0%E8%BE%93%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.3.3.</span> <span class="nav-text">Internet提供的传输服务</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#TCP%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.3.3.1.</span> <span class="nav-text">TCP服务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#UDP%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.3.3.2.</span> <span class="nav-text">UDP服务</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E6%89%80%E4%BD%BF%E7%94%A8%E7%9A%84%E4%BC%A0%E8%BE%93%E5%B1%82%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.3.4.</span> <span class="nav-text">典型网络应用所使用的传输层服务</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web%E5%BA%94%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">Web应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Web%E5%BA%94%E7%94%A8%E6%A6%82%E8%BF%B0"><span class="nav-number">3.1.</span> <span class="nav-text">Web应用概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Web"><span class="nav-number">3.1.1.</span> <span class="nav-text">Web</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%BF%B0"><span class="nav-number">3.1.2.</span> <span class="nav-text">HTTP协议概述</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E8%BF%9E%E6%8E%A5%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.2.</span> <span class="nav-text">HTTP连接类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP%E8%BF%9E%E6%8E%A5%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.2.1.</span> <span class="nav-text">HTTP连接的两种类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%9E%E6%8C%81%E4%B9%85%E6%80%A7%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.2.2.</span> <span class="nav-text">非持久性连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E6%97%B6%E9%97%B4%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1"><span class="nav-number">3.2.3.</span> <span class="nav-text">响应时间分析与建模</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E6%80%A7HTTP"><span class="nav-number">3.2.4.</span> <span class="nav-text">持久性HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%97%A0%E6%B5%81%E6%B0%B4%EF%BC%88pipelining%EF%BC%89%E7%9A%84%E6%8C%81%E4%B9%85%E6%80%A7%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.2.4.1.</span> <span class="nav-text">无流水（pipelining）的持久性连接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%A6%E6%9C%89%E6%B5%81%E6%B0%B4%E6%9C%BA%E5%88%B6%E7%9A%84%E6%8C%81%E4%B9%85%E6%80%A7%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.2.4.2.</span> <span class="nav-text">带有流水机制的持久性连接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E6%B6%88%E6%81%AF%E6%A0%BC%E5%BC%8F"><span class="nav-number">3.3.</span> <span class="nav-text">HTTP消息格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP%E8%AF%B7%E6%B1%82%E6%B6%88%E6%81%AF"><span class="nav-number">3.3.1.</span> <span class="nav-text">HTTP请求消息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP%E8%AF%B7%E6%B1%82%E6%B6%88%E6%81%AF%E7%9A%84%E9%80%9A%E7%94%A8%E6%A0%BC%E5%BC%8F"><span class="nav-number">3.3.2.</span> <span class="nav-text">HTTP请求消息的通用格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E8%BE%93%E5%85%A5%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">3.3.3.</span> <span class="nav-text">上传输入的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.3.4.</span> <span class="nav-text">方法的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP-1-0"><span class="nav-number">3.3.4.1.</span> <span class="nav-text">HTTP&#x2F;1.0</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP-1-1"><span class="nav-number">3.3.4.2.</span> <span class="nav-text">HTTP&#x2F;1.1</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP%E5%93%8D%E5%BA%94%E6%B6%88%E6%81%AF"><span class="nav-number">3.3.5.</span> <span class="nav-text">HTTP响应消息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP%E5%93%8D%E5%BA%94%E7%8A%B6%E6%80%81%E4%BB%A3%E7%A0%81"><span class="nav-number">3.3.6.</span> <span class="nav-text">HTTP响应状态代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie%E6%8A%80%E6%9C%AF"><span class="nav-number">3.4.</span> <span class="nav-text">Cookie技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cookie%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86"><span class="nav-number">3.4.1.</span> <span class="nav-text">Cookie技术原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web%E7%BC%93%E5%AD%98-%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8A%80%E6%9C%AF"><span class="nav-number">3.5.</span> <span class="nav-text">Web缓存&#x2F;代理服务器技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Web%E7%BC%93%E5%AD%98-%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8A%80%E6%9C%AF-1"><span class="nav-number">3.5.1.</span> <span class="nav-text">Web缓存&#x2F;代理服务器技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E6%80%A7GET%E6%96%B9%E6%B3%95"><span class="nav-number">3.5.2.</span> <span class="nav-text">条件性GET方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">3.5.2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-number">3.5.2.2.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">3.5.2.3.</span> <span class="nav-text">服务器</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Email"><span class="nav-number">4.</span> <span class="nav-text">Email</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Email%E5%BA%94%E7%94%A8%E7%9A%84%E6%9E%84%E6%88%90"><span class="nav-number">4.1.</span> <span class="nav-text">Email应用的构成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMTP%E5%8D%8F%E8%AE%AE%EF%BC%9ARFC-2821"><span class="nav-number">4.2.</span> <span class="nav-text">SMTP协议：RFC 2821</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMTP%E4%BA%A4%E4%BA%92%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.3.</span> <span class="nav-text">SMTP交互示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMTP%E5%8D%8F%E8%AE%AE"><span class="nav-number">4.4.</span> <span class="nav-text">SMTP协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Email-%E6%B6%88%E6%81%AF%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.5.</span> <span class="nav-text">Email 消息格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Email-%E6%B6%88%E6%81%AF%E6%A0%BC%E5%BC%8F%EF%BC%88%E5%A4%9A%E5%AA%92%E4%BD%93%E6%89%A9%E5%B1%95%EF%BC%89"><span class="nav-number">4.6.</span> <span class="nav-text">Email 消息格式（多媒体扩展）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%82%AE%E4%BB%B6%E8%AE%BF%E9%97%AE%E5%8D%8F%E8%AE%AE"><span class="nav-number">4.7.</span> <span class="nav-text">邮件访问协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#POP%E5%8D%8F%E8%AE%AE"><span class="nav-number">4.7.1.</span> <span class="nav-text">POP协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IMAP%E5%8D%8F%E8%AE%AE"><span class="nav-number">4.7.2.</span> <span class="nav-text">IMAP协议</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS%E5%BA%94%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">DNS应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS%E6%A6%82%E8%BF%B0"><span class="nav-number">5.1.</span> <span class="nav-text">DNS概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS-Domain-Name-System"><span class="nav-number">5.1.1.</span> <span class="nav-text">DNS(Domain Name System)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E5%B1%82%E6%AC%A1%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">5.1.2.</span> <span class="nav-text">分布式层次式数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS%E6%A0%B9%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">5.1.3.</span> <span class="nav-text">DNS根域名服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TLD%E5%92%8C%E6%9D%83%E5%A8%81%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">5.1.4.</span> <span class="nav-text">TLD和权威域名解析服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">5.1.5.</span> <span class="nav-text">本地域名解析服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS%E6%9F%A5%E8%AF%A2%E7%A4%BA%E4%BE%8B"><span class="nav-number">5.1.6.</span> <span class="nav-text">DNS查询示例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.1.6.1.</span> <span class="nav-text">迭代查询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.1.6.2.</span> <span class="nav-text">递归查询</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS%E8%AE%B0%E5%BD%95%E7%BC%93%E5%AD%98%E5%92%8C%E6%9B%B4%E6%96%B0"><span class="nav-number">5.1.7.</span> <span class="nav-text">DNS记录缓存和更新</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS%E8%AE%B0%E5%BD%95%E5%92%8C%E6%B6%88%E6%81%AF"><span class="nav-number">5.2.</span> <span class="nav-text">DNS记录和消息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS%E8%AE%B0%E5%BD%95"><span class="nav-number">5.2.1.</span> <span class="nav-text">DNS记录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%B6%88%E6%81%AF"><span class="nav-number">5.2.2.</span> <span class="nav-text">DNS协议与消息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#P2P%E5%BA%94%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">P2P应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BitTorrent"><span class="nav-number">6.1.</span> <span class="nav-text">BitTorrent</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Socket-%E7%BC%96%E7%A8%8B"><span class="nav-number">7.</span> <span class="nav-text">Socket 编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%8E%A5%E5%8F%A3"><span class="nav-number">7.1.</span> <span class="nav-text">网络程序设计接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3-API"><span class="nav-number">7.2.</span> <span class="nav-text">应用编程接口 API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket-API"><span class="nav-number">7.3.</span> <span class="nav-text">Socket API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket%E6%8A%BD%E8%B1%A1"><span class="nav-number">7.4.</span> <span class="nav-text">Socket抽象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80%E7%BB%93%E6%9E%84"><span class="nav-number">7.5.</span> <span class="nav-text">地址结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket-API%E5%87%BD%E6%95%B0"><span class="nav-number">7.6.</span> <span class="nav-text">Socket API函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WSAStartup"><span class="nav-number">7.6.1.</span> <span class="nav-text">WSAStartup</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WSACleanup"><span class="nav-number">7.6.2.</span> <span class="nav-text">WSACleanup</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Socket"><span class="nav-number">7.6.3.</span> <span class="nav-text">Socket</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Closesocket"><span class="nav-number">7.6.4.</span> <span class="nav-text">Closesocket</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bind"><span class="nav-number">7.6.5.</span> <span class="nav-text">bind</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#listen"><span class="nav-number">7.6.6.</span> <span class="nav-text">listen</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#connect"><span class="nav-number">7.6.7.</span> <span class="nav-text">connect</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#accept"><span class="nav-number">7.6.8.</span> <span class="nav-text">accept</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#send-sendto"><span class="nav-number">7.6.9.</span> <span class="nav-text">send, sendto</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#recv-recvfrom"><span class="nav-number">7.6.10.</span> <span class="nav-text">recv, recvfrom</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Socket-API%E5%87%BD%E6%95%B0%E5%B0%8F%E7%BB%93"><span class="nav-number">7.6.11.</span> <span class="nav-text">Socket API函数小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket%E9%9D%A2%E5%90%91TCP-IP%E7%9A%84%E6%9C%8D%E5%8A%A1%E7%B1%BB%E5%9E%8B"><span class="nav-number">7.7.</span> <span class="nav-text">Socket面向TCP&#x2F;IP的服务类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%AD%97%E8%8A%82%E9%A1%BA%E5%BA%8F"><span class="nav-number">7.8.</span> <span class="nav-text">关于网络字节顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E7%9A%84Socket-API-TCP-%E8%B0%83%E7%94%A8%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="nav-number">7.9.</span> <span class="nav-text">网络应用的Socket API(TCP)调用基本流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1"><span class="nav-number">7.10.</span> <span class="nav-text">客户端软件设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90%E6%9C%8D%E5%8A%A1%E5%99%A8IP%E5%9C%B0%E5%9D%80"><span class="nav-number">7.10.1.</span> <span class="nav-text">解析服务器IP地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%88%E7%86%9F%E7%9F%A5%EF%BC%89%E7%AB%AF%E5%8F%A3%E5%8F%B7"><span class="nav-number">7.10.2.</span> <span class="nav-text">解析服务器（熟知）端口号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90%E5%8D%8F%E8%AE%AE%E5%8F%B7"><span class="nav-number">7.10.3.</span> <span class="nav-text">解析协议号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BD%AF%E4%BB%B6%E6%B5%81%E7%A8%8B"><span class="nav-number">7.10.4.</span> <span class="nav-text">TCP客户端软件流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UDP%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BD%AF%E4%BB%B6%E6%B5%81%E7%A8%8B"><span class="nav-number">7.10.5.</span> <span class="nav-text">UDP客户端软件流程</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sineagle"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">sineagle</p>
+  <div class="site-description" itemprop="description">一个失败的人</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">76</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sineagle" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sineagle" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:997991067@gmail.com" title="E-Mail → mailto:997991067@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/bottlecodes" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;bottlecodes" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/bottlecodes" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;bottlecodes" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:yourname?call|chat" title="Skype → skype:yourname?call|chat" rel="noopener" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://cnblogs.com/sineagle" title="OldBlogs → https:&#x2F;&#x2F;cnblogs.com&#x2F;sineagle" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>OldBlogs</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://cnblogs.com/sineagle" title="http:&#x2F;&#x2F;cnblogs.com&#x2F;sineagle" rel="noopener" target="_blank">MyOldBlog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://cnblogs.com/sineagle" title="http:&#x2F;&#x2F;cnblogs.com&#x2F;sineagle" rel="noopener" target="_blank">MyOldBlog2</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://cnblogs.com/sineagle" title="http:&#x2F;&#x2F;cnblogs.com&#x2F;sineagle" rel="noopener" target="_blank">MyOldBlog3</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://cnblogs.com/sineagle" title="http:&#x2F;&#x2F;cnblogs.com&#x2F;sineagle" rel="noopener" target="_blank">MyOldBlog4</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sineagle</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">197k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:59</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
