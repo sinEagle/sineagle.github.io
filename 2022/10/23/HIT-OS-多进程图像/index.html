@@ -50,8 +50,16 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221024111340.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221024204308.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221024204532.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026090322.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026091656.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026092111.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026093304.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026093934.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026100939.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026101737.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026102245.png">
 <meta property="article:published_time" content="2022-10-23T02:19:07.000Z">
-<meta property="article:modified_time" content="2022-10-24T12:45:46.166Z">
+<meta property="article:modified_time" content="2022-10-26T02:23:17.087Z">
 <meta property="article:author" content="sineagle">
 <meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary">
@@ -222,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-24 20:45:46" itemprop="dateModified" datetime="2022-10-24T20:45:46+08:00">2022-10-24</time>
+                <time title="修改时间：2022-10-26 10:23:17" itemprop="dateModified" datetime="2022-10-26T10:23:17+08:00">2022-10-26</time>
               </span>
 
           <br>
@@ -231,7 +239,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>359</span>
+              <span>514</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -277,6 +285,18 @@
 <p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221024111340.png"></p>
 <h2 id="为什么说是用户级线程-Yield是用户级线程"><a href="#为什么说是用户级线程-Yield是用户级线程" class="headerlink" title="为什么说是用户级线程-Yield是用户级线程"></a>为什么说是用户级线程-Yield是用户级线程</h2><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221024204308.png"></p>
 <h2 id="核心级线程"><a href="#核心级线程" class="headerlink" title="核心级线程"></a>核心级线程</h2><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221024204532.png"></p>
+<h1 id="内核级线程"><a href="#内核级线程" class="headerlink" title="内核级线程"></a>内核级线程</h1><h2 id="开始核心级线程"><a href="#开始核心级线程" class="headerlink" title="开始核心级线程"></a>开始核心级线程</h2><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026090322.png"></p>
+<p>只有<font color='9900CC'>内核级线程</font>才能多核并行，充分发挥多核的价值</p>
+<ul>
+<li>多进程在多核上的情况，关键在于<code>Cache</code>和<code>MMU</code>是否共享</li>
+</ul>
+<h2 id="和用户级相比，核心级线程有什么不同"><a href="#和用户级相比，核心级线程有什么不同" class="headerlink" title="和用户级相比，核心级线程有什么不同"></a>和用户级相比，核心级线程有什么不同</h2><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026091656.png"></p>
+<h2 id="用户栈和内核栈之间的关联"><a href="#用户栈和内核栈之间的关联" class="headerlink" title="用户栈和内核栈之间的关联"></a>用户栈和内核栈之间的关联</h2><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026092111.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026093304.png"></p>
+<h2 id="开始内核中的切换：switch-to"><a href="#开始内核中的切换：switch-to" class="headerlink" title="开始内核中的切换：switch_to"></a>开始内核中的切换：switch_to</h2><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026093934.png"> </p>
+<h2 id="内核线程switch-to的五段论"><a href="#内核线程switch-to的五段论" class="headerlink" title="内核线程switch_to的五段论"></a>内核线程<code>switch_to</code>的五段论</h2><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026100939.png"></p>
+<h2 id="ThreadCreate"><a href="#ThreadCreate" class="headerlink" title="ThreadCreate()"></a>ThreadCreate()</h2><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026101737.png"></p>
+<h2 id="用户级线程、核心级线程的对比"><a href="#用户级线程、核心级线程的对比" class="headerlink" title="用户级线程、核心级线程的对比"></a>用户级线程、核心级线程的对比</h2><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221026102245.png"></p>
 
     </div>
 
@@ -373,7 +393,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%9B%BE%E5%83%8F"><span class="nav-number">1.</span> <span class="nav-text">多进程图像</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%9B%BE%E5%83%8F%E4%BB%8E%E5%90%AF%E5%8A%A8%E5%BC%80%E5%A7%8B%E5%88%B0%E5%85%B3%E6%9C%BA%E7%BB%93%E6%9D%9F"><span class="nav-number">1.1.</span> <span class="nav-text">多进程图像从启动开始到关机结束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%9B%BE%E5%83%8F%E5%A6%82%E4%BD%95%E7%BB%84%E7%BB%87"><span class="nav-number">1.2.</span> <span class="nav-text">多进程图像如何组织</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%A6%82%E4%BD%95%E4%BA%A4%E6%9B%BF"><span class="nav-number">1.3.</span> <span class="nav-text">多进程如何交替</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%9B%BF%E7%9A%84%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9A%E9%98%9F%E5%88%97%E6%93%8D%E4%BD%9C-%E8%B0%83%E5%BA%A6-%E5%88%87%E6%8D%A2"><span class="nav-number">1.4.</span> <span class="nav-text">交替的三部分：队列操作+调度+切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%A6%82%E4%BD%95%E5%BD%B1%E5%93%8D%EF%BC%9F"><span class="nav-number">1.5.</span> <span class="nav-text">多进程如何影响？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%A6%82%E4%BD%95%E5%90%88%E4%BD%9C"><span class="nav-number">1.6.</span> <span class="nav-text">多进程如何合作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.6.1.</span> <span class="nav-text">生产者-消费者示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%BA%A7%E7%BA%BF%E7%A8%8B%EF%BC%88L10%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">用户级线程（L10）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E8%B5%84%E6%BA%90%E4%B8%8D%E5%8A%A8%E8%80%8C%E5%88%87%E6%8D%A2%E6%8C%87%E4%BB%A4%E5%BA%8F%E5%88%97"><span class="nav-number">2.1.</span> <span class="nav-text">是否可以资源不动而切换指令序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E6%8C%87%E4%BB%A4%E5%BA%8F%E5%88%97-%E4%B8%80%E4%B8%AA%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E6%98%AF%E5%90%A6%E5%AE%9E%E7%94%A8"><span class="nav-number">2.2.</span> <span class="nav-text">多个指令序列 + 一个地址空间是否实用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-Yield"><span class="nav-number">2.3.</span> <span class="nav-text">Create Yield</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E6%89%A7%E8%A1%8C%E5%BA%8F%E5%88%97%E4%B8%8E%E4%B8%80%E4%B8%AA%E6%A0%88"><span class="nav-number">2.4.</span> <span class="nav-text">两个执行序列与一个栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E4%B8%80%E4%B8%AA%E6%A0%88%E5%88%B0%E4%B8%A4%E4%B8%AA%E6%A0%88"><span class="nav-number">2.5.</span> <span class="nav-text">从一个栈到两个栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A0%B7%E5%AD%90%EF%BC%9A%E4%B8%A4%E4%B8%AATCB%E3%80%81%E4%B8%A4%E4%B8%AA%E6%A0%88%E3%80%81%E5%88%87%E6%8D%A2%E7%9A%84PC%E5%9C%A8%E6%A0%88%E4%B8%AD"><span class="nav-number">2.6.</span> <span class="nav-text">两个线程的样子：两个TCB、两个栈、切换的PC在栈中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4%E6%98%AF%E7%94%A8%E6%88%B7%E7%BA%A7%E7%BA%BF%E7%A8%8B-Yield%E6%98%AF%E7%94%A8%E6%88%B7%E7%BA%A7%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.7.</span> <span class="nav-text">为什么说是用户级线程-Yield是用户级线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%BA%A7%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.8.</span> <span class="nav-text">核心级线程</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%9B%BE%E5%83%8F"><span class="nav-number">1.</span> <span class="nav-text">多进程图像</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%9B%BE%E5%83%8F%E4%BB%8E%E5%90%AF%E5%8A%A8%E5%BC%80%E5%A7%8B%E5%88%B0%E5%85%B3%E6%9C%BA%E7%BB%93%E6%9D%9F"><span class="nav-number">1.1.</span> <span class="nav-text">多进程图像从启动开始到关机结束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%9B%BE%E5%83%8F%E5%A6%82%E4%BD%95%E7%BB%84%E7%BB%87"><span class="nav-number">1.2.</span> <span class="nav-text">多进程图像如何组织</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%A6%82%E4%BD%95%E4%BA%A4%E6%9B%BF"><span class="nav-number">1.3.</span> <span class="nav-text">多进程如何交替</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%9B%BF%E7%9A%84%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9A%E9%98%9F%E5%88%97%E6%93%8D%E4%BD%9C-%E8%B0%83%E5%BA%A6-%E5%88%87%E6%8D%A2"><span class="nav-number">1.4.</span> <span class="nav-text">交替的三部分：队列操作+调度+切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%A6%82%E4%BD%95%E5%BD%B1%E5%93%8D%EF%BC%9F"><span class="nav-number">1.5.</span> <span class="nav-text">多进程如何影响？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%A6%82%E4%BD%95%E5%90%88%E4%BD%9C"><span class="nav-number">1.6.</span> <span class="nav-text">多进程如何合作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.6.1.</span> <span class="nav-text">生产者-消费者示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%BA%A7%E7%BA%BF%E7%A8%8B%EF%BC%88L10%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">用户级线程（L10）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E8%B5%84%E6%BA%90%E4%B8%8D%E5%8A%A8%E8%80%8C%E5%88%87%E6%8D%A2%E6%8C%87%E4%BB%A4%E5%BA%8F%E5%88%97"><span class="nav-number">2.1.</span> <span class="nav-text">是否可以资源不动而切换指令序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E6%8C%87%E4%BB%A4%E5%BA%8F%E5%88%97-%E4%B8%80%E4%B8%AA%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E6%98%AF%E5%90%A6%E5%AE%9E%E7%94%A8"><span class="nav-number">2.2.</span> <span class="nav-text">多个指令序列 + 一个地址空间是否实用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-Yield"><span class="nav-number">2.3.</span> <span class="nav-text">Create Yield</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E6%89%A7%E8%A1%8C%E5%BA%8F%E5%88%97%E4%B8%8E%E4%B8%80%E4%B8%AA%E6%A0%88"><span class="nav-number">2.4.</span> <span class="nav-text">两个执行序列与一个栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E4%B8%80%E4%B8%AA%E6%A0%88%E5%88%B0%E4%B8%A4%E4%B8%AA%E6%A0%88"><span class="nav-number">2.5.</span> <span class="nav-text">从一个栈到两个栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A0%B7%E5%AD%90%EF%BC%9A%E4%B8%A4%E4%B8%AATCB%E3%80%81%E4%B8%A4%E4%B8%AA%E6%A0%88%E3%80%81%E5%88%87%E6%8D%A2%E7%9A%84PC%E5%9C%A8%E6%A0%88%E4%B8%AD"><span class="nav-number">2.6.</span> <span class="nav-text">两个线程的样子：两个TCB、两个栈、切换的PC在栈中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4%E6%98%AF%E7%94%A8%E6%88%B7%E7%BA%A7%E7%BA%BF%E7%A8%8B-Yield%E6%98%AF%E7%94%A8%E6%88%B7%E7%BA%A7%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.7.</span> <span class="nav-text">为什么说是用户级线程-Yield是用户级线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%BA%A7%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.8.</span> <span class="nav-text">核心级线程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E7%BA%A7%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">内核级线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E6%A0%B8%E5%BF%83%E7%BA%A7%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.1.</span> <span class="nav-text">开始核心级线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%92%8C%E7%94%A8%E6%88%B7%E7%BA%A7%E7%9B%B8%E6%AF%94%EF%BC%8C%E6%A0%B8%E5%BF%83%E7%BA%A7%E7%BA%BF%E7%A8%8B%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C"><span class="nav-number">3.2.</span> <span class="nav-text">和用户级相比，核心级线程有什么不同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E6%A0%88%E5%92%8C%E5%86%85%E6%A0%B8%E6%A0%88%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E8%81%94"><span class="nav-number">3.3.</span> <span class="nav-text">用户栈和内核栈之间的关联</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E5%86%85%E6%A0%B8%E4%B8%AD%E7%9A%84%E5%88%87%E6%8D%A2%EF%BC%9Aswitch-to"><span class="nav-number">3.4.</span> <span class="nav-text">开始内核中的切换：switch_to</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E7%BA%BF%E7%A8%8Bswitch-to%E7%9A%84%E4%BA%94%E6%AE%B5%E8%AE%BA"><span class="nav-number">3.5.</span> <span class="nav-text">内核线程switch_to的五段论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadCreate"><span class="nav-number">3.6.</span> <span class="nav-text">ThreadCreate()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%BA%A7%E7%BA%BF%E7%A8%8B%E3%80%81%E6%A0%B8%E5%BF%83%E7%BA%A7%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="nav-number">3.7.</span> <span class="nav-text">用户级线程、核心级线程的对比</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -452,12 +472,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">382k</span>
+    <span title="站点总字数">387k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:47</span>
+    <span title="站点阅读时长">5:52</span>
 </div>
 
         
