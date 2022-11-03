@@ -23,18 +23,25 @@
   </script>
 
   <meta property="og:type" content="article">
-<meta property="og:title" content="2020 China Collegiate Programming Contest, Weihai Site H题（差分）">
-<meta property="og:url" content="https://sineagle.github.io/2021/10/09/2020-China-Collegiate-Programming-Contest-Weihai-Site-H%E9%A2%98%EF%BC%88%E5%B7%AE%E5%88%86%EF%BC%89/index.html">
+<meta property="og:title" content="HIT-OS 线程同步和信号量">
+<meta property="og:url" content="https://sineagle.github.io/2022/11/03/HIT-OS-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E5%92%8C%E4%BF%A1%E5%8F%B7%E9%87%8F/index.html">
 <meta property="og:site_name" content="sinEagle">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-10-09T12:39:57.000Z">
-<meta property="article:modified_time" content="2021-10-09T14:24:30.865Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221103165259.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221103170533.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221103170630.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221103171806.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221103172328.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221103173328.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221103174830.png">
+<meta property="article:published_time" content="2022-11-03T08:34:48.000Z">
+<meta property="article:modified_time" content="2022-11-03T09:54:41.571Z">
 <meta property="article:author" content="sineagle">
-<meta property="article:tag" content="差分">
-<meta property="article:tag" content="set">
+<meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221103165259.png">
 
-<link rel="canonical" href="https://sineagle.github.io/2021/10/09/2020-China-Collegiate-Programming-Contest-Weihai-Site-H%E9%A2%98%EF%BC%88%E5%B7%AE%E5%88%86%EF%BC%89/">
+<link rel="canonical" href="https://sineagle.github.io/2022/11/03/HIT-OS-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E5%92%8C%E4%BF%A1%E5%8F%B7%E9%87%8F/">
 
 
 <script id="page-configurations">
@@ -47,7 +54,7 @@
   };
 </script>
 
-  <title>2020 China Collegiate Programming Contest, Weihai Site H题（差分） | sinEagle</title>
+  <title>HIT-OS 线程同步和信号量 | sinEagle</title>
   
 
 
@@ -169,7 +176,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2021/10/09/2020-China-Collegiate-Programming-Contest-Weihai-Site-H%E9%A2%98%EF%BC%88%E5%B7%AE%E5%88%86%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2022/11/03/HIT-OS-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E5%92%8C%E4%BF%A1%E5%8F%B7%E9%87%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.jpg">
@@ -182,7 +189,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          2020 China Collegiate Programming Contest, Weihai Site H题（差分）
+          HIT-OS 线程同步和信号量
         </h1>
 
         <div class="post-meta">
@@ -193,7 +200,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-10-09 20:39:57 / 修改时间：22:24:30" itemprop="dateCreated datePublished" datetime="2021-10-09T20:39:57+08:00">2021-10-09</time>
+              <time title="创建时间：2022-11-03 16:34:48 / 修改时间：17:54:41" itemprop="dateCreated datePublished" datetime="2022-11-03T16:34:48+08:00">2022-11-03</time>
             </span>
 
           <br>
@@ -202,7 +209,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>780</span>
+              <span>50</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -222,8 +229,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><a target="_blank" rel="noopener" href="https://codeforces.com/gym/102798/problem/H">题目链接</a></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">201000</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, m, s;</span><br><span class="line"><span class="keyword">int</span> cnt[N];</span><br><span class="line"><span class="keyword">int</span> ans[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m &gt;&gt; s;</span><br><span class="line">    <span class="keyword">int</span> tt = <span class="number">0</span>;</span><br><span class="line">    set&lt;<span class="keyword">int</span>&gt; group[N];</span><br><span class="line">    <span class="keyword">while</span>(s--) &#123;</span><br><span class="line">        <span class="keyword">int</span> op, x, y;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>, &amp;op, &amp;x, &amp;y);</span><br><span class="line">        <span class="keyword">if</span>(op == <span class="number">1</span>) &#123;</span><br><span class="line">            group[y].<span class="built_in">insert</span>(x);</span><br><span class="line">            ans[x] -= cnt[y];</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(op == <span class="number">2</span>) &#123;</span><br><span class="line">            group[y].<span class="built_in">erase</span>(x);</span><br><span class="line">            ans[x] += cnt[y];</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(op == <span class="number">3</span>) &#123;</span><br><span class="line">            cnt[y]++;</span><br><span class="line">            ans[x]--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> it:group[i]) ans[it] += cnt[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ans[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="进程同步和信号量概述"><a href="#进程同步和信号量概述" class="headerlink" title="进程同步和信号量概述"></a>进程同步和信号量概述</h1><h2 id="生产者-消费者示例"><a href="#生产者-消费者示例" class="headerlink" title="生产者-消费者示例"></a>生产者-消费者示例</h2><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221103165259.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221103170533.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221103170630.png"></p>
+<h2 id="从信号的到信号量"><a href="#从信号的到信号量" class="headerlink" title="从信号的到信号量"></a>从信号的到信号量</h2><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221103171806.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221103172328.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221103173328.png"></p>
+<h2 id="用信号量解生产者-消费者问题"><a href="#用信号量解生产者-消费者问题" class="headerlink" title="用信号量解生产者-消费者问题"></a>用信号量解生产者-消费者问题</h2><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221103174830.png"></p>
+<h1 id="信号量临界区的保护"><a href="#信号量临界区的保护" class="headerlink" title="信号量临界区的保护"></a>信号量临界区的保护</h1>
     </div>
 
     
@@ -247,8 +260,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%B7%AE%E5%88%86/" rel="tag"># 差分</a>
-              <a href="/tags/set/" rel="tag"># set</a>
+              <a href="/tags/OS/" rel="tag"># OS</a>
           </div>
 
         
@@ -257,13 +269,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/10/08/NTHU-Operating-System-Chap5-Process-Scheduling/" rel="prev" title="NTHU-Operating System: Chap5 Process Scheduling">
-      <i class="fa fa-chevron-left"></i> NTHU-Operating System: Chap5 Process Scheduling
+    <a href="/2022/11/01/Linux%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%A3%85%E8%BD%BD%E5%92%8C%E5%BA%93/" rel="prev" title="Linux环境下程序的链接，装载和库">
+      <i class="fa fa-chevron-left"></i> Linux环境下程序的链接，装载和库
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/10/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E4%B8%8E%E8%AE%BE%E8%AE%A1-%E9%97%A8%E7%94%B5%E8%B7%AF%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/" rel="next" title="计算机组成与设计-门电路的基本原理">
-      计算机组成与设计-门电路的基本原理 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -323,6 +332,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5%E5%92%8C%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">进程同步和信号量概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.1.</span> <span class="nav-text">生产者-消费者示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E4%BF%A1%E5%8F%B7%E7%9A%84%E5%88%B0%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="nav-number">1.2.</span> <span class="nav-text">从信号的到信号量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E4%BF%A1%E5%8F%B7%E9%87%8F%E8%A7%A3%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.</span> <span class="nav-text">用信号量解生产者-消费者问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%B4%E7%95%8C%E5%8C%BA%E7%9A%84%E4%BF%9D%E6%8A%A4"><span class="nav-number">2.</span> <span class="nav-text">信号量临界区的保护</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
