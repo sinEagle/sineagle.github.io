@@ -22,15 +22,25 @@
     var CONFIG = {"hostname":"sineagle.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="sinEagle">
-<meta property="og:url" content="https://sineagle.github.io/tags/fhq-Treap/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="HIT-OS 内存管理">
+<meta property="og:url" content="https://sineagle.github.io/2022/11/11/HIT-OS-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/index.html">
 <meta property="og:site_name" content="sinEagle">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221111104448.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221111105012.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221111105455.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221111110058.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221111110421.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221111111053.png">
+<meta property="article:published_time" content="2022-11-11T02:40:46.000Z">
+<meta property="article:modified_time" content="2022-11-11T03:10:56.697Z">
 <meta property="article:author" content="sineagle">
+<meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221111104448.png">
 
-<link rel="canonical" href="https://sineagle.github.io/tags/fhq-Treap/">
+<link rel="canonical" href="https://sineagle.github.io/2022/11/11/HIT-OS-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
 
 
 <script id="page-configurations">
@@ -38,12 +48,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: fhq Treap | sinEagle</title>
+  <title>HIT-OS 内存管理 | sinEagle</title>
   
 
 
@@ -157,72 +167,116 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
 			
 			
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">fhq Treap
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2022/11/11/HIT-OS-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="sineagle">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sinEagle">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HIT-OS 内存管理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-11 10:40:46 / 修改时间：11:10:56" itemprop="dateCreated datePublished" datetime="2022-11-11T10:40:46+08:00">2022-11-11</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>84</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+            <div class="post-description"> </div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-16T09:19:43+08:00"
-              content="2021-08-16">
-          08-16
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/16/Luogu-P3391-%E6%96%87%E8%89%BA%E5%B9%B3%E8%A1%A1%E6%A0%91%EF%BC%88fhq-Treap-%E7%BF%BB%E8%BD%AC%E5%8C%BA%E9%97%B4%EF%BC%89/" itemprop="url">
-            <span itemprop="name">Luogu P3391 文艺平衡树（fhq Treap 翻转区间）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-14T09:57:54+08:00"
-              content="2021-08-14">
-          08-14
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/14/fhq-Treap%E6%A8%A1%E6%9D%BF/" itemprop="url">
-            <span itemprop="name">fhq Treap模板</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
+        <h1 id="内存使用与分段"><a href="#内存使用与分段" class="headerlink" title="内存使用与分段"></a>内存使用与分段</h1><h2 id="如何让内存用起来"><a href="#如何让内存用起来" class="headerlink" title="如何让内存用起来"></a>如何让内存用起来</h2><h3 id="仍然从计算机如何工作开始…"><a href="#仍然从计算机如何工作开始…" class="headerlink" title="仍然从计算机如何工作开始…"></a>仍然从计算机如何工作开始…</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221111104448.png"></p>
+<h3 id="那就让首先程序进入内存"><a href="#那就让首先程序进入内存" class="headerlink" title="那就让首先程序进入内存"></a>那就让首先程序进入内存</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221111105012.png"></p>
+<h3 id="重定位：修改程序中的地址（是相对地址）"><a href="#重定位：修改程序中的地址（是相对地址）" class="headerlink" title="重定位：修改程序中的地址（是相对地址）"></a>重定位：修改程序中的地址（<font color='red'>是相对地址</font>）</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221111105455.png"></p>
+<h3 id="程序载入后还需要移动"><a href="#程序载入后还需要移动" class="headerlink" title="程序载入后还需要移动"></a>程序载入后还需要移动</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221111110058.png"></p>
+<h3 id="重定位最合适的时机-运行时重定位"><a href="#重定位最合适的时机-运行时重定位" class="headerlink" title="重定位最合适的时机 - 运行时重定位"></a>重定位最合适的时机 - 运行时重定位</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221111110421.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221111111053.png"></p>
 
     </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>求大佬赏个饭</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weichat.png" alt="sineagle 微信支付">
+        <p>微信支付</p>
+      </div>
+
   </div>
-  
-  
-  
+</div>
 
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS/" rel="tag"># OS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/03/HIT-OS-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E5%92%8C%E4%BF%A1%E5%8F%B7%E9%87%8F/" rel="prev" title="HIT-OS 线程同步和信号量">
+      <i class="fa fa-chevron-left"></i> HIT-OS 线程同步和信号量
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
@@ -276,6 +330,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%88%86%E6%AE%B5"><span class="nav-number">1.</span> <span class="nav-text">内存使用与分段</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%AE%A9%E5%86%85%E5%AD%98%E7%94%A8%E8%B5%B7%E6%9D%A5"><span class="nav-number">1.1.</span> <span class="nav-text">如何让内存用起来</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8D%E7%84%B6%E4%BB%8E%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E5%BC%80%E5%A7%8B%E2%80%A6"><span class="nav-number">1.1.1.</span> <span class="nav-text">仍然从计算机如何工作开始…</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%82%A3%E5%B0%B1%E8%AE%A9%E9%A6%96%E5%85%88%E7%A8%8B%E5%BA%8F%E8%BF%9B%E5%85%A5%E5%86%85%E5%AD%98"><span class="nav-number">1.1.2.</span> <span class="nav-text">那就让首先程序进入内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E4%BD%8D%EF%BC%9A%E4%BF%AE%E6%94%B9%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84%E5%9C%B0%E5%9D%80%EF%BC%88%E6%98%AF%E7%9B%B8%E5%AF%B9%E5%9C%B0%E5%9D%80%EF%BC%89"><span class="nav-number">1.1.3.</span> <span class="nav-text">重定位：修改程序中的地址（是相对地址）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%BD%BD%E5%85%A5%E5%90%8E%E8%BF%98%E9%9C%80%E8%A6%81%E7%A7%BB%E5%8A%A8"><span class="nav-number">1.1.4.</span> <span class="nav-text">程序载入后还需要移动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E4%BD%8D%E6%9C%80%E5%90%88%E9%80%82%E7%9A%84%E6%97%B6%E6%9C%BA-%E8%BF%90%E8%A1%8C%E6%97%B6%E9%87%8D%E5%AE%9A%E4%BD%8D"><span class="nav-number">1.1.5.</span> <span class="nav-text">重定位最合适的时机 - 运行时重定位</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
