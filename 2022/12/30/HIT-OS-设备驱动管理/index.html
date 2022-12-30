@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/eagle32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/eagle16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=DejaVu Sans Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-flat-top.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sineagle.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="HIT-OS 设备驱动管理与文件系统">
+<meta property="og:url" content="https://sineagle.github.io/2022/12/30/HIT-OS-%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="sinEagle">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230111214.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230115002.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230125329.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230142231.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230144051.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230161808.png">
+<meta property="article:published_time" content="2022-12-30T02:41:53.000Z">
+<meta property="article:modified_time" content="2022-12-30T08:21:13.675Z">
+<meta property="article:author" content="sineagle">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230111214.png">
+
+<link rel="canonical" href="https://sineagle.github.io/2022/12/30/HIT-OS-%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E7%AE%A1%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>HIT-OS 设备驱动管理与文件系统 | sinEagle</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">sinEagle</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">bottlecode</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+			
+			
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2022/12/30/HIT-OS-%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="sineagle">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sinEagle">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HIT-OS 设备驱动管理与文件系统
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-30 10:41:53 / 修改时间：16:21:13" itemprop="dateCreated datePublished" datetime="2022-12-30T10:41:53+08:00">2022-12-30</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+            <div class="post-description"> </div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="设备驱动-从文件视图到out指令"><a href="#设备驱动-从文件视图到out指令" class="headerlink" title="设备驱动-从文件视图到out指令"></a>设备驱动-从文件视图到out指令</h1><h2 id="设备驱动的基本原理"><a href="#设备驱动的基本原理" class="headerlink" title="设备驱动的基本原理"></a>设备驱动的基本原理</h2><h3 id="外设的工作工作原理"><a href="#外设的工作工作原理" class="headerlink" title="外设的工作工作原理"></a>外设的工作工作原理</h3><p>CPU对外设的使用主要由如下两条主线构成：</p>
+<ul>
+<li>第一条主线是从CPU开始，CPU发送命令给外设，最终表现为CPU执行指令, out ax, 端口号</li>
+<li>第二条主线是从外设开始，外设在完成工作后或出现状态变化时通过中断通知CPU，CPU通过中断处理程序完成后续工作</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230111214.png"></p>
+<h3 id="文件视图"><a href="#文件视图" class="headerlink" title="文件视图"></a>文件视图</h3><p>一段操纵外设的程序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> fd = open(<span class="string">&quot;/dev/xxx&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i ++) &#123;</span><br><span class="line">    write(fd, i, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">&#125;</span><br><span class="line">close(fd);</span><br></pre></td></tr></table></figure>
+
+<p>不管是什么样子的外设，操作系统都将其统一抽象成一个文件，程序员通过文件接口 open、read、write来使用这些外设。</p>
+<ul>
+<li><p>无论什么设备都是open, read, wirte, close</p>
+<p><font color='9900CC'>操作系统为用户提供统一的接口</font></p>
+</li>
+<li><p>不同设备对应不同的设备文件(/dev/xxx)</p>
+<p><font color='9900CC'>根据设备文件找到控制器的地址、内容格式等等</font></p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230115002.png"></p>
+<h2 id="显示器的驱动"><a href="#显示器的驱动" class="headerlink" title="显示器的驱动"></a>显示器的驱动</h2><h3 id="从printf开始"><a href="#从printf开始" class="headerlink" title="从printf开始"></a>从printf开始</h3><p>printf是一个库函数，该库函数会将 %d、%c等内容统一处理为字符串，然后以该字符串所在的内存地址 buf 和字符串长度 count 为参数调用<font color='#0000C6'>系统调用write(1, buf, count)</font>。</p>
+<p>write系统调用通过 <code>int 0x80</code> 中断进入内核执行 <code>sys_write()</code>函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在linux/fs/read_write.c中</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_write</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> fd, <span class="keyword">char</span> * buf, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">file</span> * <span class="title">file</span>;</span></span><br><span class="line">    file = current-&gt;filp[fd];</span><br><span class="line">    inode = file-&gt;f_inode;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>fd</code>是找到file的索引， <code>current</code>表示当前进程，file的目的就是得到<code>inode</code>，显示器的信息就在这里</p>
+<p><code>sys_write</code>首先要做的就是找到所写文件的属性，即到底是普通文件还是设备文件，如果是设备文件，<code>sys_write</code>要根据设备文件中存放的设备属性信息转到相应的操作命令。</p>
+<p>设备信息存放在描述文件本身（非文件内容）的数据结构中，这个数据结构就是著名的文件控制块(file control block, FCB)。所以 <code>sys_write</code>的第一步工作就应该是找到要写的“文件”的FCB。</p>
+<h4 id="fd-1的flip从哪里来"><a href="#fd-1的flip从哪里来" class="headerlink" title="fd=1的flip从哪里来"></a>fd=1的flip从哪里来</h4><p>为了找到文件FCB，首先要做的工作就是从当前进程的PCB中找到打开文件的<font color='9900CC'>句柄标识</font>，即<code>fd</code>, 对于显示器而言，这个fd = 1，然后<font color='9900CC'>根据这个fd可以找到文件FCB</font>，即代码中的<code>inode</code>。这个<code>inode</code>到底对应了什么设备？里面存放了什么内容？需要从为inode赋值说起。</p>
+<p><code>current-&gt;filp</code>中存放了<font color='red'>当前进程打开的文件</font>，<font color='red'>如果一个文件不是当前进程打开的，那么就一定是其父进程打开后再由子进程继承而来的</font>。这个是UNIX类操作系统执行<code>fork</code>的结果，因为在<code>fork</code>的核心实现<code>copy_process()</code>中就有这样的资源复制。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 进程创建的代码片段（复制父进程文件句柄）</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">copy_process</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    *p = *current;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; NR_OPEN; i ++) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((f = p-&gt;filp[i])) f-&gt;f_count ++;</span><br><span class="line">        ......</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>谁是一开始打开的，shell进程启动了whoami命令，shell是其父进程</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 系统初始化代码片段</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!fork()) init();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    open(<span class="string">&quot;/dev/tty0&quot;</span>, O_RDWR, <span class="number">0</span>);</span><br><span class="line">    dup(<span class="number">0</span>);</span><br><span class="line">    dup(<span class="number">0</span>);</span><br><span class="line">    execve(<span class="string">&quot;/bin/sh&quot;</span>, argv, envp);</span><br><span class="line">    .....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>fd = 1 的文件对应标准输出，因为每个进程都可能用到标准输出，所以每个进程都会打开这个文件。既然所有进程都要打开这个设备文件，操作系统初始化时的1号进程会首次打开这个设备文件，然后其它进程继承这个文件句柄。在系统启动后创建1号进程的地方，即在<code>init</code>函数中调用名为 <code>/dev/tty0</code>的文件，由于这是该进程打开的第一个文件，所以对应的文件句柄fd = 0，接下来调用两次<code>dup</code>，使得 fd = 1，fd = 2也都指向了 <strong>/dev/tty0</strong> 的FCB，如下图所示</p>
+<p>系统调用 open 的核心工作就是找到文件对应的 <code>FCB</code> （存储在磁盘上），将其读入到内存里并和进程<code>PCB</code>关联如下图中 fd = 0的样子。dup的功能就是将上一个fd的内容复制到下一个fd中, 所以两次调用以后就变成下图所示的效果</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230125329.png"></p>
+<p>现在显示器对应的设备文件已经找到了，就是文件<code>/dev/tty0</code>，其属性信息也已经存放在<code>sys_write</code>函数中的<code>inode</code>变量中了。</p>
+<h4 id="open系统调用完成了什么"><a href="#open系统调用完成了什么" class="headerlink" title="open系统调用完成了什么"></a>open系统调用完成了什么</h4><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230142231.png"></p>
+<p>主要为了在设备文件中读入inode， 根据inode的信息，就可以确认设备的信息，比如后续磁盘的话就走磁盘路，显示器就走显示器的路…</p>
+<h4 id="准备好了，真正向屏幕输出"><a href="#准备好了，真正向屏幕输出" class="headerlink" title="准备好了，真正向屏幕输出"></a>准备好了，真正向屏幕输出</h4><p>现在沿着<code>sys_write</code>继续向下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sys_write 代码片段（根据文件属性进行分支）</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_write</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> fd, <span class="keyword">char</span> * buf, <span class="keyword">int</span> cnt)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    inode = file-&gt;f_inode; </span><br><span class="line">    <span class="keyword">if</span>(S_ISCHR(inode-&gt;i_mode)) &#123; <span class="comment">// /dev/tty0的inode信息是字符设备</span></span><br><span class="line">        <span class="keyword">return</span> rw_char(WRITE, inode-&gt;i_zone[<span class="number">0</span>], buf, cnt); <span class="comment">// inode-&gt;i_zone[0]表示对应的设备号</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先根据inode中的信息判断该文件对应的设备是否是一个字符设备，显示器就是一个字符设备，用命令<code>ls -l /dev/tty0</code>可以列出这个文件的设备信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230144051.png"></p>
+<p>其中第一个字符 <code>c</code> 就表示这是一个字符设备，而后面给出的数字4, 0是这个而设备id主设备号和次设备号。因为计算机上有多个字符设备，用4, 0区分到底是哪一个字符设备。</p>
+<p>显示器是字符设备，现在sys_write 就要分支到函数 rw_char(WRITE, inode-&gt;i_zone[0], buf, cnt) 中去执行， 其中 inode-&gt;izone_[0]中存放的就是该设备id主设备号和次设备号。继续向下执行相应的字符设备处理代码。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 字符设备处理代码</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">rw_char</span><span class="params">(<span class="keyword">int</span> rw, <span class="keyword">int</span> dev, <span class="keyword">char</span> *buf, <span class="keyword">int</span> cnt)</span> </span>&#123;</span><br><span class="line">    crw_ptr call_addr = crw_table[MAJOR(dev)];</span><br><span class="line">    call_addr(rw, dev, buf, cnt);</span><br><span class="line">    <span class="keyword">static</span> crw_ptr crw_table[] = &#123;.... rw_ttyx, .....&#125;;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">rw_ttyx</span><span class="params">(<span class="keyword">int</span> rw, <span class="keyword">unsigned</span> minor, <span class="keyword">char</span> *buf, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ((rw==READ) ? tty_read(minor, buf) : tty_write(minor, buf));</span><br><span class="line">    &#125;</span><br><span class="line">    ........</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>rw_char中以主设备号（MAJOR(dev)) 为索引从一个函数表 <code>crw_table</code>中查找和终端设备对应的读写函数 <code>rw_ttyx</code>， 然后调用这个函数。</p>
+<p>函数 <code>rw_ttyx</code> 中根据是设备读操作还是设备写操作继续分支。显示器和键盘合在一起构成了终端设备 <code>tty</code>，显示器只写，键盘只读。此处是显示器，所以对应写操作，将调用函数 <code>tty_write(minor, buf)</code> 。根据文件的属性，即 inode 中的信息，经过大量分支以后，从写文件 write 最终到达真正操作显示器的 tty_write 。 </p>
+<h4 id="继续tty-write这一核心函数"><a href="#继续tty-write这一核心函数" class="headerlink" title="继续tty_write这一核心函数"></a>继续tty_write这一核心函数</h4><p>经过漫长的分支（在实际使用的操作系统中，如Linux 2.6，这个分支要比这里论述的还要长）以后，tty_write(代码如下)开始真正向显示器输出了。</p>
+<p><code>tty_write</code>首先获得一个结构体 <code>tty_struct</code> ， 主要的目的是在这个结构体中找到队列 <code>tty-&gt;write_q</code>。实际上，站在用户的角度上，输出到显示器就是输出到这个队列中。最终等到合适的时候，由操作系统将这一队列中的内容输出到显示器上，这就是著名的<font color='9900CC'>缓冲机制</font>。</p>
+<blockquote>
+<p>缓冲是指两个速度存在差异的设备之间通过缓存队列来弥补这种差异的一种方式，具体而言，就是高速设备将数据存到缓存队列中，然后高速设备去做其他事，低速设备在合适的时候从缓冲队列中取走内容进行输出，这样高速设备不必一直同步等待低速设备，提高了系统的整体效率。在这里，高速设备就是CPU，低速设备就是显示器。缓冲机制是操作系统在外设管理时经常使用的基本机制。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// tty_write 核心代码（将显示字符放到缓冲队列中）</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">tty_write</span><span class="params">(<span class="keyword">unsigned</span> channel, <span class="keyword">char</span> * buf, <span class="keyword">int</span> nr)</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tty_struct</span> *<span class="title">tty</span>;</span></span><br><span class="line">    tty = channel + tty_table;</span><br><span class="line">    sleep_if_full(&amp;tty-&gt;write_q);</span><br><span class="line">    <span class="keyword">char</span> c, *b = buf;</span><br><span class="line">    <span class="keyword">while</span>(nr &gt; <span class="number">0</span> &amp;&amp; !FULL(tty-&gt;write_q)) &#123;</span><br><span class="line">        c = get_fs_byte(b);</span><br><span class="line">        <span class="keyword">if</span> (c == <span class="string">&#x27;r&#x27;</span>) &#123;</span><br><span class="line">            PUTCH(<span class="number">13</span>, tty-&gt;write_q); <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (O_LCUC(tty)) c = <span class="built_in">toupper</span>(c);</span><br><span class="line">        PUTCH(c, tty-&gt;write_q);</span><br><span class="line">        b++; nr--;</span><br><span class="line">    &#125; <span class="comment">// 输出完成或队列满</span></span><br><span class="line">    tty-&gt;write(tty);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>tty-&gt;write()应该就是真的开始输出屏幕了</p>
+<h4 id="tty-gt-write"><a href="#tty-gt-write" class="headerlink" title="tty-&gt;write()"></a>tty-&gt;write()</h4><p>从缓冲队列中取出字符真正写到显示器上。从对 tty 结构体的初始化可以看出，tty-&gt;write调用的函数时<code>con_write()</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// con_write 核心代码（真正将字符打印到显示器上</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tty_struct</span> <span class="title">tty_table</span>[] =</span> &#123;&#123;con_write, &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">&quot;&quot;</span>&#125;, &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">&quot; &quot;</span>&#125;&#125;, &#123;&#125;, ...&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">con_write</span><span class="params">(struct tty_struct *tty)</span> </span>&#123;</span><br><span class="line">    GETCH(tty-&gt;write_q, c);</span><br><span class="line">    <span class="keyword">if</span> (c &gt; <span class="number">31</span> &amp;&amp; c &lt; <span class="number">127</span>) &#123;</span><br><span class="line">        _asm(<span class="string">&quot;movb attr, %%ah&quot;</span></span><br><span class="line">            <span class="string">&quot;movw %%ax, %1&quot;</span> :: <span class="string">&quot; a&quot;</span>(c),<span class="string">&quot; m&quot;</span>(*(<span class="keyword">short</span>*)pos): <span class="string">&quot;ax&quot;</span>);</span><br><span class="line">        pos += <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述的核心代码是一段嵌入式汇编代码，具体完成的工作是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov c, al</span><br><span class="line">mov attr, ah</span><br><span class="line">mov ax, [pos]</span><br></pre></td></tr></table></figure>
+
+<p>即将要输出的字符放在寄存器 AX 的低8为位，将显示属性 attr 放到 AX的高8位，然后将 AX 输出到地址 pos 处。显示器输出工作真正做到了 <strong>out</strong> 指令，即整个文件视图的最后一个环节。</p>
+<p>为了故事的完整性，我们需要知道 pos 到底是什么。 con_write 中每输出一个 AX 都让 pos  + 2 ,这是必然的，因为 AX 就是两个字节。所以理解pos 的关键在于 pos 的初值，在初始化 con_init 中，调用函数 gotoxy 将 pos 的值初始化为 <code>origin + [0x90001]*video_size_row + ([0x9000]&lt;&lt;1)</code>。90000这个数字并不陌生吧，在系统启动的 <code>setup.s</code>时利用BIOS中断将当前光标的行、列位置取出来放到了 0x90000和 0x90001处。而 origin 时显存在内存中的初始位置。因此初始化以后 pos 就是开机以后当前光标所在的显存位置。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pos（光标位置）的初始化代码</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">con_init</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    gotoxy(ORIG_X, ORIG_Y);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">gotoxy</span><span class="params">(x, y)</span> </span>&#123;</span><br><span class="line">    pos = origin + y * video_size_row + (x &lt;&lt; <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ORIG_X (*(unsigned char *)0x90000)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ORIG_Y (*(unsigned char *)0x90001)</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>现在应该明白了，<code>mov ax, [pos]</code> 就是将 prinf要显示的字符放在显存当前光标位置处。这里的 mov 和 out 没有本质区别，计算机硬件原理告诉我们，外设可以独立编址，也可以和内存统一编制，如果是独立编址就用 out 指令， 如果统一编制就用 mov 指令</p>
+<p>到了这里, <font color='9900CC'>printf -&gt; write -&gt; sys_write -&gt; rw_char -&gt; rw_ttyx -&gt; tty_write -&gt; write_q –&gt; con_write -&gt; mov ax, [pos] </font>，这条从 <code>printf</code> 到 <code>mov ax, [pos]</code> 的文件视图路线就完整了</p>
+<h4 id="printf的整个过程"><a href="#printf的整个过程" class="headerlink" title="printf的整个过程"></a>printf的整个过程</h4><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230161808.png"></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>求大佬赏个饭</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weichat.png" alt="sineagle 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS/" rel="tag"># OS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/26/Linux-%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" rel="prev" title="Linux 系统编程">
+      <i class="fa fa-chevron-left"></i> Linux 系统编程
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+			
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8-%E4%BB%8E%E6%96%87%E4%BB%B6%E8%A7%86%E5%9B%BE%E5%88%B0out%E6%8C%87%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">设备驱动-从文件视图到out指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">设备驱动的基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E8%AE%BE%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.1.</span> <span class="nav-text">外设的工作工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%A7%86%E5%9B%BE"><span class="nav-number">1.1.2.</span> <span class="nav-text">文件视图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%99%A8%E7%9A%84%E9%A9%B1%E5%8A%A8"><span class="nav-number">1.2.</span> <span class="nav-text">显示器的驱动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8Eprintf%E5%BC%80%E5%A7%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">从printf开始</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fd-1%E7%9A%84flip%E4%BB%8E%E5%93%AA%E9%87%8C%E6%9D%A5"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">fd&#x3D;1的flip从哪里来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#open%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AE%8C%E6%88%90%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">open系统调用完成了什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%A5%BD%E4%BA%86%EF%BC%8C%E7%9C%9F%E6%AD%A3%E5%90%91%E5%B1%8F%E5%B9%95%E8%BE%93%E5%87%BA"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">准备好了，真正向屏幕输出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%A7%E7%BB%ADtty-write%E8%BF%99%E4%B8%80%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">继续tty_write这一核心函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tty-gt-write"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">tty-&gt;write()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#printf%E7%9A%84%E6%95%B4%E4%B8%AA%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.1.6.</span> <span class="nav-text">printf的整个过程</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sineagle"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">sineagle</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sineagle" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sineagle" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:997991067@gmail.com" title="E-Mail → mailto:997991067@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/bottlecodes" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;bottlecodes" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/bottlecodes" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;bottlecodes" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:yourname?call|chat" title="Skype → skype:yourname?call|chat" rel="noopener" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://cnblogs.com/sineagle" title="OldBlogs → https:&#x2F;&#x2F;cnblogs.com&#x2F;sineagle" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>OldBlogs</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sineagle</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">419k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:21</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
