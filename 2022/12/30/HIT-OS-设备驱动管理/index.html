@@ -33,8 +33,13 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230142231.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230144051.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230161808.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230111144742.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230111145943.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230111152806.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230111153937.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230111154109.png">
 <meta property="article:published_time" content="2022-12-30T02:41:53.000Z">
-<meta property="article:modified_time" content="2022-12-30T08:21:13.675Z">
+<meta property="article:modified_time" content="2023-01-11T07:41:15.995Z">
 <meta property="article:author" content="sineagle">
 <meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary">
@@ -197,10 +202,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-12-30 10:41:53 / 修改时间：16:21:13" itemprop="dateCreated datePublished" datetime="2022-12-30T10:41:53+08:00">2022-12-30</time>
+              <time title="创建时间：2022-12-30 10:41:53" itemprop="dateCreated datePublished" datetime="2022-12-30T10:41:53+08:00">2022-12-30</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-01-11 15:41:15" itemprop="dateModified" datetime="2023-01-11T15:41:15+08:00">2023-01-11</time>
+              </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -208,7 +219,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.6k</span>
+              <span>6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -247,7 +258,7 @@
 </li>
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230115002.png"></p>
-<h2 id="显示器的驱动"><a href="#显示器的驱动" class="headerlink" title="显示器的驱动"></a>显示器的驱动</h2><h3 id="从printf开始"><a href="#从printf开始" class="headerlink" title="从printf开始"></a>从printf开始</h3><p>printf是一个库函数，该库函数会将 %d、%c等内容统一处理为字符串，然后以该字符串所在的内存地址 buf 和字符串长度 count 为参数调用<font color='#0000C6'>系统调用write(1, buf, count)</font>。</p>
+<h2 id="显示器的驱动"><a href="#显示器的驱动" class="headerlink" title="显示器的驱动"></a>显示器的驱动</h2><h3 id="从printf开始"><a href="#从printf开始" class="headerlink" title="从printf开始"></a>从printf开始</h3><p>printf是一个库函数，该库函数会将 %d、%c等内容统一处理为字符串，然后以该字符串所在的内存地址 buf 和字符串长度 count 为参数进行<font color='#0000C6'>系统调用write(1, buf, count)</font>。</p>
 <p>write系统调用通过 <code>int 0x80</code> 中断进入内核执行 <code>sys_write()</code>函数</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在linux/fs/read_write.c中</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_write</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> fd, <span class="keyword">char</span> * buf, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">file</span> * <span class="title">file</span>;</span></span><br><span class="line">    file = current-&gt;filp[fd];</span><br><span class="line">    inode = file-&gt;f_inode;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -307,6 +318,19 @@
 <p>现在应该明白了，<code>mov ax, [pos]</code> 就是将 prinf要显示的字符放在显存当前光标位置处。这里的 mov 和 out 没有本质区别，计算机硬件原理告诉我们，外设可以独立编址，也可以和内存统一编制，如果是独立编址就用 out 指令， 如果统一编制就用 mov 指令</p>
 <p>到了这里, <font color='9900CC'>printf -&gt; write -&gt; sys_write -&gt; rw_char -&gt; rw_ttyx -&gt; tty_write -&gt; write_q –&gt; con_write -&gt; mov ax, [pos] </font>，这条从 <code>printf</code> 到 <code>mov ax, [pos]</code> 的文件视图路线就完整了</p>
 <h4 id="printf的整个过程"><a href="#printf的整个过程" class="headerlink" title="printf的整个过程"></a>printf的整个过程</h4><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20221230161808.png"></p>
+<h2 id="键盘"><a href="#键盘" class="headerlink" title="键盘"></a>键盘</h2><h3 id="从键盘的中断开始"><a href="#从键盘的中断开始" class="headerlink" title="从键盘的中断开始"></a>从键盘的中断开始</h3><p>对于用户：敲键盘、看结果</p>
+<p>对于操作系统：等着你敲键盘，敲了就<font color='9900CC'>中断</font></p>
+<p>所以故事就应该从键盘中断开始，从<font color='red'>中断初始化</font>开始</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">con_init</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    set_trap_gate(<span class="number">0x21</span>, &amp;keyboard_interrupt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.global _keyboard_interrupt</span><br><span class="line"></span><br><span class="line">_keyboard_interrupt:</span><br><span class="line">    inb $0x60, %al &#x2F;&#x2F; 从端口0x60读扫描码</span><br><span class="line">    call key_table(,%eax, 4) &#x2F;&#x2F; 调用key_table+eax*4 </span><br><span class="line">    ....</span><br><span class="line">    push $0</span><br><span class="line">    call do_tty_interrupt</span><br></pre></td></tr></table></figure>
+
+<p>从键盘的 <code>0x60</code>端口上获得按键扫描码，然后根据这个扫描码调用不同的处理函数来处理各个按键，即 <code>cal key_table(, %eax, 4)</code></p>
+<h3 id="处理扫描吗key-table-eax-4"><a href="#处理扫描吗key-table-eax-4" class="headerlink" title="处理扫描吗key_table+eax*4"></a>处理扫描吗key_table+eax*4</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230111144742.png"></p>
+<h3 id="从key-map中取出ASCII码"><a href="#从key-map中取出ASCII码" class="headerlink" title="从key_map中取出ASCII码"></a>从key_map中取出ASCII码</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230111145943.png"></p>
+<h3 id="put-queue-将-ASCII码放到？-con-read-q"><a href="#put-queue-将-ASCII码放到？-con-read-q" class="headerlink" title="put_queue 将 ASCII码放到？ con.read_q"></a>put_queue 将 ASCII码放到？ con.read_q</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230111152806.png"></p>
+<h3 id="键盘处理"><a href="#键盘处理" class="headerlink" title="键盘处理"></a>键盘处理</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230111153937.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230111154109.png"></p>
 
     </div>
 
@@ -403,7 +427,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8-%E4%BB%8E%E6%96%87%E4%BB%B6%E8%A7%86%E5%9B%BE%E5%88%B0out%E6%8C%87%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">设备驱动-从文件视图到out指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">设备驱动的基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E8%AE%BE%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.1.</span> <span class="nav-text">外设的工作工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%A7%86%E5%9B%BE"><span class="nav-number">1.1.2.</span> <span class="nav-text">文件视图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%99%A8%E7%9A%84%E9%A9%B1%E5%8A%A8"><span class="nav-number">1.2.</span> <span class="nav-text">显示器的驱动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8Eprintf%E5%BC%80%E5%A7%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">从printf开始</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fd-1%E7%9A%84flip%E4%BB%8E%E5%93%AA%E9%87%8C%E6%9D%A5"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">fd&#x3D;1的flip从哪里来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#open%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AE%8C%E6%88%90%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">open系统调用完成了什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%A5%BD%E4%BA%86%EF%BC%8C%E7%9C%9F%E6%AD%A3%E5%90%91%E5%B1%8F%E5%B9%95%E8%BE%93%E5%87%BA"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">准备好了，真正向屏幕输出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%A7%E7%BB%ADtty-write%E8%BF%99%E4%B8%80%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">继续tty_write这一核心函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tty-gt-write"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">tty-&gt;write()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#printf%E7%9A%84%E6%95%B4%E4%B8%AA%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.1.6.</span> <span class="nav-text">printf的整个过程</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8-%E4%BB%8E%E6%96%87%E4%BB%B6%E8%A7%86%E5%9B%BE%E5%88%B0out%E6%8C%87%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">设备驱动-从文件视图到out指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">设备驱动的基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E8%AE%BE%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.1.</span> <span class="nav-text">外设的工作工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%A7%86%E5%9B%BE"><span class="nav-number">1.1.2.</span> <span class="nav-text">文件视图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%99%A8%E7%9A%84%E9%A9%B1%E5%8A%A8"><span class="nav-number">1.2.</span> <span class="nav-text">显示器的驱动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8Eprintf%E5%BC%80%E5%A7%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">从printf开始</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fd-1%E7%9A%84flip%E4%BB%8E%E5%93%AA%E9%87%8C%E6%9D%A5"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">fd&#x3D;1的flip从哪里来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#open%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AE%8C%E6%88%90%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">open系统调用完成了什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%A5%BD%E4%BA%86%EF%BC%8C%E7%9C%9F%E6%AD%A3%E5%90%91%E5%B1%8F%E5%B9%95%E8%BE%93%E5%87%BA"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">准备好了，真正向屏幕输出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%A7%E7%BB%ADtty-write%E8%BF%99%E4%B8%80%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">继续tty_write这一核心函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tty-gt-write"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">tty-&gt;write()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#printf%E7%9A%84%E6%95%B4%E4%B8%AA%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.1.6.</span> <span class="nav-text">printf的整个过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%AE%E7%9B%98"><span class="nav-number">1.3.</span> <span class="nav-text">键盘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E9%94%AE%E7%9B%98%E7%9A%84%E4%B8%AD%E6%96%AD%E5%BC%80%E5%A7%8B"><span class="nav-number">1.3.1.</span> <span class="nav-text">从键盘的中断开始</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E6%89%AB%E6%8F%8F%E5%90%97key-table-eax-4"><span class="nav-number">1.3.2.</span> <span class="nav-text">处理扫描吗key_table+eax*4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8Ekey-map%E4%B8%AD%E5%8F%96%E5%87%BAASCII%E7%A0%81"><span class="nav-number">1.3.3.</span> <span class="nav-text">从key_map中取出ASCII码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put-queue-%E5%B0%86-ASCII%E7%A0%81%E6%94%BE%E5%88%B0%EF%BC%9F-con-read-q"><span class="nav-number">1.3.4.</span> <span class="nav-text">put_queue 将 ASCII码放到？ con.read_q</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%AE%E7%9B%98%E5%A4%84%E7%90%86"><span class="nav-number">1.3.5.</span> <span class="nav-text">键盘处理</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -473,7 +497,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
