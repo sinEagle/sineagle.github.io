@@ -27,11 +27,14 @@
 <meta property="og:url" content="https://sineagle.github.io/2023/03/01/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JVM/index.html">
 <meta property="og:site_name" content="sinEagle">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230301155335.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230301163510.png">
 <meta property="article:published_time" content="2023-03-01T01:37:51.000Z">
-<meta property="article:modified_time" content="2023-03-01T03:02:35.652Z">
+<meta property="article:modified_time" content="2023-03-01T08:46:04.302Z">
 <meta property="article:author" content="sineagle">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230301155335.png">
 
 <link rel="canonical" href="https://sineagle.github.io/2023/03/01/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JVM/">
 
@@ -192,7 +195,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-03-01 09:37:51 / 修改时间：11:02:35" itemprop="dateCreated datePublished" datetime="2023-03-01T09:37:51+08:00">2023-03-01</time>
+              <time title="创建时间：2023-03-01 09:37:51 / 修改时间：16:46:04" itemprop="dateCreated datePublished" datetime="2023-03-01T09:37:51+08:00">2023-03-01</time>
             </span>
 
           <br>
@@ -201,14 +204,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>268</span>
+              <span>1.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
             <div class="post-description"> </div>
 
@@ -221,18 +224,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="类加载器深入分析与阶段分解"><a href="#类加载器深入分析与阶段分解" class="headerlink" title="类加载器深入分析与阶段分解"></a>类加载器深入分析与阶段分解</h2><h3 id="类加载"><a href="#类加载" class="headerlink" title="类加载"></a>类加载</h3><ul>
-<li>在Java代码中，类型的加载、连接和初始化过程都是在程序运行期间完成的。</li>
-</ul>
-<h3 id="类加载器深入剖析"><a href="#类加载器深入剖析" class="headerlink" title="类加载器深入剖析"></a>类加载器深入剖析</h3><p>Java虚拟机与程序的生命周期</p>
-<p>有如下几种情况, Java虚拟机将结束生命周期</p>
+        <h2 id="类加载器深入分析与阶段分解"><a href="#类加载器深入分析与阶段分解" class="headerlink" title="类加载器深入分析与阶段分解"></a>类加载器深入分析与阶段分解</h2><h3 id="Java虚拟机与程序的生命周期"><a href="#Java虚拟机与程序的生命周期" class="headerlink" title="Java虚拟机与程序的生命周期"></a>Java虚拟机与程序的生命周期</h3><p>有如下几种情况, Java虚拟机将结束生命周期</p>
 <ul>
 <li>执行了System.exit()</li>
 <li>程序正常执行结束</li>
 <li>程序在执行过程遇到了异常或错误而异常终止</li>
 <li>由于操作系统出现的错误而导致Java虚拟机进程终止</li>
 </ul>
-<h3 id="类的加载、连接、初始化"><a href="#类的加载、连接、初始化" class="headerlink" title="类的加载、连接、初始化"></a>类的加载、连接、初始化</h3><p><strong>加载</strong>：查找并加载类的二进制数据</p>
+<h3 id="类的加载、连接、初始化"><a href="#类的加载、连接、初始化" class="headerlink" title="类的加载、连接、初始化"></a>类的加载、连接、初始化</h3><p>在Java代码中，类型的加载、连接和初始化过程都是在<font color='red'>程序运行期间</font>完成的。</p>
+<p><strong>加载</strong>：查找并加载类的二进制数据</p>
 <p><strong>连接</strong>：</p>
 <ul>
 <li>验证：确保加载类的正确性</li>
@@ -240,6 +240,48 @@
 <li>解析：<font color='9900CC'>把类中的符号引用转换为直接引用</font></li>
 </ul>
 <p><font color='9900CC'><strong>初始化</strong>：为类的静态变量赋予正确的初始值</font></p>
+<p>Java程序对类的使用方式分为两种：</p>
+<ul>
+<li>主动使用<ul>
+<li>创建类的实例</li>
+<li>访问某个类或接口的静态变量，或者对静态变量赋值</li>
+<li>调用类的静态方法</li>
+<li>反射（如 Class.forName(“com.test.Test”)）</li>
+<li>初始化一个类的子类</li>
+<li>Java虚拟机启动时被标明为启动类的类（Java Test）</li>
+<li>JDK1.7开始提供的动态语言支持…</li>
+</ul>
+</li>
+<li>被动使用<ul>
+<li>除了以上其中情况，其它使用Java类的方式都可以看作对类的被动使用，都不会导致类的初始化</li>
+</ul>
+</li>
+</ul>
+<p>所有的Java虚拟机实现必须在每个类或接口被Java程序 <font color='#0000C6'><strong>首次主动使用</strong></font>时才<font color='9900CC'>初始化</font>它们</p>
+<h3 id="类的加载"><a href="#类的加载" class="headerlink" title="类的加载"></a>类的加载</h3><p>类的加载指的是将类的 <code>.class</code> 文件中的二进制数据读入到内存中，将其存到<font color='9900CC'>运行时数据区的方法区内</font>，然后在内存创建了一个<code>java.lang.Class</code>对象（规范未说明Class对象位于哪里，HotSpot虚拟机将其放在了方法区中）用来封装类在方法区内的数据结构</p>
+<p>加载<code>.class</code>文件的方式：</p>
+<ul>
+<li>从本地系统中直接加载</li>
+<li>通过网络下载<code>.class</code>文件</li>
+<li>从<code>zip</code>, <code>jar</code>等归档文件中加载 <code>.class</code>文件</li>
+<li>从专有的数据库中提取<code>.class</code>文件</li>
+<li><font color='9900CC'>将Java源文件中动态编译为 .class 文件（JDK动态代理）</font></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sineagle.jvm.classloader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(MyChild1.str); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyParent1</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String str = <span class="string">&quot;Hello World !&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123; <span class="comment">//初始化时执行</span></span><br><span class="line">        System.out.println(<span class="string">&quot;MyParent1 static block&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyChild1</span> <span class="keyword">extends</span> <span class="title">MyParent1</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String str2 = <span class="string">&quot;welcome!&quot;</span>;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;MyChild1 static block&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230301155335.png"></p>
+<p>对于静态变量来说，只有直接定义了该字段的类才会被初始化</p>
+<p>当一个类在初始化时，要求其父类已经初始化完毕了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sineagle.jvm.classloader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(MyParent2.str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyParent2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String str = <span class="string">&quot;Hello World&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">short</span> s = <span class="number">7</span>;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Myparent2 static block&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>只输出了<code>Hello World</code></p>
+<p><strong>常量在编译阶段会存入调用这个方法所在的类的常量池中，本质上调用类并没有直接引用到定义常量的类，因此并不会触发定义常量的类的初始化</strong></p>
+<p>将<code>MyTest2</code>类进行反编译，结果如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230301163510.png"></p>
+<p>助记符<code>ldc</code> 表示将 int, float 或是 String 类型的常量值从常量池中推送至栈顶</p>
+<p>助记符<code>bipush</code>表示将单字节（-128~127）的常量值推送至栈顶 </p>
+<p><code>sipush</code>表示短整形（-32768~32767）</p>
+<p><code>icount1</code>表示将int类型1推送至栈顶 （iconst_1 ~ iconst_5）</p>
 
     </div>
 
@@ -336,7 +378,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90%E4%B8%8E%E9%98%B6%E6%AE%B5%E5%88%86%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">类加载器深入分析与阶段分解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD"><span class="nav-number">1.1.</span> <span class="nav-text">类加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">类加载器深入剖析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E3%80%81%E8%BF%9E%E6%8E%A5%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.3.</span> <span class="nav-text">类的加载、连接、初始化</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90%E4%B8%8E%E9%98%B6%E6%AE%B5%E5%88%86%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">类加载器深入分析与阶段分解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%8E%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">1.1.</span> <span class="nav-text">Java虚拟机与程序的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E3%80%81%E8%BF%9E%E6%8E%A5%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.2.</span> <span class="nav-text">类的加载、连接、初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD"><span class="nav-number">1.3.</span> <span class="nav-text">类的加载</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -415,12 +457,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">455k</span>
+    <span title="站点总字数">457k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">6:54</span>
+    <span title="站点阅读时长">6:55</span>
 </div>
 
         
