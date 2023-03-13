@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/eagle32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/eagle16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=DejaVu Sans Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-flat-top.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sineagle.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Linux内存子系统">
+<meta property="og:url" content="https://sineagle.github.io/2023/03/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="sinEagle">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313091302.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313091718.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313092521.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313095112.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313100002.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313101354.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313103235.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313103510.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313105302.png">
+<meta property="article:published_time" content="2023-03-13T01:02:28.000Z">
+<meta property="article:modified_time" content="2023-03-13T03:11:32.766Z">
+<meta property="article:author" content="sineagle">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313091302.png">
+
+<link rel="canonical" href="https://sineagle.github.io/2023/03/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux内存子系统 | sinEagle</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">sinEagle</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">bottlecode</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+			
+			
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2023/03/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="sineagle">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sinEagle">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux内存子系统
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-03-13 09:02:28 / 修改时间：11:11:32" itemprop="dateCreated datePublished" datetime="2023-03-13T09:02:28+08:00">2023-03-13</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+            <div class="post-description"> </div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="内存的硬件电路与接口"><a href="#内存的硬件电路与接口" class="headerlink" title="内存的硬件电路与接口"></a>内存的硬件电路与接口</h2><h3 id="内存硬件实现"><a href="#内存硬件实现" class="headerlink" title="内存硬件实现"></a>内存硬件实现</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313091302.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313091718.png"></p>
+<h2 id="物理内存管理（page、zone、node）"><a href="#物理内存管理（page、zone、node）" class="headerlink" title="物理内存管理（page、zone、node）"></a>物理内存管理（page、zone、node）</h2><p>物理内存管理</p>
+<ul>
+<li>页： <code>struct page</code></li>
+<li>分区： <code>struct zone</code></li>
+<li>内存节点： <code>struct node</code></li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313092521.png"></p>
+<p>在Linux内核中，内存被分为几个不同的区域，每个区域被称为”Zone”，它们分别是ZONE_DMA、ZONE_NORMAL和ZONE_HIGHMEM。它们之间的区别如下：</p>
+<ol>
+<li>ZONE_DMA：这个区域的内存被用于DMA（Direct Memory Access）操作，这些操作是直接访问内存的，而不是通过CPU。由于一些历史原因，这个区域的内存只能使用32位的地址。在现代硬件上，DMA操作通常使用的是高速缓存和总线控制器，因此ZONE_DMA的大小通常非常小。</li>
+<li>ZONE_NORMAL：这个区域包含了内核和大多数用户空间程序所需的内存。这个区域的内存可以通过32位和64位的地址进行访问。由于这个区域的内存使用非常广泛，因此它通常占用系统内存的大部分。</li>
+<li>ZONE_HIGHMEM：这个区域包含了物理地址高于896MB的内存。这个区域的内存只能通过64位地址进行访问。在一些旧的硬件上，这个区域的内存可能没有被映射到内核地址空间，因此访问这个区域的内存需要特殊的处理。</li>
+</ol>
+<p>联系：这些区域都是内存管理的一部分，它们被用于不同的目的，并且它们的大小和可用性都有所不同。它们之间的联系是它们都属于内存的不同区域，而且它们都被Linux内核用于管理系统内存。</p>
+<h3 id="物理页帧：-struct-page"><a href="#物理页帧：-struct-page" class="headerlink" title="物理页帧： struct page"></a>物理页帧： struct page</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313095112.png"></p>
+<blockquote>
+<p>物理页帧实际上存放在物理内存中，即在系统的随机存储器（RAM）中。在Linux内核中，物理内存被划分为不同的区域（zone），每个区域包含一定数量的物理页帧。Linux内核使用伙伴系统（Buddy System）算法来管理物理页帧，以便快速地分配和释放页帧。当物理页帧被分配给某个进程或内核对象时，内核会将其映射到相应的虚拟地址空间中，以便进程可以访问这些物理页帧。因此，物理页帧的存放位置取决于系统的物理内存布局和伙伴系统算法的实现方式。</p>
+</blockquote>
+<p>通过<code>mem_map</code>指针可以获取到存放<code>page</code>内存区域的起始地址</p>
+<h3 id="内存区域：struct-zone"><a href="#内存区域：struct-zone" class="headerlink" title="内存区域：struct zone"></a>内存区域：struct zone</h3><blockquote>
+<p>在Linux内核中，内存区域（Memory Zone）是一段物理内存的逻辑分区，用于跟踪和管理系统中的物理页帧。每个内存区域都由一个 <code>struct zone</code> 结构体表示，该结构体包含了有关内存区域的元数据，例如区域的起始地址、大小、类型、页帧的状态等信息。</p>
+<p><code>struct zone</code> 是内存管理子系统中的关键数据结构之一，它包含了一些重要的字段，如 <code>free_area</code>，它是一个数组，用于存储当前可用的物理页帧；<code>lock</code> 字段用于保护内存区域的并发访问；<code>zone_pgdat</code> 字段指向所属的内存节点（NUMA Node）等。内存区域还与其他内存管理子系统中的数据结构（例如 <code>struct page</code>）紧密关联，这些数据结构用于跟踪和管理物理页帧。</p>
+<p>在Linux内核中，物理内存被划分为不同的内存区域，每个内存区域通常包含一定数量的物理页帧。不同的内存区域用于不同的目的，例如 <code>ZONE_DMA</code> 用于存储DMA设备可直接访问的内存；<code>ZONE_NORMAL</code> 用于存储普通进程和内核对象的内存等。通过将物理内存划分为不同的内存区域，Linux内核能够更有效地管理内存，以适应不同的应用场景和硬件配置。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313100002.png"></p>
+<h3 id="内存节点-node"><a href="#内存节点-node" class="headerlink" title="内存节点: node"></a>内存节点: node</h3><blockquote>
+<p>在 NUMA 架构的计算机系统中，内存被分配到不同的内存节点（Memory Node）中，每个内存节点包含一组物理内存和一个或多个 CPU 插槽。每个内存节点都有自己的内存控制器，负责管理节点中的物理内存。</p>
+<p>在 Linux 内核中，每个内存节点都由一个 <code>struct pglist_data</code> 结构体表示，该结构体包含了与内存节点相关的信息，例如节点的编号、大小、可用页帧数、内存区域和内存池等。内存区域和内存池是 Linux 内核中用于管理物理内存的两个关键抽象，它们被用于跟踪和管理物理页帧，以便快速地分配和释放内存。</p>
+<p>每个内存节点都与一个或多个 CPU 插槽相对应，其中一个节点通常对应于一个 CPU 插槽。在 NUMA 架构中，不同的 CPU 插槽访问不同的内存节点，因此内存节点之间的访问延迟可能会不同。为了最大程度地减少访问延迟，Linux 内核通常会将本地 CPU 插槽与本地内存节点匹配，以便最小化访问延迟。在访问远程内存节点时，Linux 内核使用一些高级的缓存技术（例如页表、TLB 等）来最大程度地减少访问延迟。</p>
+<p>总之，内存节点是 NUMA 架构中的一个重要概念，它允许系统管理员和应用程序开发人员针对特定的硬件配置和应用场景进行优化，以最大程度地提高系统性能和效率。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313101354.png"></p>
+<h3 id="物理内存管理架构"><a href="#物理内存管理架构" class="headerlink" title="物理内存管理架构"></a>物理内存管理架构</h3><blockquote>
+<p>物理内存管理是操作系统内存管理的一个重要组成部分，用于管理系统中的物理内存。在 Linux 内核中，物理内存管理架构由以下三个关键组件组成：</p>
+<ol>
+<li>物理页帧（Physical Page Frame）：物理页帧是 Linux 内核中最基本的内存管理单元，它表示一个连续的物理内存页。每个物理页帧都由一个 <code>struct page</code> 结构体来表示，该结构体包含了物理页帧的元数据，例如页帧的状态、所属的内存区域、引用计数等信息。物理页帧的状态可以是“空闲”、“已使用”或“已保留”等，它们可以用于跟踪和管理系统中的物理内存。</li>
+<li>内存区域（Memory Zone）：内存区域是物理内存的逻辑分区，它由一个 <code>struct zone</code> 结构体表示。每个内存区域包含一定数量的物理页帧，用于跟踪和管理物理页帧的状态。不同的内存区域用于不同的目的，例如 <code>ZONE_DMA</code> 用于存储 DMA 设备可直接访问的内存；<code>ZONE_NORMAL</code> 用于存储普通进程和内核对象的内存等。</li>
+<li>内存节点（Memory Node）：内存节点是 NUMA 架构中的一个重要概念，它将物理内存划分为不同的节点，每个节点包含一组物理内存和一个或多个 CPU 插槽。在 Linux 内核中，每个内存节点都由一个 <code>struct pglist_data</code> 结构体表示，它包含了有关内存节点的元数据，例如节点的编号、大小、可用页帧数、内存区域和内存池等信息。内存节点通常用于跟踪和管理系统中的物理内存，并优化内存访问延迟。</li>
+</ol>
+<p>总之，物理内存管理架构是 Linux 内核中内存管理的核心组成部分，它通过物理页帧、内存区域和内存节点等抽象，提供了一个灵活、高效的物理内存管理框架，以支持不同的应用场景和硬件配置。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313103235.png"></p>
+<h3 id="核心结构体关联"><a href="#核心结构体关联" class="headerlink" title="核心结构体关联"></a>核心结构体关联</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313103510.png"></p>
+<h2 id="伙伴系统：-buddy-system"><a href="#伙伴系统：-buddy-system" class="headerlink" title="伙伴系统： buddy system"></a>伙伴系统： buddy system</h2><blockquote>
+<p>伙伴系统（Buddy System）是一种经典的动态内存分配算法，它的主要思想是将物理内存按照二进制指数的方式进行分割和组织，以实现高效的内存分配和回收。在 Linux 内核中，伙伴系统被广泛用于物理内存管理，用于管理系统中的空闲物理页帧。</p>
+<p>伙伴系统的基本原理是将物理内存划分为一系列大小为 $2^n$ 的连续内存块，每个内存块都可以看作是一组相同大小的物理页帧。当需要分配一块大小为 $2^k$ 的内存时，伙伴系统会在内存块中查找一个大小为 $2^k$ 的空闲块，如果找到了，则将该块分配给请求者；否则，伙伴系统会将一个大小为 $2^{k+1}$ 的内存块一分为二，将其中一半分配给请求者，将另一半保留为伙伴块，以备后续分配使用。</p>
+<p>具体来说，伙伴系统会将所有可用的物理内存块组织成一棵二叉树，树的根节点对应整个物理内存，树的每个节点对应一个内存块，节点的左子节点和右子节点分别对应内存块的两半。每个节点包含了有关该内存块的元数据，例如块的大小、状态、伙伴块等信息。初始时，整个二叉树中只有一个根节点，对应整个物理内存，此时该节点的大小为 $2^n$，其中 $n$ 是系统中可用的最大物理页帧数的二进制位数。</p>
+<p>当需要分配一块大小为 $2^k$ 的内存时，伙伴系统会在二叉树中查找一个大小为 $2^k$ 的空闲块。查找过程从根节点开始，递归向下遍历二叉树，直到找到一个合适的空闲块或者遍历到叶子节点为止。如果找到了大小为 $2^k$ 的空闲块，则将该块分配给请求者；否则，伙伴系统会将一个大小为 $2^{k+1}$ 的内存块一分为二，将其中一半分配给请求者，将另一半保留为伙伴块。分配过程中，如果某个节点的伙伴块也是空闲的，则将两个伙伴块合并为一个更大的内存块，然后继续向上递归合并，直到合并到根节点为止。</p>
+<p>伙伴系统的优点在于它能够高效地管理不同大小的内存块，并且支持动态内存分配和回收。由于伙伴系统按照二进制指数的方式进行内存分割，因此它能够避免内存碎片的问题，提高内存利用率。另外，伙伴系统的内存分配算法也比较简单，容易实现和维护，因此被广泛应用于操作系统和嵌入式系统等领域。</p>
+<p>不过，伙伴系统也存在一些缺点。首先，由于伙伴系统只能管理固定大小的内存块，因此在进行内存分配时可能会存在浪费的情况。例如，当请求分配一个大小为 $2^k$ 的内存块时，如果最接近 $2^k$ 的可用内存块的大小为 $2^{k+1}$，则必须将该内存块一分为二，导致浪费一半的内存空间。其次，伙伴系统的内存回收算法也可能导致一些性能问题。由于伙伴系统需要不断合并相邻的空闲块以减少内存碎片，因此内存回收的时间复杂度较高，可能会影响系统的响应时间。</p>
+<p>总的来说，伙伴系统是一种非常实用的内存管理算法，它能够高效地管理物理内存，并且在许多操作系统和嵌入式系统中得到广泛应用。但是，在应用伙伴系统时也需要根据实际情况进行权衡，以避免潜在的性能问题和内存浪费。</p>
+</blockquote>
+<ul>
+<li>物理内存由页分配器（page allocator）接管</li>
+<li>内存块的申请、释放过程</li>
+<li>伙伴算法、阶数</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230313105302.png"></p>
+<p>伙伴系统管理思路：将所有的物理页按照不同大小划分成不同大小的块，相同大小的块使用链表将它们链起来，将链表头保存在一个数组里面，如果使用两个物理页拼成一个内存块（8KB），使用链表将其链起来。数组的索引就是阶数，索引<code>i</code>表示链表头指向链表的内存块大小为 $2^i$ 个物理页，索引值最大为<code>MAX_ORDER-1</code>, 一般<code>MAX_ORDER</code>值为11, 即最多可管理内存块大小最大为1024个物理页（大小为<code>4M</code>，也成为<code>pageblock</code>）组成的链表。</p>
+<p>当用户进行申请时，根据用户申请的大小到对应链表中去找，如果用户申请4KB的物理页，那么从索引值为0的对应链表去找, 找到后将page结构体地址返回给用户，用户根据page就可以操作对应的内存了。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>求大佬赏个饭</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weichat.png" alt="sineagle 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS/" rel="tag"># OS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/12/TCP/" rel="prev" title="TCP">
+      <i class="fa fa-chevron-left"></i> TCP
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+			
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%9A%84%E7%A1%AC%E4%BB%B6%E7%94%B5%E8%B7%AF%E4%B8%8E%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.</span> <span class="nav-text">内存的硬件电路与接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%A1%AC%E4%BB%B6%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.1.</span> <span class="nav-text">内存硬件实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%EF%BC%88page%E3%80%81zone%E3%80%81node%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">物理内存管理（page、zone、node）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E9%A1%B5%E5%B8%A7%EF%BC%9A-struct-page"><span class="nav-number">2.1.</span> <span class="nav-text">物理页帧： struct page</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%EF%BC%9Astruct-zone"><span class="nav-number">2.2.</span> <span class="nav-text">内存区域：struct zone</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E8%8A%82%E7%82%B9-node"><span class="nav-number">2.3.</span> <span class="nav-text">内存节点: node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%9E%B6%E6%9E%84"><span class="nav-number">2.4.</span> <span class="nav-text">物理内存管理架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9E%84%E4%BD%93%E5%85%B3%E8%81%94"><span class="nav-number">2.5.</span> <span class="nav-text">核心结构体关联</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F%EF%BC%9A-buddy-system"><span class="nav-number">3.</span> <span class="nav-text">伙伴系统： buddy system</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sineagle"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">sineagle</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sineagle" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sineagle" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:997991067@gmail.com" title="E-Mail → mailto:997991067@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/bottlecodes" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;bottlecodes" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/bottlecodes" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;bottlecodes" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:yourname?call|chat" title="Skype → skype:yourname?call|chat" rel="noopener" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://cnblogs.com/sineagle" title="OldBlogs → https:&#x2F;&#x2F;cnblogs.com&#x2F;sineagle" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>OldBlogs</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sineagle</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">506k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:40</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
