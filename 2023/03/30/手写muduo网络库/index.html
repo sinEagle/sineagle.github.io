@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/eagle32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/eagle16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=DejaVu Sans Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-flat-top.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sineagle.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="手写muduo网络库">
+<meta property="og:url" content="https://sineagle.github.io/2023/03/30/%E6%89%8B%E5%86%99muduo%E7%BD%91%E7%BB%9C%E5%BA%93/index.html">
+<meta property="og:site_name" content="sinEagle">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230330210315.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230330211910.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331110727.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331110934.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331111235.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331111801.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331111910.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331152914.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331165129.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331171941.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331203010.png">
+<meta property="article:published_time" content="2023-03-30T11:51:24.000Z">
+<meta property="article:modified_time" content="2023-03-31T13:26:11.855Z">
+<meta property="article:author" content="sineagle">
+<meta property="article:tag" content="网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230330210315.png">
+
+<link rel="canonical" href="https://sineagle.github.io/2023/03/30/%E6%89%8B%E5%86%99muduo%E7%BD%91%E7%BB%9C%E5%BA%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>手写muduo网络库 | sinEagle</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">sinEagle</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">bottlecode</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+			
+			
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sineagle.github.io/2023/03/30/%E6%89%8B%E5%86%99muduo%E7%BD%91%E7%BB%9C%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="sineagle">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sinEagle">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          手写muduo网络库
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-30 19:51:24" itemprop="dateCreated datePublished" datetime="2023-03-30T19:51:24+08:00">2023-03-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-31 21:26:11" itemprop="dateModified" datetime="2023-03-31T21:26:11+08:00">2023-03-31</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+            <div class="post-description"> </div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="I-O模型"><a href="#I-O模型" class="headerlink" title="I/O模型"></a>I/O模型</h1><p>在<code>Unix</code>下可用的5种I/O模型</p>
+<ul>
+<li>阻塞式I/O</li>
+<li>非阻塞式I/O</li>
+<li>I/O复用（select和poll）</li>
+<li>信号驱动式I/O（SIGIO）</li>
+<li>异步I/O （POSIX的aio_系列函数）</li>
+</ul>
+<p>五种I/O模型的比较</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230330210315.png"></p>
+<p>一个输入操作通常包含两个不同的阶段：</p>
+<ul>
+<li>等待数据准备好</li>
+<li>从内核向进程复制数据</li>
+</ul>
+<p>对于一个套接字上的输入操作，第一步通常涉及等待数据从网络到达。当所等待分组到达时，它被复制到内核的某个缓冲区。第二步就是把数据从内核缓冲区复制到应用进程缓冲区。</p>
+<h2 id="阻塞、非阻塞、同步、异步"><a href="#阻塞、非阻塞、同步、异步" class="headerlink" title="阻塞、非阻塞、同步、异步"></a>阻塞、非阻塞、同步、异步</h2><blockquote>
+<p>典型的一次IO的两种状态是什么?<font color='9900CC'> 数据准备</font>和<font color='9900CC'>数据读写</font></p>
+</blockquote>
+<p>数据准备：根据系统IO的就绪状态</p>
+<ul>
+<li>阻塞（调用IO方法的线程进入阻塞状态）</li>
+<li>非阻塞 （不会改变线程的状态，通过返回值判断 ）</li>
+</ul>
+<p>数据读写: 根据应用程序和内核的交互方式</p>
+<ul>
+<li>同步</li>
+<li>异步</li>
+</ul>
+<p><font color='red'>阻塞时I/O模型、非阻塞式I/O模型、I/O复用模型和信号驱动式I/O模型都是同步I/O模型，因为其中的真正的I/O操作（recvfrom）将阻塞进程。只有异步I/O模型与POSIX定义的异步I/O相匹配。</font></p>
+<p><strong>异步</strong> ：</p>
+<p>告知内核启动某个操作，并让内核在整个操作（包括将数据从内核复制到我们自己的缓冲区）完成后<strong>通知</strong>我们。这种模型与前一节介绍的信号驱动模型的主要区别在于：信号驱动式I/O是由内核通知我们何使可用启动一个I/O操作，而异步I/O模型是内核通知我们I/O操作何时完成。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230330211910.png"></p>
+<p>我们调用<code>aio_read</code>函数（POSIX异步I/O函数以<code>aio_</code>或<code>lio_</code>开头），给内核传递描述符、缓存区指针、缓冲区大小（与read相同的三个参数）和文件偏移（与<code>lseek</code>类似），并告诉内核整个操作完成时如何通知我们。该系统调用立即返回，而且在等待I/O完成期间，我们的进程不会被阻塞。本例子中我们假设要求内核在操作完成时产生某个信号。该信号直到数据已复制到应用进程缓冲区才产生，这一点不同于信号驱动式I/O模型。</p>
+<p>业务层面的一个逻辑处理是同步还是异步？</p>
+<ul>
+<li>同步：A操作等待B操作做完事情，得到返回值，继续处理</li>
+<li>异步：A操作告诉B操作它感兴趣的事件以及通知方式，A操作继续执行自己的业务逻辑了；等B监听到相应的事件发生后，B会通知A，A开始相应的数据逻辑处理。</li>
+</ul>
+<blockquote>
+<p>一个典型的网络IO接口调用，分为两个阶段，分别是<font color='9900CC'>数据就绪</font>和<font color='9900CC'>数据读写</font>，数据就绪阶段分为阻塞和非阻塞，表现的结果就是，阻塞当前进程或是直接返回。</p>
+<p>同步表示A向B请求调用一个网络IO接口时（或是调用某个业务逻辑API接口时），数据的读写都是由请求方A自己来完成的（不管是阻塞还是非阻塞）；异步表示A向B请求调用一个网络IO接口时（或是调用某个业务逻辑API接口时），向B传入请求的事件以及事件发生时<font color='9900CC'>通知方式</font>，A就可以处理其它业务逻辑了，当B监听到事件处理完成后，会用事先约定好的通知方式，通知A处理结果。</p>
+</blockquote>
+<ul>
+<li>同步阻塞</li>
+<li>同步非阻塞</li>
+<li>异步阻塞</li>
+<li>异步非阻塞</li>
+</ul>
+<h2 id="Unix-Linux的五种IO模型"><a href="#Unix-Linux的五种IO模型" class="headerlink" title="Unix/Linux的五种IO模型"></a>Unix/Linux的五种IO模型</h2><h3 id="阻塞式I-O模型-（blocking）"><a href="#阻塞式I-O模型-（blocking）" class="headerlink" title="阻塞式I/O模型 （blocking）"></a>阻塞式I/O模型 （blocking）</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331110727.png"></p>
+<h3 id="非阻塞I-O模型（non-blocking）"><a href="#非阻塞I-O模型（non-blocking）" class="headerlink" title="非阻塞I/O模型（non-blocking）"></a>非阻塞I/O模型（non-blocking）</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331110934.png"></p>
+<h3 id="IO复用模型（IO-muliplexing）"><a href="#IO复用模型（IO-muliplexing）" class="headerlink" title="IO复用模型（IO muliplexing）"></a>IO复用模型（IO muliplexing）</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331111235.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331111801.png"></p>
+<h3 id="信号驱动式I-O模型（signal-driven-I-O）"><a href="#信号驱动式I-O模型（signal-driven-I-O）" class="headerlink" title="信号驱动式I/O模型（signal-driven I/O）"></a>信号驱动式I/O模型（signal-driven I/O）</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331111910.png"></p>
+<p>这种模式的优势在于等待数据包到达期间进程不被阻塞。主循环可以继续执行，只要等待来自信号处理函数的通知：既可以是数据已准备好被处理，也可以是数据准备好被读取。</p>
+<p>与非阻塞IO相的区别在于它提供了消息通知机制，不需要用户进程不断的轮询检查，减少了系统API调用次数，提高了效率。</p>
+<h3 id="异步I-O模型（asynchronous）"><a href="#异步I-O模型（asynchronous）" class="headerlink" title="异步I/O模型（asynchronous）"></a>异步I/O模型（asynchronous）</h3><p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331152914.png"></p>
+<h2 id="Reactor模型"><a href="#Reactor模型" class="headerlink" title="Reactor模型"></a>Reactor模型</h2><p><strong>重要组件</strong>：<strong>Event事件、Reactor反应堆、Demultiplex事件分发器、Evanthandler事件处理器</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331165129.png"></p>
+<p>muduo库的Multiple Reactors模型如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331171941.png"></p>
+<h2 id="I-O复用"><a href="#I-O复用" class="headerlink" title="I/O复用"></a>I/O复用</h2><h3 id="select-系统调用"><a href="#select-系统调用" class="headerlink" title="select 系统调用"></a>select 系统调用</h3><p>在一段时间内，监听用户感兴趣的文件描述符的可读、可写和异常等事件。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/select.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">select</span> <span class="params">(<span class="keyword">int</span> nfds, fd_set* readfds, fd_set* writefds, fd_set* exceptfds, struct timeval* timeout)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>nfds 参数指定被监听的文件描述符的总数</li>
+<li>readfds、writefds和 exceptfds 参数分别指向可读、可写和异常等事件对应的文件描述符集合。应用程序调用<code>select</code>函数时，通过这3个参数传入自己感兴趣的文件描述符。<code>select</code>函数调用返回时，内核将修改它们来<strong>通知</strong>应用程序哪些文件描述符已经就绪。这三个参数是<code>fd_set</code>结构指针类型。<ul>
+<li><code>fd_set</code>结构体仅包含一个整型数组，该数组的每一个元素的每一位（bit）标记一个文件描述符。<code>fd_set</code>能容纳的文件描述符的数量由<code>FD_SETSIZE</code>指定，这就限制了<code>select</code>能同时处理的文件描述符的数量</li>
+</ul>
+</li>
+<li><code>timeout</code>参数用来设置<code>select</code>函数的超时时间。它是一个<code>timeval</code>结构类型的指针，采用指针参数是因为内核将修改它以告诉应用程序<code>select</code>等待了多久，不过我们不能完全信任 select 调用返回时的值，比如调用失败时 timeout 的值是不确定的。</li>
+<li>由以上定义可见，select 给我们提供了一个微秒级的定时方式。如果给 timeout 变量的<code>tv_sec</code>成员和<code>tv_usec</code>成员都传递0，则select将立即返回。如果给<code>timeout</code>传递NULL，则select将一直阻塞，直到某个文件描述符就绪。</li>
+</ul>
+<p><font color='9900CC'>select 成功时返回就绪（可读、可写和异常）文件描述符的总数</font>。如果在超时时间内没有任何文件描述符就绪，select将返回 0。select失败时返回-1并设置 errno。 如果在select等待期间，程序收到信号，则select立即返回-1，并设置errno为EINTR。</p>
+<h3 id="poll系统调用"><a href="#poll系统调用" class="headerlink" title="poll系统调用"></a>poll系统调用</h3><p><code>poll</code>系统调用和<code>select</code>类似，也是在指定时间内轮询一定数量的文件描述符，以测试其中是否有就绪者。poll 的原型如下；</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;poll.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">poll</span> <span class="params">(struct pollfd* fds, <span class="keyword">nfds_t</span> nfds, <span class="keyword">int</span> timeout )</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>fds 参数是一个 pollfd 结构类型的数组，它指定所有我们感兴趣的文件描述符上发生的可读、可写和异常等事件。 pollfd结构体的定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pollfd</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> fd; <span class="comment">// 文件描述符</span></span><br><span class="line">    <span class="keyword">int</span> events; <span class="comment">// 注册的事件</span></span><br><span class="line">    <span class="keyword">short</span> revents; <span class="comment">// 实际发生的事件，由内核填充</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>其中, fd成员指定文件描述符，events成员告诉poll监听fd上的哪些事件，它是一系列事件的按位或；revents 成员则由内核修改，以通知应用程序fd上实际发生了哪些事件。</p>
+</li>
+</ul>
+<p>​    <img src="https://cdn.jsdelivr.net/gh/sineagle/Pic_image/20230331203010.png"></p>
+<ul>
+<li><p>nfds 参数指定了被监听事件集合fds的大小。其类型 nfds_t 的定义如下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span> <span class="keyword">nfds_t</span>;</span><br></pre></td></tr></table></figure></li>
+<li><p>timeout 参数指定poll的超时值，单位是毫秒。当 timeout 为 -1 时，poll 调用将永远阻塞，直到某个事件发生；当 timeout 为 0 时，poll 调用将立即返回</p>
+</li>
+</ul>
+<p>poll 系统调用的返回值的含义与 select 相同</p>
+<h3 id="epoll-系统调用"><a href="#epoll-系统调用" class="headerlink" title="epoll 系统调用"></a>epoll 系统调用</h3><h4 id="内核事件表"><a href="#内核事件表" class="headerlink" title="内核事件表"></a>内核事件表</h4><p><code>epoll</code> 是 Linux 特有的 I/O 复用函数。它在实现和使用上与 select 、poll 由很大的差异。首先，epoll 使用一组函数来完成任务，而不是单个函数。其次，epoll 把用户关心的文件描述符上的事件放入内核的一个事件表中，从而无需像 select 和 poll 那样每次调用都要重复传入文件描述符或事件集。但 epoll 需要使用一个额外的文件描述符，来唯一标识内核中的这个事件表。这个文件描述符使用如下的 <code>epoll_create</code>函数来创建</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/epoll.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_create</span><span class="params">(<span class="keyword">int</span> size)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>size 参数现在并不起作用，只是给内核一个提示，告诉它事件表需要多大。该函数返回的文件描述符将作用其他所有epoll系统调用的第一个参数，已指定要访问的内核事件表。</p>
+<p>下面的函数用来操作内核事件表：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/epoll.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_ctl</span><span class="params">(<span class="keyword">int</span> epfd, <span class="keyword">int</span> op, <span class="keyword">int</span> fd, struct epoll_event * event)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>fd参数是要操作的文件描述符，op 参数则是指定的操作类型。操作类型有以下三种：</p>
+<ul>
+<li>EPOLL_CTL_ADD: 往事件表中注册 fd 上的事件</li>
+<li>EPOLL_CTL_MOD: 修改 fd 上的注册事件</li>
+<li>EPOLL_CTL_DEL: 删除 fd 上的注册事件</li>
+</ul>
+</li>
+<li><p>event 参数指定事件，它是 epoll_event 结构指针类型。epoll_event 的定义如下：</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> &#123;</span></span><br><span class="line">    <span class="keyword">__uint32_t</span> events; <span class="comment">// epoll事件</span></span><br><span class="line">    <span class="keyword">epoll_data_t</span> data; <span class="comment">// 用户数据</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>其中 events 成员描述事件类型。epoll 支持的事件类型与 poll 基本相同。表示 epoll 事件类型的宏是在 poll 对应的宏前加 “E” ，比如 epoll 的可读事件是 EPOLLIN。但 epoll 有两个额外的事件类型– EPOLLET和 EPOLLONESHOT。它们对于 epoll 的高效运作非常关键，后面会讨论他们。data 成员用于存储用户数据。</p>
+<p>epoll_ctl 成功时返回 0， 失败时返回 -1，并设置 errno。</p>
+<h4 id="epoll-wait-函数"><a href="#epoll-wait-函数" class="headerlink" title="epoll_wait 函数"></a>epoll_wait 函数</h4><p>epoll 系列系统调用的主要接口是 epoll_wait 函数。它在一段超时时间内等待一组文件描述符上的事件，其原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/epoll.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_wait</span><span class="params">(<span class="keyword">int</span> epfd, struct epoll_event* events, <span class="keyword">int</span> maxevents, <span class="keyword">int</span> timeout)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>该函数成功时返回就绪的文件描述符的个数，失败时返回 -1并设置 errno。</p>
+<p>关于该函数的参数，timeout参数的含义与poll接口的timeout 参数相同。maxevents参数指定最多监听多少个事件，它必须大于 0。</p>
+<p>epoll_wait 函数如果检测到事件，就将所有就绪的事件从内核事件表（由 epfd 参数指定）中复制到它的第二个参数 events 指向的数组中。这个数组只用于输出 epoll_wait 检测到的就绪事件，而不像 select 和 poll 的数组参数那样既用于传入用户注册的事件，又用于输出内核检测到的就绪事件。这就极大地提高了应用程序索引就绪文件描述符的效率。以下代码体现了这个差别</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ret = poll(fds, MAX_EVENT_NUMBER, <span class="number">-1</span>);</span><br><span class="line"><span class="comment">// 必须遍历所有已注册文件描述符并找到其中的就绪者</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; MAX_EVENT_NUMBER; i ++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (fds[i].revents &amp; POLLIN) &#123;</span><br><span class="line">        <span class="keyword">int</span> sockfd = fds[i].fd; <span class="comment">// 判断第i个文件描述符是否就绪</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如何索引 epoll 返回的就绪文件描述符</span></span><br><span class="line"><span class="keyword">int</span> ret = epoll_wait(epollfd, events, MAX_EVENT_NUMBER, <span class="number">-1</span>);</span><br><span class="line"><span class="comment">// 仅遍历就绪的ret个文件描述符</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ret; i ++) &#123;</span><br><span class="line">    <span class="keyword">int</span> sockfd = events[i].data.fd; <span class="comment">// sockfd肯定就绪，直接处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="LT和ET模式"><a href="#LT和ET模式" class="headerlink" title="LT和ET模式"></a>LT和ET模式</h3><p>epoll 对文件描述符的操作有两种模式： LT（Level Trigger，电平触发）模式和 ET（Edge Trigger，边沿触发）模式。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>求大佬赏个饭</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/weichat.png" alt="sineagle 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/" rel="prev" title="Linux内存子系统">
+      <i class="fa fa-chevron-left"></i> Linux内存子系统
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+			
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#I-O%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">I&#x2F;O模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%BB%E5%A1%9E%E3%80%81%E9%9D%9E%E9%98%BB%E5%A1%9E%E3%80%81%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5"><span class="nav-number">1.1.</span> <span class="nav-text">阻塞、非阻塞、同步、异步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unix-Linux%E7%9A%84%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">Unix&#x2F;Linux的五种IO模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%BB%E5%A1%9E%E5%BC%8FI-O%E6%A8%A1%E5%9E%8B-%EF%BC%88blocking%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">阻塞式I&#x2F;O模型 （blocking）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9EI-O%E6%A8%A1%E5%9E%8B%EF%BC%88non-blocking%EF%BC%89"><span class="nav-number">1.2.2.</span> <span class="nav-text">非阻塞I&#x2F;O模型（non-blocking）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IO%E5%A4%8D%E7%94%A8%E6%A8%A1%E5%9E%8B%EF%BC%88IO-muliplexing%EF%BC%89"><span class="nav-number">1.2.3.</span> <span class="nav-text">IO复用模型（IO muliplexing）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8%E5%BC%8FI-O%E6%A8%A1%E5%9E%8B%EF%BC%88signal-driven-I-O%EF%BC%89"><span class="nav-number">1.2.4.</span> <span class="nav-text">信号驱动式I&#x2F;O模型（signal-driven I&#x2F;O）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5I-O%E6%A8%A1%E5%9E%8B%EF%BC%88asynchronous%EF%BC%89"><span class="nav-number">1.2.5.</span> <span class="nav-text">异步I&#x2F;O模型（asynchronous）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">Reactor模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O%E5%A4%8D%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">I&#x2F;O复用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#select-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-number">1.4.1.</span> <span class="nav-text">select 系统调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#poll%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-number">1.4.2.</span> <span class="nav-text">poll系统调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#epoll-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-number">1.4.3.</span> <span class="nav-text">epoll 系统调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E4%BA%8B%E4%BB%B6%E8%A1%A8"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">内核事件表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#epoll-wait-%E5%87%BD%E6%95%B0"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">epoll_wait 函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LT%E5%92%8CET%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.4.</span> <span class="nav-text">LT和ET模式</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sineagle"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">sineagle</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">132</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sineagle" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sineagle" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:997991067@gmail.com" title="E-Mail → mailto:997991067@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/bottlecodes" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;bottlecodes" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/bottlecodes" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;bottlecodes" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:yourname?call|chat" title="Skype → skype:yourname?call|chat" rel="noopener" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://cnblogs.com/sineagle" title="OldBlogs → https:&#x2F;&#x2F;cnblogs.com&#x2F;sineagle" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>OldBlogs</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sineagle</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">568k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:36</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
